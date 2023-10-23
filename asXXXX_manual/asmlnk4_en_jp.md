@@ -1448,6 +1448,8 @@ Format:
 
 The  .odd directive ensures that the current location counter contains an odd boundary value by adding one if the current  location is even.
 
+.odd指示文は、現在位置が偶数であれば1加算することで、現在位置カウンタが奇数境界値を含むことを保証する。
+
 ### 1.4.22  .bndry Directive
 
 Format:
@@ -1456,6 +1458,8 @@ Format:
 ```
 
 If  the current location is not an integer multiple of n then the location counter is increased to the next  integer  multiple of n.
+
+現在位置がnの整数倍でない場合、位置カウンタは次のnの整数倍に増加する。
 
 As an example:
 ```
@@ -1467,6 +1471,13 @@ changes  the current location to be at a multiple of 4, a 4-byte boundary.
 The boundary specifications are propagated to the linker as a boundary modulus, ie the smallest common boundary for all  .odd, .even, and .bndry directives contained within the area.  A boundary value of 1 is equivalent to .odd and a boundary value of  2 is equivalent to .even.  Because areas are always assembled with an initial address of 0, an even address, both  .odd  and  .even are modulus 2 boundaries.
 
 As  an  example, suppose there are two sections:  a CODE section and a DATA section.  The program code is  written  so  that the  data  associated with this section of the program code follows immediately.
+
+は現在の位置を4の倍数、つまり4バイト境界に変更する。
+
+境界の指定は、その領域内に含まれるすべての .odd、.even、.bndry ディレクティブに共通する最小の境界、すなわち境界係数としてリンカに伝えられる。 境界値1は.oddに相当し、境界値2は.evenに相当する。 領域は常に初期アドレス0（偶数アドレス）で組み立てられるので、.oddも.evenもモジュラス2の境界となります。
+
+例として、CODEセクションとDATAセクションの2つのセクションがあるとする。 プログラムコードは、このセクションに関連するデータがすぐに続くように書かれている。
+
 ```
     .area   CODE
     ; Subroutine 1 Code
@@ -1495,6 +1506,11 @@ When  multiple files containing the same area names (projects with multiple inde
 
 Boundary  specifications  will also be preserved when an area base address is specified with the -a linker option  and/or  the area is placed within a bank.
 
+CODEセクションとDATAセクションは1回のアセンブルで組み立てられるため（インクルードファイルにも適用される）、アセンブラはすべてのCODEセグメントを1つのエリアセグメントとしてコンパイルする。 24は、6と8で割り切れる最小の境界で、余りはありません。 アセンブルされたファイルがリンクされると、DATAエリアのデータの位置は、境界モジュラス24を持つアドレスにオフセットされる。
+
+同じエリア名を持つ複数のファイル（複数の独立したコンパイル・ファイルまたはライブラリ・ファイルを持つプロジェクト）が一緒にリンクされる場合、各エリア・セグメントはセグメントの境界モジュラスに合わせてオフセットされます。
+
+エリア・ベース・アドレスが -a リンカ・オプションで指定されている場合や、エリアがバンク内に配置されている場合にも、境界の指定は保持されます。
 
 ### 1.4.23  .area Directive
 
@@ -1530,6 +1546,10 @@ The .area directive provides a means of defining and separating multiple program
 
 The options are specified within parenthesis and separated by commas as shown in the following example:
 
+.areaディレクティブは、複数のプログラミング・セクションとデータ・セクションを定義し、分離する手段を提供する。  この名前は、アセンブラとリンカが、別々にアセンブルされたさまざまなモジュールからコードを1つのセクションに集めるために使用する領域ラベルです。 名前の長さは1文字から79文字までである。
+
+オプションは、次の例に示すように括弧で囲み、カンマで区切って指定する：
+
 ```
     .area  TEST  (REL,CON)  ;This section is relocatable
                             ;and concatenated with other
@@ -1562,6 +1582,15 @@ The  area can be specified as either a code segment, CSEG, or a data segment, DS
 The  .area  directive also provides a means of specifying the bank this area is associated with.  All areas associated with  a particular  bank  are  combined  at  link  time  into a block of code/data.
 
 The  CSEG,  DSEG,  and  BANK options are specified within the parenthesis as shown in the following examples:
+
+デフォルトの領域タイプはREL|CONである。つまり、同じ領域名を持つ他のセクションと連結される再配置可能なセクションである。 ABSオプションは絶対領域を示す。 OVRオプションとCONオプションは、同じ名前のプログラムセクションが互いに重なる（同じ位置から始まる）か、互いに連結される（互いに付加される）かを示す。
+
+領域は、コード・セグメント（CSEG）またはデータ・セグメント（DSEG）として指定できる。 CSEGおよびDSEG記述子は、マイクロプロセッサのコード・ユニットとデータ・ユニットの割り当てが不均等な場合に便利です。例えば、実行コードは各命令に2バイトの割り当てを使用し、命令ごとに1のインクリメントでアドレス指定され、データは各要素に1バイトの割り当てを使用し、データ・バイトごとに1のインクリメントでアドレス指定されます。 割り当て単位は、特定のマイクロプロセッサのアーキテクチャによって定義されます。
+
+.areaディレクティブは、このエリアがどのバンクに関連するかを指定する手段も提供する。 特定のバンクに関連付けられたすべてのエリアは、リンク時にコード/データのブロックに結合されます。
+
+CSEG、DSEG、BANKオプションは、次の例のように括弧の中で指定します：
+
 ```
     .area   C_SEG   (CSEG,BANK=C1)
                         ;This is a code section
@@ -1574,6 +1603,10 @@ The  CSEG,  DSEG,  and  BANK options are specified within the parenthesis as sho
 Multiple  invocations  of  the  .area directive with the same name must specify the same options or leave  the  options  field blank,  this  defaults  to  the previously specified options for this program area.
 
 The   ASxxxx   assemblers   automatically  provide  two  program sections:
+
+.areaディレクティブを同じ名前で複数回呼び出す場合は、同じオプションを指定するか、オプションフィールドを空白にする必要があります。
+
+ASxxxx アセンブラは自動的に 2 つのプログラム・セクションを提供します：
 
 ```
     '_CODE'         This  is  the  default  code/data  area.
@@ -1588,11 +1621,18 @@ The   ASxxxx   assemblers   automatically  provide  two  program sections:
 The .area names and options are never case sensitive.
 
 The  linker  -a option allows the repositioning of an area by specifying its start address.
+
+.area名とオプションは決して大文字と小文字を区別しない。
+
+リンカーの -a オプションは、開始アドレスを指定することで領域の位置を変更できる。
+
 ```
     -a TEST=arg
 ```
 
 Where  TEST  is  the  area name and arg is an expression that evaluates to a start address.
+
+TESTはエリア名、argは開始アドレスを評価する式である。
 
 ### 1.4.24  .psharea and .poparea Directives
 
@@ -1608,6 +1648,13 @@ The .psharea directive pushes the current area context onto a 16 element stack. 
 The  .poparea directive pops an area context from the 16 element stack.  Attemptimg a .poparea operation form an empty stack results in a stack underflow error message.
 
 These  directives  can  be  useful  when calling macros which place code and/or data into other areas.   As  an  example  this macro  saves the current area context, places descriptors into a specific area, and then restores the area context.
+
+.psharea指示文は、現在のエリアコンテキストを16要素のスタックにプッシュする。 スタックがいっぱいの状態で .psharea を実行しようとすると、 スタックオーバーフローのエラーメッセージが表示されます。
+
+.poparea 指令は16個の要素スタックから領域コンテキストをポップします。 空のスタックで .poparea 操作を行おうとすると、 スタックアンダーフローのエラーメッセージが表示されます。
+
+これらのディレクティブは、コードやデータを他の領域に置くマクロを呼び出すときに便利です。  例として、このマクロは現在の領域コンテキストを保存し、記述子を特定の領域に配置した後、領域コンテキストを復元する。
+
 ```
     .macro  .descriptor     name, device, block, flags
         .psharea
@@ -1620,6 +1667,9 @@ These  directives  can  be  useful  when calling macros which place code and/or 
 ```
 
 Code or data added to an area whose context is in the psh/pop stack is not affected by the restoration of the area's  context.  The  code or data pointer is not part of the stacked area's context.
+
+コンテキストが psh/pop スタック内にある領域に追加されたコードまたはデータは、その領域のコンテキストの復元による影響を受けない。 コードまたはデータのポインタは、スタックされている領域のコンテキストの一部ではない。
+
 
 ### 1.4.25  .bank Directive
 
@@ -1651,7 +1701,17 @@ The  .bank  directive allows an arbitrary grouping of program and/or data areas 
 3.  FSFX, the file suffix to be used by the linker for this bank.  The suffix may not contain embedded white space.
 4.  MAP,  NOICE   mapping   parameter   for  this  bank  of code/data.
 
+.bankディレクティブは、プログラム領域とデータ領域の任意のグループ化をリンカに伝えることができる。  バンク・パラメーターはすべてオプションで、以下のように記述される：
+
+1.  BASE、バンクの開始アドレス（デフォルトは0）を定義することができる。 このアドレスは、リンカーの -b オプションを使って上書きすることができる。 バンクアドレスは常に「バイト」アドレッシングで指定される。 バイト」アドレスでない最初の領域（例えば、2バイト以上の「ワード」でアドレス指定されたプロセッサ）は、領域アドレスが「バイト」アドレスから始まるようにスケーリングされる。
+2.  SIZE（サイズ）：バイト単位で指定されるバンクの最大長。 サイズは常にバイト単位で指定される。
+3.  FSFX：このバンクのリンカーが使用するファイルサフィックス。 サフィックスに空白を含めることはできない。
+4.  MAP、このバンクのコード/データの NOICE マッピング・パラメータ。
+
 The options are specified within parenthesis and separated by commas as shown in the following example:
+
+オプションは、次の例のように括弧で囲み、カンマで区切って指定する：
+
 ```
     .BANK  C1  (BASE=0x0100,SIZE=0x1000,FSFX=_C1)
             ;This bank starts at 0x0100,
@@ -1661,6 +1721,8 @@ The options are specified within parenthesis and separated by commas as shown in
 ```
 
 The parameters must be absolute (external symbols are not allowed.)
+
+パラメータは絶対値でなければならない（外部シンボルは使用不可）。
 
 ### 1.4.26  .org Directive
 
@@ -1676,6 +1738,9 @@ where:
 ```
 
 The  .org directive is valid only in an absolute program section and will give a `<q>` error if used in a relocatable program area.  The  .org  directive specifies that the current location counter is to become the specified absolute value.
+
+.org指示文は絶対プログラムセクションでのみ有効で、再配置可能なプログラム領域で使用すると `<q>` エラーが発生します。 .org ディレクティブは、現在の位置カウンタが指定された絶対値になるように指定します。
+
 
 ### 1.4.27  .globl Directive
 
@@ -1694,6 +1759,11 @@ where:
 A  .globl directive may also have a label field and/or a comment field.
 
 The  .globl directive is provided to export (and thus provide linkage to) symbols not  otherwise  defined  as  global  symbols within  a  module.   In  exporting  global symbols the directive .globl J is similar to:
+
+.globl指示文は、ラベル・フィールドやコメント・フィールドを持つこともある。
+
+.globl指示文は、モジュール内でグローバル・シンボルとして定義されていないシンボルを エクスポートする（つまり、リンクを提供する）ために用意されています。  グローバル・シンボルをエクスポートする場合、.globl J ディレクティブは次のようになります：
+
 ```
     J == expression or J::
 ```
@@ -1702,10 +1772,16 @@ Because  object  modules  are linked by global symbols, these symbols are vital 
 
 The  .globl directive and == construct can be overridden by a following .local directive.
 
+オブジェクト・モジュールはグローバル・シンボルによってリンクされているため、これらのシンボルはプログラムにとって不可欠である。 与えられたプログラム内に現れる内部シンボルは、パス1の終了時にすべて定義されていなければならず、そうでなければ未定義とみなされる。 アセンブリ指示文（-g）を使用すると、パス 1 の終了時にすべての未定義シンボルをグローバルにすることができます。
+
+.globl指示文と==構成文は、次の.local指示文によって上書きすることができます。
+
 <p style="text-align: center">
 NOTE
 
 The  ASxxxx  assemblers  use the last occurring symbol specification in the source file(s) as the type  shown in the symbol table and output to the .rel file.
+
+ASxxxxアセンブラは、ソースファイル内で最後に出現したシンボル指定をシンボルテーブルに表示される型として使用し、.relファイルに出力します。
 </p>
 
 ### 1.4.28  .local Directive
@@ -1725,6 +1801,11 @@ where:
 A  .local directive may also have a label field and/or a comment field.
 
 The  .local  directive is provided to define symbols that are local to the current assembly process.  Local  symbols  are  not effected  by  the assembler option -a (make all symbols global).  In defining local symbols the directive .local J is similar to:
+
+.local指示文は、ラベルフィールドやコメントフィールドを持つこともある。
+
+.local ディレクティブは、現在のアセンブラプロセスに対してローカルなシンボルを 定義するために用意されています。 ローカル・シンボルは、アセンブラのオプション -a (make all symbols global) の影響を受けません。 ローカルシンボルを定義する場合、.local J 指令は次のようになります：
+
 ```
     J =: expression
 ```
@@ -1733,10 +1814,18 @@ The  .local directive and the =:  construct are useful in defining symbols and c
 
 The `.local` directive and `=:`  construct can be overridden by a following .globl directive.
 
+.localディレクティブと=:コンストラクトは、.rel出力ファイルにエクスポートされるべきでない、現在のアセンブリプロセス固有のシンボルを多く含むヘッダーファイルや定義ファイル内でシンボルや定数を定義する場合に便利です。  典型的な使用例としては、マイクロプロセッサのSFR（Special Function Registers）の定義がある。
+
+.local`指示文と`=:`構成子は、次の.globl指示文によって上書きすることができる。
+
+
 <p style="text-align: center">
 NOTE
 
 The  ASxxxx  assemblers  use the last occurring symbol specification in the source file(s) as the type  shown in the symbol table and output to the .rel file.
+
+ASxxxxアセンブラは、ソースファイル内で最後に出現したシンボル指定をシンボルテーブルに表示される型として使用し、.relファイルに出力します。
+
 </p>
 
 ### 1.4.29  .equ, .gblequ, and .lclequ Directives
@@ -1756,6 +1845,8 @@ Format:
 
 These  alternate  forms  of equivalence are provided for user convenience.
 
+これらの同等性の代替形式は、ユーザーの便宜のために提供されている。
+
 ### 1.4.30  .if, .else, and .endif Directives
 
 Format:
@@ -1774,6 +1865,11 @@ Format:
 The  conditional  assembly directives allow you to include or exclude blocks of source code during the assembly process, based on the evaluation of the test condition.
 
 The  range of true condition will be processed if the expression 'expr' is not zero (i.e.  true) and the range of false condition  will  be processed if the expression 'expr' is zero (i.e false).  The range of true condition is optional as is the .else directive  and  the range of false condition.  The following are all valid .if/.else/.endif constructions:
+
+条件付きアセンブリディレクティブは、テスト条件の評価に基づいて、 アセンブリ処理中にソースコードのブロックを含めたり除外したりすることができます。
+
+true 条件の範囲は、式 'expr' がゼロでない (すなわち true) 場合に処理され、false 条件の範囲は、式 'expr' がゼロ (すなわち false) の場合に処理されます。 true条件の範囲は、.else指示文やfalse条件の範囲と同様に省略可能です。 以下はすべて有効な.if/.else/.endif構文です：
+
 ```
     .if     A-4             ;evaluate A-4
     .byte   1,2             ;insert bytes if A-4 is
@@ -1795,6 +1891,9 @@ All .if/.else/.endif directives are limited to a maximum nesting of 10 levels.
 
 The  use of a .else directive outside a .if/.endif block will generate an `<i>` error.  Assemblies having unequal .if and .endif counts will cause an `<i>` error.
 
+All .if/.else/.endif directives are limited to a maximum nesting of 10 levels.
+
+The use of a .else directive outside a .if/.endif block will generate an `<i>` error.  Assemblies having unequal .if and .endif counts will cause an `<i>` error.
 
 ### 1.4.31  .iff, .ift, and .iftf Directives
 
@@ -1827,18 +1926,37 @@ The  subconditional  assembly directives may be placed within conditional assemb
 
 The use of the .iff, .ift, and .iftf directives makes the use of the .else directive redundant.
 
+サブ条件付きアセンブリ指示文は、条件付きアセンブリブロックの中に置くことができる：
+
+1. 1.ブロックの条件が偽のとき、別のコード本体をアセンブルする。
+2. 2. 条件付きアセンブリブロック内で、ブロックに入る際の条件テストの結果に応じて、連続しないコード本体をアセンブリする。
+3. 条件付きアセンブリ・ブロック内のコード本体の無条件アセンブリ。
+
+.iff、.ift、.iftfディレクティブの使用は、.elseディレクティブの使用を冗長にする。
+
 Note  that  the  implementation of the .else directive causes the .if tested condition to be complemented.  The TRUE and FALSE conditions are determined by the .if/.else conditional state.
+
+.elseディレクティブの実装は.ifのテストされた条件を補うことに注意してほしい。 TRUEとFALSEの条件は.if/.elseの条件状態によって決定される。
 
 All  .if/.else/.endif  directives  are  limited  to a maximum nesting of 10 levels.
 
+.if/.else/.endifディレクティブはすべて、最大10レベルの入れ子に制限されています。
+
+
 The  use  of the .iff, .ift, or .iftf directives outside of a conditional block results in a `<i>` error code.
+
+条件ブロックの外で .iff、.ift、.iftf ディレクティブを使用すると `<i>` エラーコードになります。
 
 The  use of a .else directive outside a .if/.endif block will generate an `<i>` error.  Assemblies having unequal .if and .endif counts will cause an `<i>` error.
 
+.if/.endifブロックの外側で.elseディレクティブを使用すると`<i>`エラーが発生する。.ifと.endifの数が等しくない状態でアセンブルすると、`<i>`エラーが発生する。
 
 ### 1.4.32  .ifxx Directives
 
 Additional  conditional  directives are available to test the value of an evaluated expression:
+
+評価された式の値をテストするために、追加の条件ディレクティブが利用できる：
+
 ```
     .ifne   expr            ; true if expr != 0
     .ifeq   expr            ; true if expr == 0
@@ -1864,6 +1982,11 @@ Format:
 The  conditional  assembly directives allow you to include or exclude blocks of source code during the assembly process, based on the evaluation of the test condition.
 
 The  range of true condition will be processed if the expression 'expr' is not zero (i.e.  true) and the range of false condition  will  be processed if the expression 'expr' is zero (i.e false).  The range of true condition is optional as is the .else directive  and  the range of false condition.  The following are all valid .ifxx/.else/.endif constructions:
+
+条件付きアセンブリディレクティブは、テスト条件の評価に基づいて、 アセンブリ処理中にソースコードのブロックを含めたり除外したりすることができます。
+
+true 条件の範囲は、式 'expr' がゼロでない (すなわち true) 場合に処理され、false 条件の範囲は、式 'expr' がゼロ (すなわち false) の場合に処理されます。 true条件の範囲は、.else指示文とfalse条件の範囲と同様に省略可能です。 以下はすべて有効な.ifxx/.else/.endif構文です：
+
 ```
     .ifne   A-4             ;evaluate A-4
     .byte   1,2             ;insert bytes if A-4 is
@@ -1882,7 +2005,12 @@ The  range of true condition will be processed if the expression 'expr' is not z
 
 All .if/.else/.endif directives are limited to a maximum nesting of 10 levels.
 
+
 The  use of a .else directive outside a .if/.endif block will generate an `<i>` error.  Assemblies having unequal .if and .endif counts will cause an `<i>` error.
+
+.if/.else/.endifディレクティブの最大ネストレベルは10に制限されている。
+
+.if/.endifブロックの外側で.elseディレクティブを使用すると`<i>`エラーが発生する。.ifと.endifの数が等しくない状態でアセンブルすると、`<i>`エラーが発生する。
 
 ### 1.4.33  .ifdef Directive
 
@@ -1902,6 +2030,11 @@ Format:
 The  conditional  assembly directives allow you to include or exclude blocks of source code during the assembly process, based on the evaluation of the test condition.
 
 The  range  of true condition will be processed if the symbol 'sym' has been defined with a .define directive or  'sym'  is  a variable  with  an  assigned  value else the false range will be processed.  The range of true condition is optional  as  is  the .else directive and the range of false condition.  The following are all valid .ifdef/.else/.endif constructions:
+
+条件付きアセンブリディレクティブは、テスト条件の評価に基づいて、 アセンブリ処理中にソースコードのブロックを含めたり除外したりすることができます。
+
+シンボル 'sym' が .define ディレクティブで定義されているか、'sym' が代入された変数である場合、 真の条件の範囲が処理されます。 .elseディレクティブやfalse条件の範囲と同様に、true条件の範囲はオプションです。 以下はすべて有効な.ifdef/.else/.endif構文です：
+
 ```
     .ifdef  sym$1           ;lookup symbol sym$1
     .byte   1,2             ;insert bytes if sym$1
@@ -1923,9 +2056,16 @@ The  range  of true condition will be processed if the symbol 'sym' has been def
 
 Note  that the default assembler configuration of case sensitive means the testing for a defined symbol is also case sensitive.
 
+アセンブラのデフォルトの設定で大文字小文字を区別するということは、定義されたシンボルもまた大文字小文字を区別することを意味します。
+
 All  .if/.else/.endif  directives  are  limited  to a maximum nesting of 10 levels.
 
 The  use of a .else directive outside a .if/.endif block will generate an `<i>` error.  Assemblies having unequal .if and .endif counts will cause an `<i>` error.
+
+.if/.else/.endifディレクティブの最大ネストレベルは10に制限されている。
+
+.if/.endifブロックの外側で.elseディレクティブを使用すると`<i>`エラーが発生する。.ifと.endifの数が等しくない状態でアセンブルすると、`<i>`エラーが発生する。
+
 
 ### 1.4.34  .ifndef Directive
 
@@ -1945,6 +2085,11 @@ Format:
 The  conditional  assembly directives allow you to include or exclude blocks of source code during the assembly process, based on the evaluation of the condition test.
 
 The  range  of true condition will be processed if the symbol 'sym' is not defined by a .define directive and a variable 'sym' has  not been assigned a value else the range of false condition will be processed.  The range of true condition is  optional  as is  the  .else  directive and the range of false condition.  The following are all valid .ifndef/.else/.endif constructions:
+
+条件付きアセンブルディレクティブは、条件テストの評価に基づいて、 アセンブル処理中にソースコードのブロックを含めたり除外したりすることができます。
+
+シンボル 'sym' が .define ディレクティブで定義されておらず、変数 'sym' に値が代入されていない場合、真の条件の範囲が処理されます。 真の条件の範囲は、.elseディレクティブと偽の条件の範囲と同様にオプションです。 以下はすべて有効な.ifndef/.else/.endif構文です：
+
 ```
     .ifndef sym$1           ;lookup symbol sym$1
     .byte   1,2             ;insert bytes if sym$1 is
@@ -1968,6 +2113,11 @@ All .if/.else/.endif directives are limited to a maximum nesting of 10 levels.
 
 The  use of a .else directive outside a .if/.endif block will generate an `<i>` error.  Assemblies having unequal .if and .endif counts will cause an `<i>` error.
 
+.if/.else/.endifディレクティブの最大ネストレベルは10に制限されている。
+
+.if/.endifブロックの外側で.elseディレクティブを使用すると`<i>`エラーが発生する。.ifと.endifの数が等しくない状態でアセンブルすると、`<i>`エラーが発生する。
+
+
 ### 1.4.35  .ifb Directive
 
 Format:
@@ -1986,6 +2136,11 @@ Format:
 The  conditional  assembly directives allow you to include or exclude blocks of source code during the assembly process, based on the evaluation of the test condition.
 
 The  conditional  .ifb  is most useful when used in macro definitions to determine if the argument is blank.  The  range  of true  condition  will be processed if the symbol 'sym' is blank.  The range of true condition is optional as is the  .else  directive  and  the  range of false condition.  The following are all valid .ifb/.else/.endif constructions:
+
+条件付きアセンブリ指令は、テスト条件の評価に基づいて、アセンブリ処理中に ソースコードのブロックを含めたり除外したりすることができる。
+
+条件付き .ifb は、引数が空白かどうかを判定するマクロ定義で使用すると最も便利です。 真の条件の範囲は、シンボル 'sym' が空白の場合に処理されます。 真の条件の範囲は、.elseディレクティブや偽の条件の範囲と同様にオプションです。 以下はすべて有効な.ifb/.else/.endif構文です：
+
 ```
     .ifb    sym$1           ;argument is not blank
     .byte   1,2             ;insert bytes if argument
@@ -2006,6 +2161,10 @@ All .if/.else/.endif directives are limited to a maximum nesting of 10 levels.
 
 The  use of a .else directive outside a .if/.endif block will generate an `<i>` error.  Assemblies having unequal .if and .endif counts will cause an `<i>` error.
 
+.if/.else/.endifディレクティブの最大ネストレベルは10に制限されている。
+
+.if/.endifブロックの外側で.elseディレクティブを使用すると`<i>`エラーが発生する。.ifと.endifの数が等しくない状態でアセンブルすると、`<i>`エラーが発生する。
+
 ### 1.4.36  .ifnb Directive
 
 Format:
@@ -2024,6 +2183,11 @@ Format:
 The  conditional  assembly directives allow you to include or exclude blocks of source code during the assembly process, based on the evaluation of the test condition.
 
 The  conditional  .ifnb is most useful when used in macro definitions to determine if the argument is not blank.  The  range of  true  condition will be processed if the symbol 'sym' is not blank.  The range of true condition is optional as is the  .else directive  and  the range of false condition.  The following are all valid .ifnb/.else/.endif constructions:
+
+条件付きアセンブリ指令は、テスト条件の評価に基づいて、アセンブリ処理中に ソースコードのブロックを含めたり除外したりすることができる。
+
+条件付き .ifnb は、引数が空白でないかどうかを判定するマクロ定義で使用すると最も便利です。 シンボル 'sym' が空白でなければ、真条件の範囲が処理されます。 真の条件の範囲は、.elseディレクティブや偽の条件の範囲と同様にオプションです。 以下はすべて有効な.ifnb/.else/.endif構文です：
+
 ```
     .ifnb   sym$1           ;argument is not blank
     .byte   1,2             ;insert bytes if argument
@@ -2045,6 +2209,10 @@ All .if/.else/.endif directives are limited to a maximum nesting of 10 levels.
 
 The  use of a .else directive outside a .if/.endif block will generate an `<i>` error.  Assemblies having unequal .if and .endif counts will cause an `<i>` error.
 
+.if/.else/.endifディレクティブの最大ネストレベルは10に制限されている。
+
+.if/.endifブロックの外側で.elseディレクティブを使用すると`<i>`エラーが発生する。.ifと.endifの数が等しくない状態でアセンブルすると、`<i>`エラーが発生する。
+
 ### 1.4.37  .ifidn Directive
 
 Format:
@@ -2063,6 +2231,11 @@ Format:
 The  conditional  assembly directives allow you to include or exclude blocks of source code during the assembly process, based on the evaluation of the test condition.
 
 The  conditional .ifidn is most useful when used in macro definitions to determine if  the  arguments  are  identical.   The range  of true condition will be processed if the symbol 'sym$1' is identical to 'sym$2' (i.e.  the character strings  for  sym$1 and  sym$2  are  the  same  consistent with the case sensitivity flag).  When this if statement occurs inside a  macro  where  an argument  substitution  may  be blank then an argument should be delimited with the form /symbol/ for each symbol.  The range  of true  condition  is  optional  as is the .else directive and the range  of  false  condition.   The  following  are   all   valid .ifidn/.else/.endif constructions:
+
+条件付きアセンブリ指令は、テスト条件の評価に基づいて、アセンブリ処理中に ソースコードのブロックを含めたり除外したりすることができる。
+
+条件付き .ifidn は、引数が同一かどうかを判定するマクロ定義で使用すると最も便利です。  シンボル'sym$1'が'sym$2'と同一である場合（すなわち、大文字小文字を区別するフラグと一致するsym$1とsym$2の文字列が同一である場合）、真条件の範囲が処理されます。 このif文が、引数の置換が空白になる可能性のあるマクロの内部で発生する場合、引数は、各シンボルに対して/symbol/の形式で区切られなければならない。 真の条件の範囲は、.elseディレクティブと偽の条件の範囲と同様に任意である。  以下はすべて有効な.ifidn/.else/.endif構文です：
+
 ```
     .ifidn  sym$1,sym$1     ;arguments are the same
     .byte   1,2             ;insert bytes if arguments
@@ -2084,6 +2257,10 @@ All .if/.else/.endif directives are limited to a maximum nesting of 10 levels.
 
 The  use of a .else directive outside a .if/.endif block will generate an `<i>` error.  Assemblies having unequal .if and .endif counts will cause an `<i>` error.
 
+.if/.else/.endifディレクティブの最大ネストレベルは10に制限されている。
+
+.if/.endifブロックの外側で.elseディレクティブを使用すると`<i>`エラーが発生する。.ifと.endifの数が等しくない状態でアセンブルすると、`<i>`エラーが発生する。
+
 ### 1.4.38  .ifdif Directive
 
 Format:
@@ -2102,6 +2279,11 @@ Format:
 The  conditional  assembly directives allow you to include or exclude blocks of source code during the assembly process, based on the evaluation of the test condition.
 
 The  conditional .ifdif is most useful when used in macro definitions to determine if  the  arguments  are  different.   The range  of true condition will be processed if the symbol 'sym$1' is different from 'sym$2' (i.e.  the character strings for sym$1 and  sym$2  are the not the same consistent with the case sensitivity flag).  When this if  statement  occurs  inside  a  macro where  an  argument  substitution  may be blank then an argument should be delimited with the form /symbol/ for each symbol.  The range  of  true  condition is optional as is the .else directive and the range of false condition.  The following are  all  valid .ifdif/.else/.endif constructions:
+
+条件付きアセンブリ指令は、テスト条件の評価に基づいて、アセンブリ処理中に ソースコードのブロックを含めたり除外したりすることができる。
+
+条件付き .ifdif は、引数が異なるかどうかを判定するマクロ定義で使用すると最も便利です。  シンボル'sym$1'が'sym$2'と異なる場合（すなわち、大文字小文字を区別するフラグと一致するsym$1とsym$2の文字列が同じでない場合）、真条件の範囲が処理されます。 このif文が引数の置換が空白になる可能性のあるマクロの内部で発生する場合、引数は各シンボルに対して/symbol/の形式で区切られなければならない。 真の条件の範囲は、.elseディレクティブと偽の条件の範囲と同様に任意である。 以下はすべて有効な.ifdif/.else/.endif構文です：
+
 ```
     .ifdif  sym$1,sym$2     ;arguments are different
     .byte   1,2             ;insert bytes if arguments
@@ -2122,6 +2304,10 @@ The  conditional .ifdif is most useful when used in macro definitions to determi
 All .if/.else/.endif directives are limited to a maximum nesting of 10 levels.
 
 The  use of a .else directive outside a .if/.endif block will generate an `<i>` error.  Assemblies having unequal .if and .endif counts will cause an `<i>` error.
+
+.if/.else/.endifディレクティブの最大ネストレベルは10に制限されている。
+
+.if/.endifブロックの外側で.elseディレクティブを使用すると`<i>`エラーが発生する。.ifと.endifの数が等しくない状態でアセンブルすると、`<i>`エラーが発生する。
 
 ### 1.4.39  Alternate .if Directive Forms
 
@@ -2150,14 +2336,17 @@ All .if/.else/.endif directives are limited to a maximum nesting of 10 levels.
 
 The  use of a .else directive outside a .if/.endif block will generate an `<i>` error.  Assemblies having unequal .if and .endif counts will cause an `<i>` error.
 
+.if/.else/.endifディレクティブの最大ネストレベルは10に制限されている。
+
+.if/.endifブロックの外側で.elseディレクティブを使用すると`<i>`エラーが発生する。.ifと.endifの数が等しくない状態でアセンブルすると、`<i>`エラーが発生する。
+
 
 ### 1.4.40  Immediate Conditional Assembly Directives
 
 
-The  immediate conditional assembly directives allow a single
-line of code to be assembled without  using  a  .if/.else/.endif
-construct.   All  of  the previously described conditionals have
-immediate equivalents.
+The  immediate conditional assembly directives allow a single line of code to be assembled without  using  a  .if/.else/.endif construct.   All  of  the previously described conditionals have immediate equivalents.
+
+即時条件組み立てディレクティブは、.if/.else/.endif 構造体を使用せずに、1 行のコードを組み立てることを可能にします。  先に説明したすべての条件分岐は、即値条件分岐に相当します。
 
 Format:
 ```
@@ -2218,6 +2407,11 @@ The  .iif  types b, n, idn, and dif require the commas if the argument(s) may be
 
 The  immediate  conditional  directives  do  not  change  the .if/.else/.endif nesting level.
 
+(,)はオプションのカンマを示す。
+
+.iif型のb、n、idn、およびdifでは、引数が空白の場合はカンマが必要である。 引数が各シンボルに対して ^/symbol/ の形式で区切られている場合、これらのカンマは削除することができる。
+
+即時条件指示子は、.if/.else/.endif の入れ子レベルを変更しない。
 
 ### 1.4.41  .incbin Directive
 
@@ -2245,6 +2439,11 @@ where:
 The  .incbin  directive  is  used to insert the contents of a file verbatim into the assembler as a byte stream.  This can  be handy  (for example) when including some arbitrary data directly into the executable output.  However, it is recommended  to  use this only for small pieces of data.
 
 The .incbin can be invoked with one or two optional arguments which specify the number of bytes to skip in the  file  and  the maximum number of bytes to insert into the output file.
+
+.incbinディレクティブは、ファイルの内容をそのままバイトストリームとしてアセンブラに挿入するために使用します。 これは(例えば)任意のデータを実行ファイルの出力に直接含める場合に便利です。 ただし、これは小さなデータに対してのみ使用することを推奨する。
+
+.incbinは、1つまたは2つのオプション引数で呼び出すことができ、ファイル内でスキップするバイト数と、出力ファイルに挿入する最大バイト数を指定する。
+
 ```
     .incbin "file.dat"              ; include the whole file
     .incbin "file.dat",1024         ; skip the first 1024 bytes
@@ -2254,7 +2453,11 @@ The .incbin can be invoked with one or two optional arguments which specify the 
 
 The ',' delimiters can be any regular delimiter - space, tab, or ','.  The offset and count arguments must be local, evaluate  to a  constant, and may be 0.  A blank offset is by default 0 and a blank count is the remainder of the file.
 
+デリミタ','は標準的なデリミタである、空白文字、タブ文字、','(カンマ)のいずれでも使用可能である。空白のオフセットはデフォルトで0であり、空白のカウントはファイルの残りとなる。
+
 An offset equal to or greater than the file length results in an `<i>` error.  A count that is larger than the  remaining  bytes in a file does not result in an error.
+
+オフセットがファイル長以上である場合は、`<i>`エラーとなる。 ファイルの残りバイト数より大きいカウントはエラーにならない。
 
 ### 1.4.42  .include Directive
 
@@ -2285,24 +2488,38 @@ The  total  number  of separately specified .include files is unlimited as each 
 
 The  default  directory  path,  if none is specified, for any .include file is the directory path of the  current  file.   For example:   if  the  current  source file, D:\proj\file1.asm, includes  a  file  specified   as   "include1"   then   the   file D:\proj\include1.asm is opened.
 
+.include指示文は、現在アセンブル中のソースファイル内にソースファイルを挿入するために使用されます。 このディレクティブに遭遇すると、暗黙の .page ディレクティブが発行される。 指定されたソースファイルの終端に達すると、暗黙の .page 指令が発行され、前のソースファイルから入力が続行されます。 .include ディレクティブで指定されるソースファイルの最大入れ子レベルは 5 です。
+
+各 .include ファイルはアセンブラの各パスの間に開かれ、閉じられるので、別々に指定された .include ファイルの総数は無制限である。
+
+.includeファイルのデフォルトのディレクトリ・パスは、何も指定されていない場合、現在のファイルのディレクトリ・パスになります。  例えば、現在のソースファイル D:￢projfile1.asm に "include1" と指定されたファイルが含まれている場合、D:￢proj feininclude1.asm がオープンされます。
+
 ### 1.4.42.1  Including Files In Windows/DOS  -
 
-Graphical Illustration of Include File Locations
+Graphical Illustration of Include File Locations for the following command line entry:
 
-for the following command line entry:
+次のコマンドライン・エントリ
+
 ```
 __> bin\ascheck -l -o -s  obj\prjct.rel   src\prjct\prjct.asm
 ```
+についてのインクルード・ファイルの場所の図解は以下のようになります。
 
 <figure>
 <img width=700, src="img/001-1-4-42-1-including-files-in-windows-dos.png">
 </figure>
 
 ### 1.4.42.2  Including Files in Linux  -
+
 Graphical Illustration of Include File Locations for the following command line entry:
+
+次のコマンドライン・エントリ
+
 ```
 __$ bin/ascheck -l -o -s  obj/prjct.rel   src/prjct/prjct.asm
 ```
+についてのインクルード・ファイルの場所の図解は以下のようになります。
+
 <figure>
 <img width=700, src="img/002-1-4-42-2-including-files-in-linux.png">
 </figure>
@@ -2346,9 +2563,17 @@ The  .define  directive specifies a user defined string which is substituted for
 
 The  .undefine  directive removes the keyword as a substitutable string.  No error is returned if the keyword  was  not  defined.
 
+.defineディレクティブは、キーワードを置換するユーザー定義文字列を指定する。 置換文字列は、それ自体が置換可能な他のキーワードを含んでいてもよい。 アセンブラは、キーワードが見つかった時点で行の解析を再開します。 .defineディレクティブ内の循環参照を避けるように注意しなければなりません。そうしないと、アセンブラは「再帰の暴走」を起こし、`<s>`エラーになるかもしれません。
+
+.undefineディレクティブはキーワードを置換可能な文字列として削除します。 キーワードが定義されていない場合、エラーは返されません。
+
 When a .define directive specifies a keyword, with or without a substitution string, the keyword is defined but is not a  symbol.   Because  the  keyword is not a symbol the keyword becomes undefined at the beginning of the next assembler pass.
 
 The   keyword   substitution   is   never  applied  to  these directives:   .define,  .undefine,   .ifdef   .ifndef,   iifdef, iifndef, or any variation of def or ndef conditionals.
+
+.defineディレクティブが置換文字列の有無にかかわらずキーワードを指定すると、そのキーワードは定義されますが、シンボルではありません。  キーワードはシンボルではないので、次のアセンブラパスの開始時にキーワードは未定義になります。
+
+.define、.undefine、.ifdef .ifndef、iifdef、iifndef、def または ndef 条件指定のバリエーション。
 
 ### 1.4.44  .enabl and .dsabl Directives
 
@@ -2359,12 +2584,13 @@ Format:
 .dsabl  (optn1, optn2, ...)     ;disable options
 ```
 
-
-
 The  'csn'  option  , C Style Numbers', is currently the only option available to all ASxxxx assemblers.  Enabling  the  'csn' option disables all the temporary radix options beginning with a 0 (zero) except the hex radix options  0x  and  0X.   All  other numbers  beginning  with 0 are evaluated as octal values and all numbers beginning with  digits  1-9  are  evaluated  as  decimal values.
 
 Individual assemblers may have additional options specific to that assembler and will be described in its documentation. 
 
+csn' オプション（C スタイル番号）は、現在すべての ASxxxx アセンブラで使用できる唯一のオプションです。 'csn' オプションを有効にすると、16進数オプションの0xと0Xを除く、0（ゼロ）で始まるすべての一時基数オプションが無効になります。  0から始まるその他の数値はすべて8進数として評価され、1～9桁で始まる数値はすべて10進数として評価される。
+
+個々のアセンブラには、そのアセンブラ固有のオプションが追加されている場合があり、そのオプションについてはそのアセンブラのドキュメントに記載されている。
 
 ### 1.4.45  .setdp Directive
 
@@ -2374,6 +2600,9 @@ Format:
 ```
 
 The set direct page directive has a common format in all the assemblers supporting a paged mode.  The .setdp directive is  used to  inform  the  assembler of the current direct page region and the offset address within the selected area.  The normal invocation methods are:
+
+set direct page 指令は、ページ・モードをサポートするすべてのアセンブラで共通 の書式を持っている。 .setdp指示文は、現在のダイレクト・ページ領域と選択された領域内のオフセット・アドレスをアセンブラに通知するために使用される。 通常の呼び出し方法は以下の通りである：
+
 ```
     .area   DIRECT  (PAG)
     .setdp
@@ -2387,9 +2616,18 @@ for  all  the  68xx microprocessors (the 6804 has only the paged ram area).  The
 
 The  assembler  verifies  that  any  local variable used in a direct variable reference is located in this area.  Local  variable  and  constant value direct access addresses are checked to be within the address range from 0 to 255.
 
+コマンドは、すべての68xxマイクロプロセッサで使用できます(6804は、ページングされたラム・エリアのみを持っています)。 コマンドは、ダイレクト・ページがエリアDIRECTにあり、そのオフセット・アドレスが0（6809マイクロプロセッサを除くすべてのマイクロプロセッサで唯一有効な値）であることを指定します。 リンク時には、必ずDIRECTエリアを0番地に置くこと。 ベースアドレスと領域が指定されていない場合、0と現在の領域がデフォルトとなる。 .setdp指令が発行されない場合、アセンブラはデフォルトでオフセット0の領域"_CODE "にDIRECTページを配置します。
+
+アセンブラは、直接変数参照で使用されるローカル変数がこの領域にあるかどうかを確認します。 ローカル変数と定数値のダイレクト・アクセス・アドレスが 0 から 255 までのアドレス範囲内にあるかどうかがチェックされます。
+
 External direct references are assumed by the assembler to be in the correct area and have valid  offsets.   The  linker  will check all direct page relocations to verify that they are within the correct area.
 
 The  6809  microprocessor  allows the selection of the direct page to be on any 256 byte boundary by loading  the  appropriate value  into the dp register.  Typically one would like to select the page boundary at link time, one method follows:
+
+外部直接参照は、アセンブラによって正しい領域にあり、有効なオフセットを持っていると見なされる。  リンカはすべての直接ページ再配置をチェックし、正しい領域内にあるかどうかを確認する。
+
+6809マイクロプロセッサでは、dpレジスタに適切な値をロードすることで、任意の256バイト境界にダイレクト・ページを選択することができます。 通常、リンク時にページ境界を選択したい場合、次のような方法がある：
+
 ```
     .area   DIRECT  (PAG)   ; define the direct page
     .setdp
@@ -2403,6 +2641,9 @@ The  6809  microprocessor  allows the selection of the direct page to be on any 
 ```
 
 At  link  time specify the base and global equates to locate the direct page:
+
+リンク時に、ベースとグローバルの等号を指定し、直接ページを探す：
+
 ```
 -a DIRECT=0x1000
 -g DIRECT=0x1000
@@ -2411,6 +2652,11 @@ At  link  time specify the base and global equates to locate the direct page:
 Both  the  area address and offset value must be specified (area and variable names are independent).   The  linker  will  verify that  the  relocated  direct page accesses are within the direct page.
 
 The  preceding  sequence  could  be  repeated for multiple paged areas, however an alternate method is to define a non-paged area and use the .setdp directive to specify the offset value:
+
+領域アドレスとオフセット値の両方を指定する必要がある（領域名と変数名は独立）。  リンカは、再配置されたダイレクト・ページ・アクセスがダイレクト・ ページ内にあるかどうかを検証する。
+
+前述の手順を複数のページングされた領域に対して繰り返すこともできますが、別の方法として、ページングされていない領域を定義し、.setdp 命令を使用してオフセット値を指定することもできます：
+
 ```
     .area   DIRECT          ; define non-paged area
     .
@@ -2432,6 +2678,10 @@ The  linker  will  verify that subsequent direct page references are in the spec
 
 For  those  cases  where a single piece of code must access a defined data structure within a direct page and there  are  many pages,  define  a  dummy  direct page linked at address 0.  This dummy page is used only to define  the  variable  labels.   Then load the dp register with the real base address but do not use a .setdp directive.  This method is equivalent to indexed addressing,  where the dp register is the index register and the direct addressing is the offset.
 
+リンカは、後続の直接ページ参照が指定された領域とオフセット・アドレス範囲にあることを確認する。 指定された .setdp ベース・アドレスに対応する正しいページ・セグメントを dp レジスタにロードするのは、プログラマーの責任である。
+
+単一コードがダイレクト・ページ内の定義されたデータ構造にアクセスしなければならず、ページ数が多い場合には、アドレス0にリンクされたダミー・ダイレクト・ページを定義する。 このダミー・ページは、変数ラベルを定義するためだけに使用される。  次に、dpレジスタに実際のベース・アドレスをロードするが、.setdpディレクティブは使用しない。 この方法はインデックス・アドレッシングと同じで、dpレジスタはインデックス・レジスタで、ダイレクト・アドレッシングはオフセットである。
+
 ### 1.4.46  .16bit, .24bit, and .32bit Directives
 
 Format:
@@ -2443,6 +2693,9 @@ Format:
 
 
 The  .16bit, .24bit, and .32bit directives are special directives for assembler configuration when default  values  are  not used.
+
+.16bit、.24bit、.32bitディレクティブは、デフォルト値を使用しない場合のアセンブラ設定用の特別なディレクティブです。
+
 
 ### 1.4.47  .msb Directive
 
@@ -2457,6 +2710,13 @@ The  .msb  directive is only available in selected assemblers which support 24 o
 The  assembler operator '>' selects the upper byte (MSB) when included in an assembler  instruction.   The  default  assembler mode  is  to  select bits <15:8> as the MSB.  The .msb directive allows the programmer to specify a particular byte as the  'MSB' when the address space is larger than 16-bits.
 
 The assembler directive   .msb n  configures the assembler to select a particular byte as MSB.  Given a 32-bit address of MNmn (M(3)  is  <31:24>, N(2) is <23:16>, m(1) is <15:8>, and n(0) is <7:0>) the following examples show how to  select  a  particular address byte:
+
+.msb 指令は、24 ビットまたは 32 ビットアドレッシングをサポートする特定のアセンブラでのみ使用可能である。
+
+アセンブラ演算子 '>' は、アセンブラ命令に含まれる場合、上位バイト (MSB) を選択します。  デフォルトのアセンブラモードでは、ビット<15:8>をMSBとして選択する。 .msb命令により、アドレス空間が16ビットより大きい場合、プログラマーは特定のバイトを「MSB」として指定することができる。
+
+アセンブラの .msb n 指令は、アセンブラが特定のバイトを MSB として選択するように設定します。 MNmnの32ビットアドレス（M(3)は<31:24>、N(2)は<23:16>、m(1)は<15:8>、n(0)は<7:0>）が与えられた場合、以下の例は特定のアドレスバイトを選択する方法を示している：
+
 ```
     .msb 1          ;select byte 1 of address
                     ;<M(3):N(2):m(1):n(0)>
@@ -2486,6 +2746,10 @@ The .lohi and .hilo directives are special directives for assembler output confi
 
 An  `<m>` error will be generated if the .lohi and .hilo directives are both used within the same assembly source file.
 
+.lohi と .hilo ディレクティブは、アセンブラ出力設定のための特別なディレクティブである。 これらのディレクティブは現在のところアセンブラ 'ascheck' でのみ有効です。
+
+.lohi ディレクティブと .hilo ディレクティブの両方が同じアセンブラソースファイル内で使用されると `<m>` エラーが発生します。
+
 ### 1.4.49  .trace and .ntrace Directives
 
 Format:
@@ -2500,6 +2764,9 @@ Format:
 ```
 
 The  .trace and .ntrace directives are used to trace the process of inserting assembler text lines, opening and closing of assembler  and  include  files,  and  the  processing of macros.  The directives have the following tracing options:
+
+.trace ディレクティブと .ntrace ディレクティブは、アセンブラのテキスト行の挿入、 アセンブラとインクルード・ファイルのオープンとクローズ、 マクロの処理の過程をトレースするために使用されます。 ディレクティブには以下のトレースオプションがあります：
+
 ```
     ins     -       line insertion
     asm     -       assembler files
@@ -2516,6 +2783,10 @@ The 'normal' tracing mode .trace is the combination of ins, asm, inc, mcr and rp
 
 The NOT option, !, is used to set the tracing mode to the opposite of the .trace or .ntrace directive  before  applying  the tracing options.
 
+通常の」トレースモード.traceは、ins、asm、inc、mcr、rptの組み合わせが有効になっている。 通常の」非トレースモード .ntrace は、すべてのトレース項目を無効にします。 トレース・オプションを指定する場合、オプション・リストは括弧で囲み、複数のオプションをカンマで区切らなければならない。
+
+NOTオプション「！」は、トレース・オプションを適用する前に、トレース・モードを.traceまたは.ntraceディレクティブの反対に設定するために使用します。
+
 For example:
 ```
     .ntrace (!)     is equivalent to .trace  and
@@ -2525,6 +2796,9 @@ For example:
 ```
 
 When  tracing  is invoked each trace option inserts a comment line into the  assembler  listing  denoting  when  a  particular traced  action  occurs.   The inserted lines contain information related to the type of traced action:
+
+トレースが実行されると、各トレース・オプションは、特定のトレース・アクションが発生したことを示すコメント行をアセンブラ・リストに挿入します。  挿入される行には、トレースされるアクションのタイプに関連する情報が含まれる：
+
 ```
     ins     at insertion    ;N>>
 
@@ -2552,6 +2826,11 @@ When  tracing  is invoked each trace option inserts a comment line into the  ass
 The initial invocation of a macro or any repeat macro will be listed as ;M>> and subsequent repeats will be  listed  as  ;R>>.  Thus  the first ;R>> will be the second invocation of the repeat macro.
 
 Examples of tracing options:
+
+マクロやリピートマクロの最初の起動は ;M>> としてリストされ、それ以降のリピートは ;R>> としてリストされる。 したがって、最初の ;R>> は、リピートマクロの2回目の呼び出しとなる。
+
+トレースオプションの例
+
 ```
     .trace  (mcr)   ; macro processing lists
                     ; the entry and exit from
@@ -2582,11 +2861,18 @@ The  .end  directive is used to specify a code entry point to be included in the
 
 The .end directive without an expression is ignored.
 
+.end指示文は、リンカ出力ファイルに含めるコード・エントリ・ポイントを指定す るために使用する。 詳細については、リンカのセクションで説明されている I86 と S レコードの書式を確認してください。
+
+式を指定しない .end 指令は無視されます。
+
 <div style="page-break-before:always"></div>
 
 ### 1.5  INVOKING ASXXXX
 
 Starting  an  ASxxxx assembler without any arguments provides the following option list and then exits:
+
+引数なしでASxxxxアセンブラを起動すると、以下のオプション・リストが表示され、終了します：
+
 ```
 Usage: [-Options] [-Option with arg] file1 [file2 ...]
     -h   or NO ARGUMENTS  Show this help list
@@ -2625,6 +2911,9 @@ Debugging:
 ```
 
 The  ASxxxx  assemblers are command line oriented.  Most systems require the option(s) and file(s) arguments to  follow  the ASxxxx assembler name:
+
+ASxxxx アセンブラはコマンドライン指向コマンドです。 ほとんどのシステムでは、ASxxxxアセンブラ名の後にオプションとファイルの引数が必要です：
+
 ```
 as6809 [-Options] [-Option with arg] file1 [file2 ...]
 ```
