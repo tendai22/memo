@@ -268,6 +268,12 @@ The  ASLINK  program was written as a companion to the ASxxxx assemblers, its de
 
 I  would  greatly  appreciate  receiving  the  details of any changes, additions, or errors pertaining to these  programs  and will  attempt  to  incorporate  any  fixes  or  generally useful changes in a future update to these programs.
 
+ASxxxxアセンブラは、Cプログラミング言語のDigital Equipment Corporation Users Society (DECUS)ディストリビューションにあった未完成のクロスアセンブラのスタイルに従って書かれました。 未完成のDECUSコードは、入力構文や出力フォーマットに関する文書がないまま提供された。 このアセンブラの開発を始めるきっかけを与えてくれた著者に感謝したい。
+
+ASLINKプログラムはASxxxxアセンブラに付随するものとして書かれたものであり、その設計と実装は他のいかなる作品からも派生したものではありません。
+
+これらのプログラムに関連する変更、追加、エラーの詳細についてお知らせいただければ幸いです。
+
 Alan R.  Baldwin  
 Kent State University  
 Physics Department  
@@ -305,11 +311,19 @@ Source Language:  C
 
 The  ASxxxx  assemblers are a series of microprocessor assemblers written in the C programming  language.   This  collection contains   cross   assemblers   for   the  1802,  S2650,  SC/MP, 4040(4004),  MPS430,   6100,   61860,   6500,   6800(6802/6808), 6801(6803/HD6303),   6804,   6805,   68HC(S)08,   6809,  68HC11, 68HC(S)12, 68HC16, 68CF 68K, 740, 78K/0,  78K/0S,  8008,  8008S, 8048(8041/8022/8021),  8051,  8085(8080),  AT89LP, 8X300(8X305), COP4,  COP8,  DS8XCXXX,  AVR,  EZ8,  EZ80,  F2MC8L/FX,  F8/3870, GameBoy(Z80),  H8/3xx,  Cypress  PSoC(M8C),  PDP11,  PIC, Rabbit 2000/3000, RS08, ST6, ST7, ST8, SX, Z8, Z80(HD64180),  and  Z280 series  microprocessors.   Each  assembler has a device specific section which includes:  
 
+ASxxxx アセンブラは、C 言語で記述されたマイクロプロセッサ用アセンブラの シリーズです。  このコレクションには、1802, S2650, SC/MP, 4040(4004), MPS430, 6100, 61860, 6500, 6800(6802/6808)、 6801(6803/hd6303), 6804, 6805, 68hc(s)08, 6809, 68hc11, 68hc(s)12, 68hc16, 68cf 68k, 740, 78k/0, 78k/0s, 8008, 8008s, 8048(8041/8022/8021)、  8051, 8085(8080), AT89LP, 8X300(8X305), COP4, COP8, DS8XCXXX, AVR, EZ8, EZ80, F2MC8L/FX, F8/3870, GameBoy(Z80), H8/3xx、  Cypress PSoC(M8C)、PDP11、PIC、Rabbit 2000/3000、RS08、ST6、ST7、ST8、SX、Z8、Z80(HD64180)、Z280 シリーズマイクロプロセッサ。  各アセンブラには、デバイス固有のセクションがあります：
+
 1) device description, byte order, and file  extension  information,  
 2)  a table of assembler general directives, special directives, assembler  mnemonics  and  associated operation codes, 
 3) machine specific code for processing the device mnemonics, addressing modes, and special directives.
 
 The assemblers have a common device independent section which handles the details of file input/output, symbol  table  generation,  program/data  areas,  expression  analysis, and assembler directive processing.
+
+1) デバイスの説明、バイトオーダー、ファイル拡張子情報、  
+2) アセンブラの一般命令、特殊命令、アセンブラのニーモニック、関連する操作コードの表、 
+3) デバイス・ニーモニック、アドレッシング・モード、特殊ディレクティブを処理するためのマシン固有コード。
+
+アセンブラには、ファイル入出力、シンボル・テーブル生成、プログラム/データ領域、式解析、アセンブラ指令処理の詳細を処理する共通のデバイス独立セクションがある。
 
 The  assemblers  provide  the following features:  
 
@@ -320,6 +334,17 @@ The  assemblers  provide  the following features:
 5) reusable  local  symbols,
 6) include-file  processing,  and  
 7)  a  general macro processing facility.
+
+アセンブラは以下の機能を提供する：  
+
+1) アルファベット順の、フォーマットされたシンボル・テーブル・リスト、
+2) リロケータブルオブジェクトモジュール、 
+3) オブジェクト・モジュールをリンクするためのグローバル・シンボル、 
+4) 条件付きアセンブリ命令 
+5) 再利用可能なローカルシンボル、
+6) インクルードファイル処理  
+7) 一般的なマクロ処理機能。
+
 
 The  companion program ASLINK is a relocating linker performing the following functions:  
 
@@ -334,7 +359,23 @@ The  companion program ASLINK is a relocating linker performing the following fu
 9) produce a map of the linked memory image, and
 10) update the ASxxxx assembler  listing files with the absolute linked addresses and data.
 
+コンパニオンプログラムASLINKは、以下の機能を実行する再配置リンカーである：  
+
+1) 複数のオブジェクト・モジュールを単一のメモリ・イメージにバインドする、  
+2) モジュール間のシンボル参照を解決する、  
+3) 指定されたオブジェクト・モジュールのライブラリから未定義シンボルを解決する、 
+4) データ・セクションとプログラム・セクションの絶対属性、相対属性、連結属性、オーバーレイ属性の処理、
+5) バイトおよびワードのプログラム・カウンタ相対（pc または pcr）アドレッシング計算の実行、
+6) リンク時に絶対シンボル値を定義する、 
+7) リンク時に絶対エリア・ベースアドレス値を定義する、 
+8) インテルHexレコード、モトローラSレコード、またはタンディCoCoディスクベーシック出力ファイルを作成する、 
+9) リンクされたメモリーイメージのマップを作成する。
+10) 絶対リンクアドレスとデータで ASxxxx アセンブラのリストファイルを更新する。
+
+
 The  assemblers  and  linker have been tested using Linux and DJGPP, Cygwin, Symantec C/C++ V7.2, Borland Turbo C++ 3.0,  Open Watcom V1.9, VC6, Visual Studio 2005, 2010, 2013, 2015, 2019 and 2022.  Complete source code and documentation for the assemblers and  linker  is  included  with the distribution.  Additionally, test code for each assembler and several microprocessor monitors (ASSIST05 for the 6805, MONDEB and ASSIST09 for the 6809, BUFFALO 2.5 for the 6811, and MONDEB for 8051 / AT89LP series ) are included as working examples of use of these assemblers.
+
+アセンブラとリンカは、LinuxとDJGPP、Cygwin、Symantec C/C++ V7.2、Borland Turbo C++ 3.0、Open Watcom V1.9、VC6、Visual Studio 2005、2010、2013、2015、2019、2022を使用してテストされています。 アセンブラとリンカの完全なソースコードとドキュメントが配布物に含まれています。 さらに、各アセンブラのテストコードと、いくつかのマイクロプロセッサ・モニター（6805用のASSIST05、6809用のMONDEBとASSIST09、6811用のBUFFALO 2.5、8051 / AT89LPシリーズ用のMONDEB）が、これらのアセンブラの使用例として含まれています。
 
 <div style="page-break-before:always"></div>
 
@@ -352,6 +393,16 @@ The device specific information is detailed in the appendices.
 
 The assemblers have a common device independent section which handles the details of file input/output, symbol  table  generation,  program/data  areas,  expression  analysis, and assembler directive processing.
 
+ASxxxxアセンブラは、C言語で記述された一連のマイクロプロセッサ・アセンブラです。 各アセンブラには、以下のようなデバイス固有のセクションがあります：
+
+1. デバイスの説明、バイト順序、ファイル拡張子情報。
+2. アセンブラの一般命令、特殊デバイス命令、アセンブラのニーモニック、関連するオペレーションコードの表。
+3. デバイス・ニーモニック、アドレッシング・モード、特殊ディレクティブを処理するためのマシン固有のコード。
+
+デバイス固有の情報については、付録を参照してください。
+
+アセンブラには、ファイル入出力、シンボル・テーブル生成、プログラム/データ領域、式解析、アセンブラ指令処理の詳細を処理する共通のデバイス非依存セクションがあります。
+
 The assemblers provide the following features:
 
 1.  Command string control of assembly functions
@@ -363,22 +414,42 @@ The assemblers provide the following features:
 
 ASxxxx assembles one or more source files into a single relocatable ascii object file.  The output of the ASxxxx  assemblers consists of an ascii relocatable object file(\*.rel), an assembly listing file(\*.lst), and a symbol file(\*.sym) each controlled by an  assembler  option.  If both the object and listing files are specified then a listing to relocated listing hint file  (\*.hlr) is  created  as  a  helper for the linker to properly create the relocated listing file.
 
+アセンブラーには以下のような特徴がある：
+
+1.  アセンブリー機能のコマンド・ストリング制御
+2.  アルファベット化され、フォーマットされたシンボル・テーブル・リスト
+3.  再配置可能なオブジェクトモジュール
+4.  オブジェクト・モジュールをリンクするためのグローバル・シンボル
+5.  条件付きアセンブリ指令
+6.  プログラム・セクション化ディレクティブ
+
+ASxxxx は、1 つまたは複数のソース・ファイルを 1 つのリロケータブルな ascii オブジェクト・ファイルにアセンブルします。 ASxxxx アセンブラの出力は、ascii リロケータブル・オブジェクト・ファイル( \*.rel)、アセンブリ・リスト・ファイル( \*.lst)、シンボル・ファイル( \*.sym) から構成され、それぞれがアセンブラ・オプションによって制御されます。 オブジェクト・ファイルとリスティング・ファイルの両方が指定された場合は、リンカーがリロケーショ ン・リスティング・ファイルを適切に作成するための補助として、リスティングからリロケーショ ン・リスティングへのヒント・ファイル( \*.hlr) が作成されます。
+
 ### 1.1.1  Assembly Pass 1
 
 During  pass  1, ASxxxx opens all source files and performs a rudimentary assembly of each source statement.  During this process  all symbol tables are built, program sections defined, and number of bytes for each assembled source line is estimated.
 
 At the end of pass 1 all undefined symbols may be made global (external) using the ASxxxx switch -g, otherwise undefined  symbols will be flagged as errors during succeeding passes.
 
+パス1の間、ASxxxxはすべてのソースファイルを開き、各ソース文の初歩的なアセンブルを実行します。 この過程で、すべてのシンボル・テーブルが構築され、プログラム・セクションが定義され、アセンブルされた各ソース行のバイト数が推定されます。
+
+パス1の最後に、ASxxxxスイッチ-gを使用して、すべての未定義シンボルをグローバル（外部）にすることができます。
+
 ### 1.1.2  Assembly Pass 2
 
-During  pass  2  the ASxxxx assembler resolves forward references and determines the number  of  bytes  for  each  assembled line.   The  number  of bytes used by a particular assembler instruction may depend upon the addressing mode, whether  the  instruction allows multiple forms based upon the relative distance to the addressed location, or other factors.   Pass  2  resolves these  cases  and  determines the address of all symbols.  Those assemblers with multiple forms are able to automatically  repeat pass  2 as many times as necessary to resolve all differences in instruction lengths and forward references.   All  other  assemblers  can  manually  specify  additional passes to resolve more
-than one level of forward referencing.
+During  pass  2  the ASxxxx assembler resolves forward references and determines the number  of  bytes  for  each  assembled line.   The  number  of bytes used by a particular assembler instruction may depend upon the addressing mode, whether  the  instruction allows multiple forms based upon the relative distance to the addressed location, or other factors.   Pass  2  resolves these  cases  and  determines the address of all symbols.  Those assemblers with multiple forms are able to automatically  repeat pass  2 as many times as necessary to resolve all differences in instruction lengths and forward references.   All  other  assemblers  can  manually  specify  additional passes to resolve more than one level of forward referencing.
+
+パス2の間、ASxxxxアセンブラは前方参照を解決し、各アセンブル行のバイト数を決定します。  特定のアセンブラ命令で使用されるバイト数は、アドレス指定モードや、アドレス指定された位置までの相対的な距離に基づいて複数の形式を許容する命令かどうか、またはその他の要因に依存する場合があります。  パス 2 はこれらのケースを解決し、すべてのシンボルのアドレスを決定します。 複数のフォームを持つアセンブラは、命令長と前方参照のすべての違いを解決するために、必要な回数だけパス 2 を自動的に繰り返すことができます。  他のすべてのアセンブラは、1 レベル以上の前方参照を解決するために、手動で追加のパスを指定できます。
 
 ### 1.1.3  Assembly Pass 3
 
 Pass 3 by the assembler generates the listing file, the relocatable output file, the listing to relocated listing hint file, and  the  symbol  tables.  Also during pass 3 the errors will be reported.
 
 The  relocatable object file is an ascii file containing symbol references and definitions, program  area  definitions,  and the  relocatable assembled code, the linker ASLINK will use this information to generate an absolute load file  (Intel,  Motorola or Tandy CoCo Disk Basic formats).
+
+アセンブラによるパス3では、リスティング・ファイル、再配置可能な出力ファイル、リスティングから再配置されたリスティングへのヒント・ファイル、シンボル・テーブルが生成される。 また、パス3の間にエラーが報告される。
+
+再配置可能オブジェクト・ファイルは、シンボルの参照と定義、プログラム領域の定義、再配置可能なアセンブル・コードを含むasciiファイルで、リンカASLINKはこの情報を使用して絶対ロード・ファイル（インテル、モトローラ、タンディCoCoディスク・ベーシック形式）を生成します。
 
 ## 1.2  SOURCE PROGRAM FORMAT
 
@@ -388,6 +459,10 @@ A source program is composed of assembly-language statements.  Each statement mu
 
 An  ASxxxx  assembler  statement  may  have  as  many as four fields.  These fields are identified by their order  within  the statement  and/or  by separating characters between fields.  The general format of the ASxxxx statement is:
 
+ソース・プログラムはアセンブリ言語のステートメントで構成される。 各ステートメントは1行で完結しなければならない。 1行に含めることができる文字数は最大128文字で、これより長い行は切り捨てられ、失われます。
+
+ASxxxxアセンブラ・ステートメントには4つのフィールドがあります。 これらのフィールドは、ステートメント内での順序やフィールド間の区切り文字によって識別されます。 ASxxxx文の一般的な書式は以下の通りです：
+
 ```
 [label:]  Operator        Operand         [;Comment(s)]
 ```
@@ -396,6 +471,9 @@ The  label and comment fields are optional.  The operator and operand fields are
 
 ASxxxx  interprets  and  processes source statements one at a time.  Each statement causes a particular operation to  be  performed.
 
+ラベルフィールドとコメントフィールドは任意である。 演算子フィールドとオペランドフィールドは相互に依存する。 演算子フィールドは、アセンブラ指令またはアセンブラのニーモニックである。 オペランド・フィールドは、演算子のコンテキストで定義されたオプションまたは必須フィールドです。
+
+ASxxxxはソース文を1つずつ解釈し、処理します。 各ステートメントでは、特定の操作が実行されます。
 
 #### 1.2.1.1  Label Field  -
 
@@ -405,17 +483,33 @@ statement.  When  a program section is absolute, the value of the current locati
 A  relocation  bias  calculated at link time is added to the apparent value of the current location counter  to  establish  its effective  absolute  address  at  execution time.  (The user can also force the linker to relocate sections defined as  absolute.  This may be required under special circumstances.)
 
 If  present,  a  label  must  be  the first field in a source statement and must be terminated by a colon (:).   For  example, if  the  value  of  the  current  location  counter  is absolute 01F0(H), the statement:
+
+ラベルは、現在位置カウンタの値が割り当てられ、ユーザー定義シンボル・テーブルに入力されるユーザー定義シンボルです。  カレント・ロケーション・カウンタは、ASxxxxがアセンブリ処理中にソース・プログラム・ステートメントにメモリ・アドレスを割り当てるために使用します。 このように、ラベルは特定のステートメントをシンボリックに参照する手段です。
+ステートメントをシンボリックに参照する手段です。 プログラム・セクションが絶対の場合、現在位置カウンタの値は絶対で、その値は絶対メモリ・アドレスを参照します。  同様に、プログラム・セクションが再配置可能な場合、現在位置カウンタの値は再配置可能である。
+
+リンク時に計算された再配置バイアスが現在位置カウンタの見かけの値に加算され、実行時の実効絶対アドレスが確定する。 (ユーザは、絶対アドレスとして定義されたセクションの再配置をリンカに強制することもできる。 これは特別な状況下で必要とされるかもしれない)。
+
+ラベルが存在する場合、ラベルはソース文の最初のフィールドでなければならず、コロン (:) で終了しなければならない。  例えば、現在位置カウンタの値が絶対値01F0(H)の場合、次のように記述する：
+
 ```
 abcd:     nop
 ```
 assigns  the  value  01F0(H) to the label abcd.  If the location counter value were relocatable, the final value of abcd would be 01F0(H)+K, where K represents the relocation bias of the program section, as calculated by the linker at link time.
 
 More  than  one label may appear within a single label field.  Each label so specified is assigned the same address value.  For example,  if  the  value  of  the  current  location  counter is 1FF0(H), the multiple labels in the following statement are each assigned the value 1FF0(H):
+
+はラベルabcdに01F0(H)を代入する。 もしロケーション・カウンターの値が再配置可能であれば、 abcdの最終値は01F0(H)+Kとなり、Kはリンク時にリンカーが計算した プログラム・セクションの再配置バイアスを表す。
+
+1つのラベル・フィールドに複数のラベルを指定することができる。 このように指定された各ラベルには、同じアドレス値が割り当てられる。 例えば、カレント・ロケーション・カウンタの値が1FF0(H)の場合、以下の文の中の複数のラベルには、それぞれ1FF0(H)という値が割り当てられる：
+
 ```
 abcd:     aq:     $abc:   nop
 ```
 
 Multiple labels may also appear on successive lines.  For example, the statements
+
+複数のラベルが連続した行に表示されることもある。 例えば
+
 ```
 abcd:
 aq:
@@ -431,19 +525,42 @@ abcd::    nop
 
 establishes the label abcd as a global symbol.  The distinguishing attribute of a global symbol is that it  can  be  referenced from  within an object module other than the module in which the symbol is defined.  References to this label  in  other  modules are  resolved when the modules are linked as a composite executable image.
 
+同様に、3つのラベルすべてに同じ値が割り当てられる。
+
+ダブルコロン（::）は、ラベルをグローバルシンボルとして定義する。 例えば
+```
+abcd:: nop
+```
+
+はラベル abcd をグローバルシンボルとして定義します。 グローバルシンボルの特徴は、そのシンボルが定義されているモジュール以外の オブジェクトモジュールから参照できることです。 他のモジュール内のこのラベルへの参照は、モジュールが複合実行イメージとしてリンクされたときに解決されます。
+
 The legal characters for defining labels are:
 
 A through Z  
 a through z  
 0 through 9  
 . (Period)  
-$ (Dollar sign)  
-_ (underscore)  
+\$ (Dollar sign)  
+\_ (underscore)  
 
-A  label  may  be  any  length,  however  only  the  first 79 characters are significant and, therefore must be  unique  among all  labels in the source program (not necessarily among separately compiled modules).  An error code(s) (<m> or <p>)  will  be generated  in the assembly listing if the first 79 characters in two or more labels are the same.  The `<m>` code is caused by  the
+A  label  may  be  any  length,  however  only  the  first 79 characters are significant and, therefore must be  unique  among all  labels in the source program (not necessarily among separately compiled modules).  An error code(s) (`<m>` or `<p>`)  will  be generated  in the assembly listing if the first 79 characters in two or more labels are the same.  The `<m>` code is caused by  the
 redeclaration  of  the symbol or its reference by another statement.  The `<p>` code is generated because the symbols location is changing on each pass through the source file.
 
 The  label  must  not  start with the characters 0-9, as this designates a reusable symbol with special  attributes  described in a later section.
+
+ラベルを定義するのに有効な文字は以下の通り：
+
+A から Z  
+A から Z  
+0 から 9  
+. (ピリオド）  
+\$ ドル記号  
+_ アンダースコア  
+
+ラベルはどのような長さでもかまいませんが、最初の79文字だけが重要であり、したがってソース・プログラム内のすべてのラベルの中で一意でなければなりません（別々にコンパイルされたモジュールの中で一意である必要はありません）。 2つ以上のラベルの最初の79文字が同じであれば、エラーコード (`<m>` または `<p>`) がアセンブリリストに生成されます。 `<m>`はシンボルの再宣言によって発生します。
+シンボルの再宣言または他のステートメントによる参照によって発生します。 `<p>`コードは、シンボルの位置がソースファイルを通過するたびに変化するために生成されます。
+
+ラベルは0-9で始まってはいけません。これは後のセクションで説明する特別な属性を持つ再利用可能なシンボルを指定するためです。
 
 
 #### 1.2.1.2  Operator Field  -
@@ -456,20 +573,35 @@ Leading  and  trailing  spaces  or tabs in the operator field have no significan
 
 An operator is terminated by a space, tab or end of line.
 
+演算子フィールドは、実行される動作を指定する。 これは、命令ニーモニック（オペコード）またはアセンブラ指令で構成される。
+
+演算子が命令ニーモニックの場合、機械命令が生成され、アセンブラはそれに続くオペランドのアドレスを評価します。 演算子がディレクティブの場合、ASxxxx はソース・プログラムのアセンブル中に特定の制御動作や処理操作を実行します。
+
+演算子フィールドの先頭および末尾のスペースやタブは意味を持ちません。これらの文字は、演算子フィールドを前後のフィールドから分離するためだけに使用されます。
+
+演算子は、スペース、タブ、行末で終了します。
 
 #### 1.2.1.3  Operand Field  -
 
 When  the  operator is an instruction mnemonic (op code), the operand  field  contains  program  variables  that  are  to   be evaluated/manipulated by the operator.
 
-Operands  may  be  expressions  or  symbols, depending on the operator.  Multiple expressions used in the operand  fields  may be  separated  by  a comma.  An operand should be preceded by an operator field;  if it is not, the statement will give an  error (<q> or <o>).   All operands following instruction mnemonics are treated as expressions.
+演算子が命令ニーモニック（オペコード）の場合、オペランド・フィールドには、演算子によって評価／操作されるプログラム変数が格納される。
+
+
+Operands  may  be  expressions  or  symbols, depending on the operator.  Multiple expressions used in the operand  fields  may be  separated  by  a comma.  An operand should be preceded by an operator field;  if it is not, the statement will give an  error (`<q>` or `<o>`).   All operands following instruction mnemonics are treated as expressions.
+
+オペランドは、演算子により式またはシンボルのいずれかである。オペランドフィールドで複数の式を記述する場合はコンマで区切る。オペランドフィールドの前に演算子フィールドを置かねばならない。そうでない場合、その文はエラー(`<q>` or `<o>`)となる。命令ニーモニックの後に置かれるオペランドは式として扱われる。
 
 The operand field is terminated by a semicolon when the field is followed  by  a  comment.   For  example,  in  the  following statement:
+
+オペランド・フィールドの後にコメントが続く場合、オペランド・フィールドはセミコロンで終了します。  例えば、以下のステートメントでは
 ```
 label:    lda     abcd,x          ;Comment field
 ```
 
 the  tab  between lda and abcd terminates the operator field and defines the beginning of the operand field;  a  comma  separates the operands abcd and x;  and a semicolon terminates the operand field and defines the beginning of the comment field.   When  no comment  field  follows,  the operand field is terminated by the end of the source line.
 
+ldaとabcdの間のタブは、演算子フィールドを終了し、オペランド・フィールドの開始を定義します。コンマは、オペランドabcdとxを区切り、セミコロンは、オペランド・フィールドを終了し、コメント・フィールドの開始を定義します。  コメント・フィールドが続かない場合、オペランド・フィールドはソース行の終端で終了する。
 
 #### 1.2.1.4  Comment Field  -
 
@@ -477,10 +609,16 @@ The comment field begins with a semicolon and extends through the end of the lin
 
 Comments  do not affect assembly processing or program execution.
 
+
+コメント・フィールドはセミコロンで始まり、行末まで続く。 このフィールドはオプションであり、nullを除く任意の7ビットのアスキー文字を含めることができる。
+
+コメントはアセンブリ処理やプログラムの実行には影響しない。
+
 ## 1.3  SYMBOLS AND EXPRESSIONS
 
 This  section  describes the generic components of the ASxxxx assemblers:  the character set, the conventions observed in constructing  symbols,  and  the use of numbers, operators, and expressions.
 
+このセクションでは、ASxxxx アセンブラの一般的な構成要素である、文字セット、シンボルを構成する際の規則、数値、演算子、および式の使用について説明します。
 
 ### 1.3.1  Character Set
 
@@ -490,22 +628,31 @@ The following characters are legal in ASxxxx source programs:
 1.  The  letters  A  through Z.  Both upper- and lower-case letters are acceptable.  The  assemblers,  by  default, are  case  sensitive,  i.e.   ABCD and abcd are not the same symbols.  (The assemblers can be made case  insen-
 sitive by using the -z command line option.)
 2.  The digits 0 through 9
-3.  The  characters . (period), $ (dollar sign), and _ (underscore).
+3.  The  characters . (period), \$ (dollar sign), and _ (underscore).
 4.  The special characters listed in Tables 1 through 6.
+
+ASxxxx ソース・プログラムでは、以下の文字が使用可能です：
+
+1.  大文字でも小文字でもかまいません。 デフォルトでは、アセンブラは大文字と小文字を区別します（ABCD と abcd は同じ記号ではありません）。 (アセンブラは大文字と小文字を区別しない。
+アセンブラは、-z コマンドラインオプションを使用することで、大文字と小文字を区別しないようにすることができる)。
+2.  0から9までの数字
+3.  .（ピリオド）、\$（ドル記号）、_（アンダースコア）。
+4.  表1～表6の特殊文字。
 
 
 Tables  1  through  6  describe  the various ASxxxx label and field terminators, assignment operators, operand separators, assembly, unary, binary, and radix operators.
 
+表1～表6に、さまざまなASxxxxラベルおよびフィールド終端子、代入演算子、オペランド分離子、アセンブリ演算子、単項演算子、二項演算子、基数演算子について説明します。
 
 Table 1         Label Terminators and Assignment Operators
 
 ||||
 |--|--|--|
 |:|Colon|Label terminator.
-|::|Double colon|Label  Terminator;   defines the label as a global label.
+|::|Double colon|Label  Terminator;   defines the<br> label as a global label.
 |=|Equal sign|Direct assignment operator.
-|==|Global equal|Direct assignment operator;  defines the  symbol  as  a  global symbol.
-|=:|Local equal|Direct assignment operator;  defines the symbol as a local symbol.
+|==|Global equal|Direct assignment operator;  defines<br> the  symbol  as  a  global symbol.
+|=:|Local equal|Direct assignment operator;  defines<br> the symbol as a local symbol.
 
 Table 2         Field Terminators and Operand Separators
 
@@ -528,22 +675,22 @@ Table 3         Assembler Operators
 Table 4         Unary Operators
 |||||
 |--|--|--|--|
-|<|Left bracket|<FEDC|Produces  the lower byte value of the expression. (DC)
-|>|Right bracket|>FEDC|Produces  the upper byte value of the expression.(FE)
+|<|Left bracket|<FEDC|Produces  the lower byte value<br> of the expression. (DC)
+|>|Right bracket|>FEDC|Produces  the upper byte value<br> of the expression.(FE)
 |+|Plus sign|+A|Positive value of A
-|-|Minus sign|-A|Produces   the  negative (2's complement) of A.
+|-|Minus sign|-A|Produces   the  negative (2's<br> complement) of A.
 |~|Tilde|~A|Produces the 1's complement of A.
-|'|Single quote|'D|Produces  the  value  of the character D.
-|"|Double quote|"AB|Produces the double byte value for AB.
-|\\ |Backslash|'\n|Unix style characters, \b, \f, \n, \r, \t or '\001   or octal byte values.
+|'|Single quote|'D|Produces  the  value  of the<br> character D.
+|"|Double quote|"AB|Produces the double byte value<br> for AB.
+|\\ |Backslash|'\n|Unix style characters, \b, \f, \n,<br> \r, \t or '\001   or octal byte values.
 
 
 Table 5         Binary Operators
 
 |||||
 |--|--|--|--|
-|<<|Double|0800 << 4|Produces the 4 bit Left bracket                left-shifted   value  of 0800.  (8000)
-|>>|Double|0800 >> 4|Produces the 4 bit Right bracket               right-shifted  value  of 0800.  (0080)
+|<<|Double|0800 << 4|Produces the 4 bit Left bracket<br>                left-shifted   value  of 0800.  (8000)
+|>>|Double|0800 >> 4|Produces the 4 bit Right bracket<br>               right-shifted  value  of 0800.  (0080)
 |+|Plus sign|A + B|Arithmetic      Addition operator.
 |-|Minus sign|A - B|Arithmetic   Subtraction operator.
 |\*|Asterisk|A \* B|Arithmetic   Multiplication operator.
@@ -567,8 +714,16 @@ hexadecimal  digit is abcdef as the assembler will treat the letter sequence as 
 
 The  decimal  point, '.', following any numerical sequence not preceded by a temporary radix and  containing only  the  decimal  digits  0-9  will  be  treated  as a decimal, radix 10, value.
 
+一時的な基数演算子として0bと0dを使用することから生じる潜在的な曖昧さは、接頭辞のないすべての16進数の前に00を付けることで回避することができる。 先頭の0は、16進数の1桁目が
+16進数の最初の桁がabcdefである場合、アセンブラはその文字列をラベルとして扱うので、先頭に0が必要である。
+
+一時基数が先行せず、10進数0～9のみを含む数値列に続く10進小数点'.'は、10進数基数10の値として扱われる。
+
 When   the   'C  Style  Numbers'  option  is  enabled (see .enabl csn) all temporary radixs beginning with a 0 (zero),  except  0x  and  0X,  are disabled.  Number sequences beginning with 0x or 0X are interpreted as  hex,
 all other numbers beginning with 0 are octal, and numerical sequences not beginning with a 0 are decimal.
+
+「Cスタイル番号」オプションが有効な場合（.enabl csnを参照）、0xと0Xを除く、0（ゼロ）で始まるすべての一時基数が無効になる。 0xまたは0Xで始まる数列は16進数として解釈される、
+0から始まるその他の数値は8進数、0から始まらない数値列は10進数として解釈される。
 
 ### 1.3.2  User-Defined Symbols
 
@@ -576,14 +731,26 @@ User-defined  symbols are those symbols that are equated to a specific value thr
 
 The following rules govern the creation of user-defined symbols:
 
-1.  Symbols  can  be  composed  of alphanumeric characters, dollar signs ($),  periods  (.),  and  underscores  (_) only.
+ユーザー定義記号とは、直接代入文によって特定の値と等号化されたり、ラベルとして表示されたりする記号のことです。 これらのシンボルは、アセンブリ中に遭遇したときにユーザー・シンボル・テーブルに追加されます。
+
+ユーザー定義記号の作成には、以下のルールがあります：
+
+1.  Symbols  can  be  composed  of alphanumeric characters, dollar signs (\$),  periods  (.),  and  underscores  (_) only.
 2.  The  first  character  of a symbol must not be a number (except in the case of reusable symbols).
 3.  The  first 79 characters of a symbol must be unique.  A symbol  can  be  written  with  more  than   79   legal characters,  but the 80th and subsequent characters are ignored.
 4.  Spaces and Tabs must not be embedded within a symbol.
 
+1.  記号は英数字、ドル記号(\$)、ピリオド(.)、アンダースコア(_)のみで構成することができる。
+2.  記号の最初の文字は数字であってはならない（再利用可能な記号の場合を除く）。
+3.  記号の最初の79文字は一意でなければならない。 記号は79文字以上で書くことができるが、80文字目以降は無視される。
+4.  記号の中にスペースやタブを入れてはならない。
+   
 ### 1.3.3  Reusable Symbols
 
 Reusable  symbols are specially formatted symbols used as labels within a block of coding that has been delimited as a reusable symbol block.  Reusable symbols are of the form n$, where n is a decimal integer from 0 to 65535,  inclusive.   Examples  of reusable symbols are:
+
+再利用可能な記号は、再利用可能な記号ブロックとして区切られた符号化ブロック内のラベルと して使用される特別な書式の記号である。 再利用可能な記号は n$ の形式で、n は 0 から 65535 までの 10 進整数である。  再利用可能なシンボルの例
+
 ```
 1$
 27$
@@ -592,6 +759,9 @@ Reusable  symbols are specially formatted symbols used as labels within a block 
 ```
 
 The range of a reusable symbol block consists of those statements between two normally constructed  symbolic  labels.   Note that a statement of the form:
+
+再利用可能なシンボル・ブロックの範囲は、通常構成される2つのシンボル・ラベルの間にあるステートメントで構成されます。  という形のステートメントに注意してください：
+
 ```
 ALPHA = EXPRESSION
 ```
@@ -602,9 +772,20 @@ Note  that  the  range  of a reusable symbol block may extend across program are
 
 Reusable symbols provide a convenient means of generating labels for branch instructions and other  such  references  within reusable symbol blocks.  Using reusable symbols reduces the possibility of symbols with multiple definitions appearing within a user  program.   In  addition,  the use of reusable symbols differentiates entry-point labels from other labels, since reusable labels cannot be referenced from outside their respective symbol blocks.  Thus, reusable symbols of the same name can  appear  in other  symbol blocks without conflict.  Reusable symbols require less symbol table space  than  normal  symbols.   Their  use  is recommended.
 
+は直接代入文であるが、ラベルを作成しないので、再利用可能なシンボル・ブロックの範囲を区切らない。
+
+再利用可能なシンボル・ブロックの範囲は、プログラム領域にまたがる可能性があることに注意してください。
+
+再利用可能なシンボルは、再利用可能なシンボル・ブロック内の分岐命令やその他の参照用のラベルを生成する便利な手段を提供します。 再利用可能なシンボルを使用することで、ユーザー・プログラム内に複数の定義を持つシンボルが出現する可能性を減らすことができます。  さらに、再利用可能なラベルはそれぞれのシンボル・ブロックの外から参照できないため、再利用可能なシンボルを使用することで、エントリー・ポイント・ラベルを他のラベルと区別することができます。 そのため、同じ名前の再利用可能なシンボルは、他のシンボル・ブロックに矛盾なく出現させることができます。 再利用可能なシンボルは、通常のシンボルよりもシンボルテーブルのスペースが少なくて済みます。  その使用を推奨する。
+
 The  use  of  the  same reusable symbol within a symbol block will generate one or both of the `<m>` or `<p>` errors.
 
+シンボルブロック内で同じ再利用可能なシンボルを使用すると、`<m>` または `<p>` エラーのどちらか、または両方が発生します。
+
 Example of reusable symbols:
+
+再利用可能なシンボルの例: 
+
 ```
 a:      ldx     #atable ;get table address
         lda     #0d48   ;table length
@@ -622,6 +803,9 @@ bne     1$
 ### 1.3.4  Current Location Counter
 
 The  period  (.) is the symbol for the current location counter.  When used in the operand  field  of  an  instruction,  the period   represents  the  address  of  the  first  byte  of  the instruction:
+
+ピリオド (.) は、現在位置カウンタを表す記号です。 命令のオペランドフィールドで使用される場合、ピリオドは命令の最初のバイトのアドレスを表します：
+
 ```
 AS:     ldx     #.      ;The period (.) refers to
                         ;the address of the ldx
@@ -629,6 +813,8 @@ AS:     ldx     #.      ;The period (.) refers to
 ```
 
 When  used  in  the  operand field of an ASxxxx directive, itrepresents the address of the current byte or word:
+
+ASxxxx 命令のオペランドフィールドで使用される場合、現在のバイトまたはワードのアドレスを表します：
 ```
 QK = 0
 
@@ -643,6 +829,13 @@ If  we  assume  the  current  value of the program counter is 0H0200, then durin
 The  second  value represented by .+4 will be stored at location 0H0202, its value will be 0H0206 ( = 0H0202  +  4).   The  third value  defined  by  the  symbol  QK  will  be placed at location 0H0204.
 
 At the beginning of each assembly pass, ASxxxx resets the location counter.  Normally, consecutive memory locations are  assigned  to  each  byte  of  object code generated.  However, the value of the location counter can be changed  through  a  direct assignment statement of the following form:
+
+プログラム・カウンターの現在値を0H0200とすると、ASxxxxはアセンブル中に0H0200番地を起点とする3ワードのストレージを確保する。  最初の値である16進数定数FFFEは、場所0H0200に格納される。
+
+.+4で表される2番目の値は、0H0202番地に格納され、その値は0H0206（= 0H0202 + 4）となる。  記号 QK で定義される 3 番目の値は、場所 0H0204 に配置されます。
+
+各アセンブリ・パスの開始時に、ASxxxxはロケーション・カウンタをリセットします。 通常、生成されるオブジェクト・コードの各バイトには、連続したメモリ位置が割り当てられます。 しかし、ロケーション・カウンタの値は、以下の形式の直接代入文によって変更することができます：
+
 ```
 . = . + expression
 ```
@@ -650,50 +843,53 @@ At the beginning of each assembly pass, ASxxxx resets the location counter.  Nor
 
 The  new  location  counter can only be specified relative to the current location counter.  Neglecting to specify the current program  counter  along with the expression on the right side of the assignment operator will generate the <.> error.   (Absolute program areas may use the .org directive to specify the absolute location of the current program counter.)
 
-The following coding illustrates the use of the current location
-counter:
+The following coding illustrates the use of the current location counter:
+
+新しい位置カウンターは、現在の位置カウンターからの相対値でしか指定できない。 代入演算子の右辺の式とともに現在のプログラム・カウンタを指定しないと、<.>エラーが発生する。  (絶対プログラム領域は、現在のプログラム・カウンタの絶対位置を指定するために .org 指令を使用することができます)。
+
+次のコーディングは、現在の位置カウンタの使用を示しています。
+
 ```
-    .area   CODE1   (ABS)   ;program area CODE1
-                            ;is ABSOLUTE
+        .area   CODE1   (ABS)   ;program area CODE1
+                                ;is ABSOLUTE
 
-    .org    0H100           ;set location to
-                            ;0H100 absolute
+        .org    0H100           ;set location to
+                                ;0H100 absolute
 
-num1:   ldx     #.+0H10     ;The label num1 has
-                            ;the value 0H100.
-                            ;X is loaded with
-                            ;0H100 + 0H10
+num1:   ldx     #.+0H10         ;The label num1 has
+                                ;the value 0H100.
+                                ;X is loaded with
+                                ;0H100 + 0H10
 
-    .org    0H130           ;location counter
-                            ;set to 0H130
+        .org    0H130           ;location counter
+                                ;set to 0H130
 
-num2:   ldy     #.          ;The label num2 has
-                            ;the value 0H130.
-                            ;Y is loaded with
-                            ;value 0H130.
+num2:   ldy     #.              ;The label num2 has
+                                ;the value 0H130.
+                                ;Y is loaded with
+                                ;value 0H130.
 
-    .area   CODE2   (REL)   ;program area CODE2
-                            ;is RELOCATABLE
+        .area   CODE2   (REL)   ;program area CODE2
+                                ;is RELOCATABLE
 
-    . = . + 0H20            ;Set location counter
-                            ;to relocatable 0H20 of
-                            ;the program section.
+        . = . + 0H20            ;Set location counter
+                                ;to relocatable 0H20 of
+                                ;the program section.
 
-num3:   .word   0           ;The label num3 has
-                            ;the value
-                            ;of relocatable 0H20.
+num3:   .word   0               ;The label num3 has　the value
+                                ;of relocatable 0H20.
 
-    . = . + 0H40            ;will reserve 0H40
-                            ;bytes of storage as will
-    .blkb   0H40            ;or
-    .blkw   0H20
+        . = . + 0H40            ;will reserve 0H40
+                                ;bytes of storage as will
+        .blkb   0H40            ;or
+        .blkw   0H20
 ```
 
 The  .blkb  and .blkw directives are the preferred methods of allocating space.
 
+.blkbディレクティブと.blkwディレクティブは、スペースを割り当てるのに好ましい方法である。
 
 ### 1.3.5  Numbers
-
 
 ASxxxx  assumes that all numbers in the source program are to be interpreted in decimal radix unless otherwise specified.  The .radix  directive  may  be used to specify the default as octal, decimal, or hexadecimal.  Individual numbers can  be  designated as  binary, octal, decimal, or hexadecimal through the temporary radix prefixes shown in table 6.
 
@@ -701,8 +897,13 @@ Negative  numbers  must  be preceded by a minus sign;  ASxxxx translates such nu
 
 Numbers are always considered to be absolute values, therefore they are never relocatable.
 
-### 1.3.6  Terms
+ASxxxxでは、特に指定がない限り、ソース・プログラム中のすべての数値は10進数基数で解釈されるものとします。 .radix指令を使用すると、デフォルトを8進数、10進数、16進数に指定することができます。 個々の数値は、表6に示す一時的な基数接頭辞によって、2進数、8進数、10進数、16進数として指定することができる。
 
+負の数の前にはマイナス記号を付けなければならない。ASxxxxはこのような数を2の補数形式に変換する。  正の数の前にはプラス記号を付けることができる（付ける必要はない）。
+
+数値は常に絶対値とみなされるため、再配置可能ではありません。
+
+### 1.3.6  Terms
 
 A  term is a component of an expression and may be one of the following:
 
@@ -716,6 +917,17 @@ A  term is a component of an expression and may be one of the following:
 4.  An  expression enclosed in parenthesis.  Any expression so enclosed is evaluated and reduced to a  single  term before  the remainder of the expression in which it appears is evaluated.  Parenthesis, for example,  may  be used  to  alter the left-to-right evaluation of expressions, (as in A*B+C versus A*(B+C)), or to apply a  unary operator to an entire expression (as in -(A+B)).
 5.  A unary operator followed by a symbol or number.
 
+用語は式の構成要素であり、以下のいずれかである：
+
+
+1.  数値。
+2.  記号：
+    1.  式でピリオド(.)を指定すると、現在の位置カウンタが使用される。
+    2.  ユーザー定義記号。
+    3.  未定義シンボルにはゼロの値が割り当てられ、未定義シンボルとしてユーザー定義シンボル・テーブルに挿入される。
+3.  一重引用符の後にAECII文字1文字、または二重引用符の後にASCII文字2文字。
+4.  括弧で囲まれた式。 このように囲まれた式はすべて評価され、それが現れる式の残りの部分が評価される前に、1つの項へと縮小される。 括弧は、たとえば、式の左から右への評価を変更したり（A*B+CとA*(B+C)のように）、単項演算子を式全体に適用したり（-(A+B)のように）するのに使われる。
+5.  単項演算子の後に記号や数値を続けること。
 
 
 ### 1.3.7  Expressions
@@ -724,6 +936,10 @@ A  term is a component of an expression and may be one of the following:
 Expressions  are  combinations  of  terms  joined together by binary operators.  Expressions reduce to a value.   The  evaluation  of  an expression includes the determination of its attributes.  A resultant expression value may be one of  three  types (as  described  later  in this section):  relocatable, absolute, and external.
 
 Expressions are evaluate with an operand hierarchy as follows:
+
+式は、二項演算子によって結合された用語の組み合わせである。 式は値に還元される。  式の評価には、その属性の決定も含まれる。 結果として得られる式の値は、（このセクションで後述するように）再配置可能、絶対、外部という3つのタイプのいずれかになります。
+
+式は次のようなオペランド階層で評価されます：
 
 |||
 |--|--|
@@ -740,16 +956,31 @@ A  missing  or  illegal  operator  terminates  the expression analysis, causing 
 
 At assembly time the value of an external (global) expression is equal to the value of the absolute part of  that  expression.  For  example,  the expression external+4, where 'external' is an external symbol, has the value of 4.  This expression,  however, when  evaluated  at link time takes on the resolved value of the symbol 'external', plus 4.
 
+A missing or illegal operator terminates the expression analysis, causing error codes `<o>` and/or `<q>` to be generated depending upon the context of the expression itself.
+
+演算子の欠落や不正は、式の解析を終了させ、式自体の文脈に応じてエラーコード `<o>` や `<q>` が生成される。
+
+アセンブリー時、外部（グローバル）式の値は、その式の絶対部分の値と等しくなる。しかし、この式はリンク時に評価されると、シンボル'external'の解決された値に 4 を加えた値になります。
+
 Expressions,  when  evaluated  by  ASxxxx,  are  one of three types:  relocatable, absolute, or external.  The following  distinctions are important:
+
+
 
 1.  An  expression is relocatable if its value is fixed relative to the base address of the program area in which it appears;  it will have an offset value added at link time.  Terms that contain labels defined in relocatable program  areas  will  have  a relocatable value;  similarly, a period (.)  in  a  relocatable  program  area, representing  the value of the current program location counter, will also have a relocatable value.
 2.  An  expression  is  absolute if its value is fixed.  An expression whose terms are numbers and ascii characters will  reduce  to  an absolute value.  A relocatable expression or term minus a relocatable term,  where  both elements  being  evaluated  belong  to the same program area, is an absolute expression.  This is because every term  in  a  program area has the same relocation bias.  When one term is subtracted from the other the  relocation bias is zero.
 3.  An  expression is external (or global) if it contains a single global reference (plus or minus an absolute  expression  value) that is not defined within the current program.  Thus, an external  expression  is  only  partially  defined following assembly and must be resolved at link time.
 
+ASxxxxによって評価される式は、再配置可能、絶対、外部という3つのタイプのうちの1つである。 以下の区別は重要である：
+
+1.  リンク時にオフセット値が追加される。 同様に、現在のプログラムロケーションカウンタの値を表すリロケータブルプログラムエリア内のピリオド（.）
+2.  式は、その値が固定であれば絶対である。 項が数字とアスキー文字である式は、絶対値に還元される。 評価される両方の要素が同じプログラム領域に属する場合、再配置可能な式または項から再配置可能な項を引いたものは絶対式である。 これは、プログラム領域内のすべての項が同じ再配置バイアスを持つためである。 一方の項から他方の項を引くと、再配置バイアスはゼロになる。
+3.  式が外部式（またはグローバル式）であるのは、現在のプログラム内で定義されていない1つのグローバル参照（プラスまたはマイナスの絶対式値）を含んでいる場合である。 したがって、外部式はアセンブリ後に部分的に定義されるだけであり、リンク時に解決されなければならない。
+
 ## 1.4  GENERAL ASSEMBLER DIRECTIVES
 
 An  ASxxxx  directive  is placed in the operator field of the source line.  Only one directive is  allowed  per  source  line.  Each  directive  may  have  a blank operand field or one or more operands.  Legal operands differ with each directive.
 
+ASxxxx 命令は、ソース行の演算子フィールドに置かれる。 ソース行ごとに 1 つの指令のみが許可される。 各指令は、空白のオペランド・フィールドを持つことも、1つ以上のオペランドを持つこともできます。 有効なオペランドは各指令によって異なります。
 
 ### 1.4.1  .module Directive
 
@@ -760,6 +991,7 @@ Format:
 
 The  .module  directive causes the name to be included in the assemblers output file as an identifier for this particular  object module.  The name may be from 1 to 79 characters in length.  The name may not have any embedded white space (spaces or tabs).  Only  one  identifier is allowed per assembled module.  The main  use of this directive  is  to  allow  the  linker  to  report  a modules'  use  of undefined symbols.  At link time all undefined symbols are  reported  and  the  modules  referencing  them  are listed.
 
+.moduleディレクティブは、この名前をアセンブラの出力ファイルに、この特定のオブジェクトモジュールの識別子として含めるようにします。 名前の長さは1文字から79文字までです。 名前には空白 (スペースやタブ) を含めることはできません。 1つのアセンブルモジュールにつき、識別子は1つだけです。 このディレクティブの主な用途は、リンカがモジュールが未定義シンボルを使用していることを報告することです。 リンク時にすべての未定義シンボルが報告され、それらを参照しているモジュールがリストされます。
 
 ### 1.4.2  .title Directive
 
@@ -770,6 +1002,7 @@ Format:
 
 The .title directive provides a character string to be placed on the second line of each page during listing.  The string  begins  with  the first non white space character (after any space or tab) and ends with the end of the line.
 
+.titleディレクティブは、一覧表示中に各ページの2行目に配置される文字列を提供します。 文字列は、最初の空白でない文字 (スペースやタブの後) で始まり、行末で終わります。
 
 ### 1.4.3  .sbttl Directive
 
@@ -780,6 +1013,7 @@ Format:
 
 The .sbttl directive provides a character string to be placed on the third line of each page during listing.  The  string  begins  with  the first non white space character (after any space or tab) and ends with the end of the line.
 
+.sbttlディレクティブは、リスト中の各ページの3行目に配置される文字列を提供します。 文字列は、最初の空白でない文字 (スペースやタブの後) で始まり、行末で終わります。
 
 ### 1.4.4  .list and .nlist Directives
 
@@ -801,6 +1035,8 @@ Format:
 
 The  .list  and  .nlist directives control the listing output to the .lst  file.   The  directives  have  the  following  sublist options:
 
+.list と .nlist ディレクティブは、.lst ファイルへのリスト出力を制御します。  ディレクティブには以下のサブリストオプションがあります：
+
 ||||
 |--|--|--|
 err|    - |     errors
@@ -821,6 +1057,10 @@ mel|    - |     macro expansion binary with source
 The  'normal' listing mode .list is the combination of err, loc, bin, eqt, cyc, lin, src, pag, lst, and md enabled with me,  meb, and mel disabled.  The 'normal' listing mode .nlist has all sublist items disabled.  When specifying sublist options the option list  must  be  enclosed within parenthesis and multiple options separated by commas.
 
 The NOT option, !, is used to set the listing mode to the opposite of the .list or .nlist directive before applying the sublist options.  For example:
+
+通常の」リスティング・モード.listは、err、loc、bin、eqt、cyc、lin、src、 pag、lst、mdが有効で、me、meb、melが無効の組み合わせである。 通常の」リスティング・モード.nlistは、すべてのサブリスト項目が無効になっている。 サブリストオプションを指定する場合、オプションリストは括弧で囲み、複数のオプションをカンマで区切る必要があります。
+
+NOTオプションの! は、サブリストオプションを適用する前に、.listまたは.nlistディレクティブと反対のリスティングモードを設定するために使われます。 例えば
 
 |||
 |--|--|
@@ -852,10 +1092,16 @@ Format:
 ```
 
 The .page directive causes a page ejection with a new heading to be printed.  The new page occurs after the next line  of  the source  program is processed, this allows an immediately following .sbttl directive to appear  on  the  new  page.   The  .page source  line will not appear in the file listing.  Paging may be disabled by invoking the -p directive or by using the directive:
+
+.page指示文は、新しい見出しを持つページの排出を印刷させます。 新しいページは、ソースプログラムの次の行が処理された後に生成されるため、 直後の .sbttl 命令が新しいページに表示されます。  .pageソース行はファイルリストには表示されない。 ページングを無効にするには、-p ディレクティブを実行するか、 ディレクティブを使用します：
+
 ```
     .nlist  (pag)
 ```
 If  the .page directive is followed by a non zero constant or an expression that evaluates to a non zero value then pagination will be enabled within a false condition range to allow extended textual information to be incorporated  in  the  source  program with out the need to use the comment delimiter (;):
+
+.pageディレクティブの後にゼロでない定数またはゼロでない値に評価される式が続く場合、コメント区切り文字(;)を使用しなくても、ソースプログラムに拡張テキスト情報を組み込むことができるように、偽の条件範囲内でページネーションが有効になります：
+
 ```
     .if     0
 
@@ -880,11 +1126,16 @@ Format:
 ```
 where:  string  represents a text string.  The string is printed to the console during the final assembly pass.
 
-`/  /`    represent   the  delimiting  characters.   These delimiters   may   be   any   paired    printing characters,  as  long  as the characters are not contained within  the  string  itself.   If  the delimiting  characters  do  not  match, the .msg
-directive will give the `<q>` error.
+ここで、stringはテキスト文字列を表す。 この文字列は、最終的なアセンブルの際にコンソールに出力される。
+
+`/  /`    represent   the  delimiting  characters.   These delimiters   may   be   any   paired    printing characters,  as  long  as the characters are not contained within  the  string  itself.   If  the delimiting  characters  do  not  match, the .msg directive will give the `<q>` error.
+
+`/ /` represent the delimiting characters.   これらの区切り文字は、文字列自体に含まれていない限り、対になる任意の文字を使用することができます。  区切り文字が一致しない場合、.msg ディレクティブは `<q>` エラーを出します。
+
 
 The  .msg  directive  is  useful to report assembly status or other information during the assembly process.
 
+.msgディレクティブは、アセンブリ・ステータスやその他の情報をアセンブリ・ プロセス中に報告するのに便利です。
 
 ### 1.4.7  .error Directive
 
@@ -895,9 +1146,11 @@ Format:
 
 where:  exp     represents   an  absolute  expression.   If  the evaluation of the expression results  in  a  non zero value then an `<e>` error is reported and the text line is listed in the generated error.
 
+ここで: exp は絶対式を表します。  式を評価した結果、値が0でない場合、`<e>`エラーが報告され、生成されたエラーにそのテキスト行がリストされます。
 
 The  .error  directive  is  useful to report configuration or value errors during the assembly process.  (The .error directive is  identical in function to the .assume directive, just perhaps more descriptive.)
 
+.errorディレクティブは、アセンブル中に設定や値のエラーを報告するのに便利です。 (.error ディレクティブは .assume ディレクティブと機能は同じですが、より説明的です)。
 
 ### 1.4.8  .byte, .db, and .fcb Directives
 
@@ -924,6 +1177,7 @@ where:
 
 The  .byte, .db, or .fcb directives are used to generate successive bytes of binary data in the object module.
 
+.byte、.db、.fcbディレクティブは、オブジェクトモジュール内の連続したバイナリデータを生成するために使用されます。
 
 ### 1.4.9  .word, .dw, and .fdb Directives
 
@@ -947,6 +1201,7 @@ where:
 ```
 The  .word, .dw, or .fdb directives are used to generate successive words of binary data in the object module.
 
+.word、.dw、.fdbディレクティブは、オブジェクト・モジュールのバイナリ・データの連続したワードを生成するために使われる。
 
 ### 1.4.10  .3byte and .triple Directives
 
@@ -970,6 +1225,8 @@ where:
     expn    separated by commas.
 ```
 The  .3byte  or .triple directive is used to generate successive triples of binary data in the object module.  (These directives   are  only  available  in  assemblers  supporting  24-bit addressing.)
+
+.3byteまたは.tripleディレクティブは、オブジェクト・モジュール内のバイナリ・データの連続する3つのトリプルを生成するために使用されます。 (これらのディレクティブは24ビットアドレッシングをサポートするアセンブラでのみ使用可能です)。
 
 ### 1.4.11  .dl, .long, .4byte, and .quad Directives
 
@@ -997,6 +1254,7 @@ where:
 
 The .dl, .long, .4byte or .quad directive is used to generate successive quads of binary data in the  object  module.   (These directives  are  only  available in assemblers supporting 32-bit addressing.)
 
+.dl、.long、.4byte、.quad 指令は、オブジェクト・モジュールにバイナリ・データの連続した4分の1を生成するために使用されます。  (これらのディレクティブは32ビットアドレッシングをサポートするアセンブラでのみ使用可能です)。
 
 ### 1.4.12  .blkb, .ds, .rmb, and .rs Directives
 
@@ -1022,6 +1280,7 @@ Format:
 
 The .blkw directive reserves word blocks;  the .blk3 reserves 3  byte  blocks(available  in   assemblers   supporting   24-bit addressing);  the .blkl and .blk4 reserves 4 byte blocks (available in assemblers supporting 32-bit addressing).
 
+.blkw指令はワード・ブロックを予約し、.blk3は3バイト・ブロック（24ビット・アドレッシングをサポートするアセンブラで使用可能）を予約し、.blklと.blk4は4バイト・ブロック（32ビット・アドレッシングをサポートするアセンブラで使用可能）を予約する。
 
 ### 1.4.14  .ascii, .str, and .fcc Directives
 
@@ -1052,6 +1311,7 @@ where:
 
 The  .ascii,  .fcc, and .str directives place one binary byte of data for each character in the string into the object module.
 
+.ascii、.fcc、.strディレクティブは、文字列の各文字に対して1バイナリバイトのデータをオブジェクトモジュールに配置する。
 
 ### 1.4.15  .ascis and .strs Directives
 
@@ -1078,6 +1338,8 @@ where:
 ```
 The .ascis and .strs directives place one binary byte of data for each character in the string into the  object  module.   The last character in the string will have the high order bit set.
 
+.ascisディレクティブと.strsディレクティブは、文字列の各文字に対して1バイトのバイナリデータをオブジェクトモジュールに配置します。  文字列の最後の文字は上位ビットが設定されます。
+
 ### 1.4.16  .asciz and .strz Directives
 
 Format:
@@ -1103,9 +1365,14 @@ where:
 ```
 The .asciz and .strz directives place one binary byte of data for each character in the string into the object  module.   Following  all  the  character data a zero byte is inserted to terminate the character string.
 
+.ascizディレクティブと.strzディレクティブは、文字列の各文字に対して1バイナリバイトのデータをオブジェクトモジュールに配置します。  すべての文字データの後には、文字列を終了するために0バイトが挿入されます。
+
 ### 1.4.17  Non-Printing Characters In Strings
 
 Non-printing  characters  can  be inserted into any string by enclosing the non-printing characters' value in  parenthesis  as shown in the following example.
+
+以下の例のように、括弧で囲むことで、任意の文字列に非印字文字を挿入することができます。
+
 ```
 .asciz  /Hello World!/(13)(10)
 ```
@@ -1113,6 +1380,11 @@ Non-printing  characters  can  be inserted into any string by enclosing the non-
 A  carriage return and line feed character have been appended to the string "Hello World!".  The  non-printing  character  values are  always  evaluated  in  the current radix (or in a temporary radix when specified.) The character  values  may  be  evaluated from  any legal expression and are truncated to 8-bit values before being inserted into the character string.
 
 It   should  be  noted  that  multiple  string  segments  and non-printing character segments can  be  included  in  a  single string statemment:
+
+文字列 "Hello World!"にキャリッジリターンと改行文字が追加された。 非印字文字値は、常に現在の基数（指定されている場合は一時基数）で評価されます。文字値は、任意の正規表現で評価することができ、文字列に挿入される前に8ビット値に切り詰められます。
+
+複数の文字列セグメントと非印刷文字セグメントを1つの文字列ステートメントに含めることができることに注意すべきである：
+
 ```
 .asciz  /I Said:/(13)(10)/Hello World!/(13)(10)
 ```
@@ -1129,6 +1401,11 @@ where:  exp     represents   an  absolute  expression.   If  the evaluation of t
 
 The  .assume  directive  is useful to check assumptions about assembler values.  (The .assume directive is identical in  function to the .error directive, just perhaps more descriptive.)
 
+ここで: exp は絶対式を表します。  式を評価した結果、ゼロでない値が返された場合、`<e>`エラーが報告され、生成されたエラーにそのテキスト行がリストされます。
+
+.assumeディレクティブはアセンブラの値の仮定をチェックするのに便利です。 (.assumeディレクティブは.errorディレクティブと機能は同じですが、より説明的です)。
+
+
 ### 1.4.19  .radix Directive
 
 Format:
@@ -1137,6 +1414,9 @@ Format:
 ```
 
 where:  character  represents  a single character specifying the default radix to be used for  succeeding  numbers.   The character may be any one of the following:
+
+ここで: characterは、後続の数値に使用されるデフォルト基数を指定する1文字を表す。  この文字は以下のいずれかである：
+
 ```
     B,b     Binary
 
