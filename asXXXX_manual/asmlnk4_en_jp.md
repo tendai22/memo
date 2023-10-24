@@ -1577,17 +1577,17 @@ The options are specified within parenthesis and separated by commas as shown in
 
 The  default  area type is REL|CON;  i.e.  a relocatable section which is concatenated with other sections of code with  the same area name.  The ABS option indicates an absolute area.  The OVR and CON options indicate if program  sections  of  the  same name  will overlay each other (start at the same location) or be concatenated with each other (appended to each other).
 
-The  area can be specified as either a code segment, CSEG, or a data segment, DSEG.  The CSEG and DSEG descriptors are  useful when  the  microprocessor  code  and  data  unit allocations are unequal:  e.g.  the executable code  uses  an  allocation  of  2 bytes for each instruction and is addressed at an increment of 1 for every instruction, and the data uses an allocation of 1 byte for  each element and is addressed at an increment of 1 for each data byte.  The allocation units are defined by the architecture of the particular microprocessor.
-
-The  .area  directive also provides a means of specifying the bank this area is associated with.  All areas associated with  a particular  bank  are  combined  at  link  time  into a block of code/data.
-
-The  CSEG,  DSEG,  and  BANK options are specified within the parenthesis as shown in the following examples:
-
 デフォルトの領域タイプはREL|CONである。つまり、同じ領域名を持つ他のセクションと連結される再配置可能なセクションである。 ABSオプションは絶対領域を示す。 OVRオプションとCONオプションは、同じ名前のプログラムセクションが互いに重なる（同じ位置から始まる）か、互いに連結される（互いに付加される）かを示す。
+
+The  area can be specified as either a code segment, CSEG, or a data segment, DSEG.  The CSEG and DSEG descriptors are  useful when  the  microprocessor  code  and  data  unit allocations are unequal:  e.g.  the executable code  uses  an  allocation  of  2 bytes for each instruction and is addressed at an increment of 1 for every instruction, and the data uses an allocation of 1 byte for  each element and is addressed at an increment of 1 for each data byte.  The allocation units are defined by the architecture of the particular microprocessor.
 
 領域は、コード・セグメント（CSEG）またはデータ・セグメント（DSEG）として指定できる。 CSEGおよびDSEG記述子は、マイクロプロセッサのコード・ユニットとデータ・ユニットの割り当てが不均等な場合に便利です。例えば、実行コードは各命令に2バイトの割り当てを使用し、命令ごとに1のインクリメントでアドレス指定され、データは各要素に1バイトの割り当てを使用し、データ・バイトごとに1のインクリメントでアドレス指定されます。 割り当て単位は、特定のマイクロプロセッサのアーキテクチャによって定義されます。
 
+The  .area  directive also provides a means of specifying the bank this area is associated with.  All areas associated with  a particular  bank  are  combined  at  link  time  into a block of code/data.
+
 .areaディレクティブは、このエリアがどのバンクに関連するかを指定する手段も提供する。 特定のバンクに関連付けられたすべてのエリアは、リンク時にコード/データのブロックに結合されます。
+
+The  CSEG,  DSEG,  and  BANK options are specified within the parenthesis as shown in the following examples:
 
 CSEG、DSEG、BANKオプションは、次の例のように括弧の中で指定します：
 
@@ -3067,6 +3067,12 @@ The file name for the .lst, .rel, .hlr, and .sym files is the first file name sp
 The  .rel  file contains a radix directive so that the linker will use the proper onversion for this file.  Linked files  may have different radices.
 
 The  ASxxxx  assemblers  also  have  several 'hidden' options which are not shown in the usage message.  These are:
+
+.lst、.rel、.hlr、.symファイルのファイル名は、コマンドラインで指定された最初のファイル名です。 すべての出力ファイルはアスキー・テキスト・ファイルであり、編集、コピーなどが可能である。 出力ファイルはすべての入力ファイルを連結したものであり、ファイルを個別にアセンブルする場合は、ファイルごとにアセンブラを起動する。
+
+.relファイルにはradixディレクティブが含まれており、リンカはこのファイルに対して適切なonversionを使用します。 リンクされたファイルの基数は異なる場合があります。
+
+ASxxxxアセンブラには、使用状況メッセージに表示されない「隠し」オプションもいくつかあります。 これらは以下のとおりです：
 ```
     -r      Include assembler line numbers
             in the .hlr hint file
@@ -3092,11 +3098,18 @@ The  ASxxxx  assemblers  also  have  several 'hidden' options which are not show
 The  ASxxxx assemblers provide limited diagnostic error codes during the assembly process, these errors will be noted  in  the listing file and printed on the stderr device.
 
 The assembler reports the errors on the stderr device as
+
+ASxxxxアセンブラは、アセンブリ処理中に限定的な診断エラー・コードを提供し、これらのエラーはリスト・ファイルに記録され、標準エラー・デバイスに出力されます。
+
+アセンブラは標準エラー・デバイスに次のようにエラーを報告します。
+
 ```
-?ASxxxx-Error-<*> in line nnn of filename
+        ?ASxxxx-Error-<*> in line nnn of filename
 ```
 
 where  `*` is the error code, nnn is the line number, and filename is the source/include file.  This line is followed by a  generic error message for the `<*>` error code.
+
+ここで、`*`はエラーコード、nnnは行番号、filenameはソース/インクルードファイルである。 この行の後には、`<*>`エラーコードに対する一般的なエラーメッセージが続きます。
 
 The errors are:
 
@@ -3119,8 +3132,29 @@ The errors are:
 `<u>`|  Undefined symbol encountered during assembly.
 `<z>`|  Divide by 0 or Modulus by 0 error:  result is 0.
 
+|||
+|--|--|
+`<.>`|  このエラーは、正しい.= .+式ではなく、現在地カウンターの絶対的な直接代入が原因である。
+`<a>`|  機械固有のアドレス指定またはアドレス指定モードのエラーを示す。
+`<b>`| 直接ページ境界エラーを示す。
+`<c>`| .bndry ディレクティブのモジュラスが大きいことを示す。
+`<d>`|  直接ページアドレス指定エラーを示す。
+`<e>`|  .error または .assume ディレクティブが原因です。
+`<i>`|  .includeファイルのエラーまたは.if/.endifの不一致が原因です。
+`<m>`|  同じラベルの複数の定義、複数の.moduleディレクティブ、.areaや.bankディレクティブの複数の競合する属性、同じアセンブリ内での.hiloやlohiの使用。
+`<n>`|  .mexit、.endm、.nargディレクティブは、マクロ、リピートブロック、不定<br>リピートブロックの外にある。
+`<o>`|  ディレクティブやニーモニックエラー、または再配置可能領域での.orgディレクティブの使用。
+`<p>`|  Phase error: label location changing between passes 2 and 3.  フェーズエラー: 2パス目と3パス目の間でラベル位置が変わった。通常、2つ以上のレベルの前方参照を持っていることが原因です。
+`<q>`|  構文に問題がある：演算子、ターミネーター、デリミターがない、または不適切である。
+`<r>`|  再配置エラー：再配置可能な項に対する論理演算、2つの再配置可能な<br>項の加算、同じプログラミング領域内にない2つの再配置可能な項の減算、または外部<br>シンボル。
+`<s>`|  文字列置換/再帰エラー。
+`<u>`|  アセンブリ中に未定義のシンボルに遭遇した。
+`<z>`|  0による除算または0によるモジュラスのエラー：結果は0です。
 
 Most  assemblers  now include more descriptive error messages for `<a>`, `<o>`, and  `<q>`  errors.   Those  assemblers  updated  to provide the expanded error messages will show three lines on the stdout device as shown by this error:
+
+ほとんどのアセンブラは `<a>`, `<o>`, `<q>` エラーに対して、より説明的なエラーメッセージを含むようになった。  拡張されたエラーメッセージを提供するようにアップデートされたアセンブラは、このエラーで示されるように標準出力デバイスに3行を表示します：
+
 ```
     ?ASxxxx-Error-<a> in line 1867 of tez80e.asm
                   `<a>` '1867         ld.l    sp,(var1)       ;a'
@@ -3130,6 +3164,11 @@ Most  assemblers  now include more descriptive error messages for `<a>`, `<o>`, 
 The  first line is the basic error in line xxxx message.  The second line lists the actual line in error followed by  a  third line containing the more specific error.
 
 The  listing  file (.lst) will have the first and third lines of the error message inserted preceding the line containing  the error.
+
+最初の行は、xxxx行目の基本的なエラーメッセージである。 2行目には実際のエラー行が記載され、3行目にはより具体的なエラーが記載される。
+
+リスト・ファイル(.lst)には、エラーを含む行の前にエラー・メッセージの1行目と3行目が挿入される。
+
 
 
 ### 1.7  LISTING FILE
@@ -3152,11 +3191,34 @@ Each succeeding line contains six fields:
 5.  Source text line number
 6.  Source text
 
+(-l)オプションは、ascii出力のリストファイルを生成する。 出力の各ページには5行のヘッダーが含まれる：
+
+1.  ASxxxxプログラム名とページ番号
+2.  アセンブラの基数、アドレス・ビット、日付、時刻
+3.  .titleディレクティブによるタイトル（もしあれば）
+4.  .sbttlディレクティブによるサブタイトル (もしあれば)
+5.  空白行
+
+続く各行は6つのフィールドを含む：
+
+1.  エラーフィールド（行の最初の2文字）
+2.  現在地カウンター
+3.  バイト形式の生成コード
+4.  オペコード・サイクル・カウント
+5.  ソーステキストの行番号
+6.  ソーステキスト
+
 The error field may contain upto 2 error flags indicating any errors encountered while assembling this line of source code.
 
 The  current  location  counter  field  displays  the 16-bit, 24-bit, or 32-bit program position.  This field will be  in  the selected radix.
 
 The generated code follows the program location.  The listing radix determines the number of bytes that will be  displayed  in this field.  Hexadecimal listing allows six bytes of data within the field, decimal and octal allow four bytes within the  field.  If more than one field of data is generated from the assembly of a single line of source code, then the data field is repeated on successive lines.
+
+エラー・フィールドには、このソース・コード行のアセンブル中に発生したエラーを示すエラー・フラグを 2 つまで含めることができる。
+
+現在位置カウンタ・フィールドには、16 ビット、24 ビット、または 32 ビットのプログラム位置が表示されます。 このフィールドは選択された基数になります。
+
+生成されるコードはプログラム位置に従います。 リスト基数によって、このフィールドに表示されるバイト数が決まります。 16進リスティングではフィールド内に6バイトのデータが表示され、10進リスティングと8進リスティングではフィールド内に4バイトのデータが表示されます。 1行のソース・コードのアセンブリから複数のデータ・フィールドが生成される場合、データ・フィールドは連続した行で繰り返されます。
 
 The  opcode cycles count is printed within the delimiters [ ] on the line with the source text.  This reduces  the  number  of generated code bytes displayed on the line with the source listing by one.  (The -c option disables all opcode cycle listing.)
 
@@ -3164,7 +3226,15 @@ The source text line number is printed in decimal and is followed by the source 
 
 Two  additional options are available for printing the source line text.  If the -b option is specified then the listed source line  contains all the .define substitutions.  If the -bb option is specified then the original source line is printed before the source line with substitutions.
 
+オペコード・サイクル・カウントは、ソース・テキストの行の区切り記号 [ ] 内に表示される。 これにより、ソース・リストの行に表示される生成コード・バイト数が 1 つ減ります。 (-c オプションは、すべてのオペコード・サイクル・リスティングを無効にする)。
+
+ソース・テキストの行番号は 10 進数で表示され、その後にソース・テキストが続きます。 .page 指示子を持つソース行は決してリストされません。 (-u オプションはこの動作を上書きする)。
+
+ソース行テキストの表示には、さらに 2 つのオプションがあります。 b オプションを指定すると、リストされるソース行にすべての .define 置換が含まれます。 bb オプションが指定されると、元のソース行が置換を含むソース行の前に表示されます。
+
 Two  data  field  options  are  available to flag those bytes which will be relocated by the linker.   If  the  -f  option  is specified then each byte to be relocated will be preceded by the '`' character.  If the -ff option is specified then each byte to be   relocated   will  be  preceded  by  one  of  the  following characters:
+
+リンカによって再配置されるバイトにフラグを付けるために、2つのデータ・ フィールド・オプションが利用できる。  fオプションを指定すると、再配置される各バイトの前に'`'文字が付く。 ffオプションが指定された場合、再配置される各バイトの前には以下の文字のいずれかが付きます：
 
 1.  `*`   paged relocation
 2.  `u`   low  byte of unsigned word or unsigned byte
@@ -3175,6 +3245,8 @@ Two  data  field  options  are  available to flag those bytes which will be relo
 7.  `s`   high byte relocation
 
 Assemblers  which  use 24-bit or 32-bit addressing use an extended flagging mode:
+
+24ビットまたは32ビットアドレッシングを使用するアセンブラは、拡張フラグモードを使用する：
 
 1.  *   paged relocation
 2.  u   1st  byte of unsigned value
@@ -3214,11 +3286,38 @@ The sorted list of symbols and/or labels contains the following information:
     R - relocatable, and  
     X - external.
 
+シンボルテーブルには2つの部分がある：
+
+1.  ソース・プログラムで定義または参照されているシンボルやラベルをアルファベット順に並べたリスト。
+
+2.  ソース・プログラムのアセンブリ中に定義されたプログラム領域のリスト。
+
+ソートされたシンボルやラベルのリストには、以下の情報が含まれています：
+
+1.  プログラム領域番号（絶対値または外部の場合はなし）。
+
+2.  シンボルまたはラベル
+
+3.  直接割り当てられた記号は(=)記号で示す。
+
+4.  シンボルの値、プログラム領域のベースアドレス（=0）に対するラベルの位置、またはシンボルやラベルが未定義であることを示す****。
+
+5.  以下の文字:  
+    G - global,  
+    L - local,  
+    R - relocatable, and  
+    X - external.
+
 The list of program areas provides the correspondence between the program area numbers and the defined program areas, the size of the program areas, and the area flags (attributes).
+
+プログラム・エリアのリストは、プログラム・エリア番号と定義されたプログラム・エリアの対応、プログラム・エリアのサイズ、およびエリア・フラグ（属性）を提供する。
 
 ## 1.9  OBJECT FILE
 
 The  object  file is an ascii file containing the information needed by the linker to bind multiple object modules into a complete  loadable  memory  image.   The object module contains the following designators:
+
+オブジェクト・ファイルは、リンカが複数のオブジェクト・モジュールを完全なローダブル・メモリ・イメージにバインドするために必要な情報を含むアスキー・ファイルです。  オブジェクト・モジュールには以下のデジグネータが含まれます：
+
 ```
     [XDQ][HL][234]
         X       Hexadecimal radix 
@@ -3246,9 +3345,14 @@ The  object  file is an ascii file containing the information needed by the link
 
 Refer to the linker for a detailed description of each of the designators and the format of the information contained  in  the object file.
 
+各デジグネータの詳細と、オブジェクト・ファイルに含まれる情報のフォーマットについては、リンカを参照してください。
+
 ## 1.10  HINT FILE
 
 The  hint file is an ascii file containing information needed by the linker to convert the listing file into a relocated listing  file.   Each  line in the .hlr file corresponds to a single line in the listing file.  The text line usually contains 3 or 4 parameters  in  the radix selected for the assembler as shown in the following table:
+
+ヒント・ファイルは、リンカがリスティング・ファイルを再配置リスティング・ ファイルに変換するために必要な情報を含むアスキー・ファイルです。  .hlrファイルの各行は、リスティング・ファイルの1行に対応しています。 テキスト行には通常、次の表に示すように、アセンブラで選択された基数のパラメータが 3 つまたは 4 つ含まれています：
+
 ```
 Line Position:  123456789012 
                 -----------
@@ -3258,6 +3362,9 @@ Hex:             11 22 33
 ```
 
 Parameter 1 specifies the parameters listed in the line. A bit is set for each listing option enabled during the assembly of the line.
+
+パラメータ1は、その行にリストされているパラメータを指定する。ビットは、行の組み立て中に有効化されたリスト・オプションごとに設定される。
+
 ```
     BIT 0   - LIST_ERR      Error Code(s) 
     BIT 1   - LIST_LOC      Location 
@@ -3270,6 +3377,9 @@ Parameter 1 specifies the parameters listed in the line. A bit is set for each l
 ```
 
 Parameter 2 is the internal assembler listing mode value specified for this line during the assembly process:
+
+パラメータ 2 は、アセンブル処理中にこの行に指定された内部アセンブラ・リスティング・モードの値である：
+
 ```
     0 - NLIST       No listing 
     1 - SLIST       Source only 
@@ -3283,6 +3393,11 @@ Parameter 2 is the internal assembler listing mode value specified for this line
 Parameter 3 is the number of output bytes listed for this line.
 
 The  4th  parameter  is only output if an equate references a value in a different area.  The area name is output in the  following format following the 3 parameters described above:
+
+パラメータ3は、この行の出力バイト数である。
+
+第4パラメータは、等号が異なる領域の値を参照する場合にのみ出力される。 エリア名は、上記の3つのパラメータに続いて、以下のフォーマットで出力される：
+
 ```
 Line Position:  123456789012 
                 -----------
@@ -3290,6 +3405,9 @@ Area Name:       equatearea
 ```
 
 When  the  line number is output to the .hlr file (-r option) the line number is prepended to the 3 or 4 parameters  described above.   The  line  number is always in decimal in the following format:
+
+行番号が.hlrファイルに出力されるとき（-rオプション）、行番号は上記の3つまたは4つのパラメータの前に付加される。  行番号は常に10進数で、以下の形式である：
+
 ```
 Line Position:  1234567 
                 -------
@@ -3297,6 +3415,9 @@ Decimal:          LLLLL
 ```
 
 Thus the four formats (for each radix) that may be present in a .hlr file are:
+
+したがって、.hlrファイルに含まれる可能性のある4つのフォーマット（各基数）は以下の通りである：
+
 ```
 Line Position:  123456789012345678901234567890
                 ------------------------------
@@ -3307,6 +3428,8 @@ Line Position:  123456789012345678901234567890
 ```
 
 The  linker understands these formats without any user interaction.
+
+リンカーは、ユーザーが操作しなくてもこれらのフォーマットを理解する。
 
 <br>
 <br>
@@ -3326,7 +3449,20 @@ Macro  expansion  is  the insertion of the macro source lines into the main  pro
 
 Macro  directives provide a means to manipulate the macro expansions.  Only one directive is allowed per source line.   Each directive  may  have  a  blank  operand  field  or  one  or more operands.  Legal  operands  differ  with  each  directive.   The macros  and  their  associated  directives  are detailed in this chapter.
 
+マクロを使うことで、プログラマーは1行を使ってソース・プログラムに一連の行を挿入することができる。
+
+マクロ定義は、.macroディレクティブの後にソース行が続く。 ソース行には、オプションで仮引数を含めることができる。 そのような引数が使用される場合、各引数は .macro ディレクティブにリストされる。
+
+マクロ呼び出しは、プログラマがマクロ ソース プログラムを呼び出すために使用するステートメントです。 マクロ呼び出しは、マクロ名と、マクロで使用される仮引数を置き換えるために必要な実引数で構成される。
+
+マクロ展開とは、マクロソース行をメインプログラムに挿入することである。  この挿入には、仮引数を実引数に置き換えることも含まれる。
+
+マクロディレクティブは、マクロ展開を操作する手段を提供する。 ソース1行につき1つのディレクティブしか許されない。  各ディレクティブは、空白のオペランドフィールドを持つことも、1つ以上のオペランドを持つこともできます。 有効なオペランドは各ディレクティブによって異なります。  マクロとそれに関連するディレクティブについては、この章で詳しく説明します。
+
+
 Macro  directives  can replace any machine dependent mnemonic associated with a specific assembler.  However, the basic assembler directives cannot be replaced with a macro.
+
+マクロ指令は、特定のアセンブラに関連するマシン依存のニーモニックを置き換えることができる。 しかし、基本的なアセンブラのディレクティブをマクロで置き換えることはできない。
 
 ### 2.1.1  .macro Directive
 
@@ -3360,11 +3496,17 @@ where:
 ```
 
 A  comment may follow the dummy argument list in a .macro directive, as shown below:
+
+以下のように、.macroディレクティブの仮引数リストの後にコメントを付けることができる：
+
 ```
-.macro  abs     a,b     ;Defines macro abs
+        .macro  abs     a,b     ;Defines macro abs
 ```
 
 The  first  statement  of  a  macro  definition must be a .macro directive.  Defining a macro with the same name as  an  existing macro will generate an `<m>` error.  The .mdelete directive should be used to delete the previous macro definition before  redefining a macro.
+
+マクロ定義の最初の文は .macro ディレクティブでなければなりません。 既存のマクロと同じ名前のマクロを定義すると `<m>` エラーが発生します。 マクロを再定義する前に、前のマクロ定義を削除するために .mdelete ディレクティブを使用しなければなりません。
+
 
 ### 2.1.2  .endm Directive
 
@@ -3375,12 +3517,21 @@ Format:
 
 The .endm directive should not have a label.  Because the directives .irp, .irpc, and .rept may repeat more than once the label will  be  defined multiple times resulting in `<m>` and/or `<p>` errors.
 
+.endm ディレクティブはラベルを持つべきではありません。 .irp、.irpc、.rept ディレクティブは複数回繰り返されることがあるので、 ラベルが複数回定義されると `<m>` や `<p>` エラーが発生します。
+
+
 The  .endm  directive  may be followed by a comment field, as shown below:
+
+.endmディレクティブの後には、以下のようにコメントフィールドを書くことができます：
+
 ```
     .endm           ;end of macro
 ```
 
 A  comment  may  follow  the  dummy argument list in a .macro directive, as shown below:
+
+以下のように、.macroディレクティブの仮引数リストの後にコメントを付けることができる：
+
 ```
     .macro  typemsg message ;Type a message. 
     jsr     typemsg 
@@ -3390,6 +3541,9 @@ A  comment  may  follow  the  dummy argument list in a .macro directive, as show
 
 The  final  statement  of every macro definition must be a .endm directive.  The .endm directive is also used to terminate  indefinite  repeat  blocks and repeat blocks.  A .endm directive encountered outside a macro definition  is  flagged  with  an  `<n>` error.
 
+すべてのマクロ定義の最後の文は .endm 指令でなければならない。 .endm ディレクティブは不定反復ブロックと反復ブロックを終了させるためにも使われます。 マクロ定義の外で .endm 命令に遭遇すると `<n>` エラーとなります。
+
+
 ### 2.1.3  .mexit Directive
 
 Format:
@@ -3398,6 +3552,8 @@ Format:
 ```
 
 The  .mexit directive may be used to terminate a macro expansion before the end of the macro is encountered.  This  directive  is also  legal  within  repeat blocks.  It is most useful in nested macros.  The .mexit directive terminates the  current  macro  as though a .endm directive had been encountered.  Using the .mexit directive bypasses the complexities of nested conditional directives  and  alternate  assembly paths, as shown in the following
+
+.mexit指示文は、マクロの終了に遭遇する前にマクロ展開を終了させるために使用することができる。 このディレクティブはリピートブロック内でも有効である。 入れ子になったマクロで最も有用である。 .mexit ディレクティブは、 .endm ディレクティブに遭遇したかのように現在のマクロを終了させます。 .mexit ディレクティブを使用すると、入れ子になった条件ディレクティブや代替アセンブリパスの複雑さを回避することができます。
 
 example:
 ```
@@ -3418,6 +3574,9 @@ example:
 ```
 
 In  an  assembly  where  the  symbol  N is replaced by zero, the .mexit directive would assemble the conditional block  and  terminate  the  macro  expansion.   When macros ar nested, a .mexit directive causes an exit to the next higher level of  macro  expansion.  A .mexit directive encountered outside a macro definition is flagged with an `<n>` error.
+
+シンボル N がゼロに置き換えられたアセンブリでは、.mexit 指令は条件ブロックをアセンブルし、マクロ展開を終了する。  マクロが入れ子になっている場合、.mexit 指令は次のレベルのマクロ展開を終了させる。 マクロ定義の外で .mexit ディレクティブに遭遇すると `<n>` エラーが発生します。
+
 
 ## 2.2  CALLING MACROS
 
@@ -3445,6 +3604,13 @@ A  macro  definition  must be established by means of the .macro
 directive before the macro can be called and expanded within the source program.
 
 When a macro name is the same as a user label, the appearance of the symbol in the operator field designates the symbol  as  a macro  call;   the appearance of the symbol in the operand field designates it as a label, as shown below:
+
+マクロの定義は、ソース・プログラム内でマクロを呼び出して展開する前に、.macro
+
+ディレクティブによって確立されなければならない。
+
+マクロ名がユーザーラベルと同じ場合、operator フィールドにシンボルが表示されると、そのシンボルはマクロ呼び出しとして指定され、operand フィールドにシンボルが表示されると、ラベルとして指定される：
+
 ```
 LESS:   mov     @r0,r1          ;LESS is a label 
         . 
@@ -3464,6 +3630,13 @@ Multiple arguments within a macro must be separated by one of the legal separati
 Macro  definition  arguments (dummy) and macro call arguments (real) maintain a strict positional relationship.  That is,  the first  real  argument in a macro call corresponds with the first dummy argument in the macro definition.
 
 For  example,  the  following  macro definition and its associated macro call contain multiple arguments:
+
+マクロ内の複数の引数は、正規の区切り文字（カンマ、スペース、タブ）で区切らなければならない。
+
+マクロ定義引数（仮引数）とマクロ呼び出し引数（実引数）は、厳密な位置関係を維持する。 つまり、マクロ呼び出しの最初の実引数は、マクロ定義の最初の仮引数に対応する。
+
+たとえば、次のマクロ定義とそれに関連するマクロ呼び出しには複数の引数が含まれる：
+
 ```
         .macro  new     a,b,c 
         . 
@@ -3473,29 +3646,46 @@ For  example,  the  following  macro definition and its associated macro call co
 ```
 
 Arguments which themselves contain separating characters must be enclosed  within  the  delimiter  construct  `^/   /`  where   the character  '/'  may be any character not in the argument string. For example, the macro call:
+
+引数自体に区切り文字が含まれている場合は、区切り文字 `^/ /` で囲む必要があります。例えば、マクロ呼び出し
+
 ```
         new     ^/exg    x,y/,#44,ij
 ```
 
 causes the entire expression
+
+は、以下の式全体
 ```
     exg    x,y
 ```
 
 to  replace all occurrences of the symbol a in the macro definition.  Real arguments with a macro call  are  considered  to  be character  strings  and  are  treated  as a single entity during macro expansion.
 
+をマクロ定義内でシンボル a が出現するすべてを置き換える。 マクロ呼び出しの実引数は文字列とみなされ、マクロ展開時に1つの実体として扱われる。
+
 The  up-arrow  (^)  construction also allows another up-arrow construction to be passed as part of the  argument.   This  construction,  for example, could have been used in the above macro call, as follows:
+
+上向き矢印（^）構文は、引数の一部として別の上向き矢印構文を渡すこともできる。  この構文は、例えば、上記のマクロ呼び出しで次のように使用することができる：
+
 ```
     new     ^!^/exg    x,y/!,#44,ij
 ```
 
 causing the entire string `^/exg    x,y/` to be passed as an argument.
 
+文字列 `^/exg    x,y/` 全体が引数として渡される。
+
 ### 2.3.1  Macro Nesting
 
 Macro  nesting  occurs  where  the expansion of one macro includes a call to another macro.  The depth of nesting  is  arbitrarily limited to 20.
 
 To  pass  an argument containing legal argument delimiters to nested macros, enclose the  argument  in  the  macro  definition within  an up-arrow construction, as shown in the coding example below.  This extra set of delimiters for each level  of  nesting is required in the macro definition, not the in the macro call.
+
+マクロのネストは、あるマクロの展開が別のマクロの呼び出しを含む場合に発生する。 入れ子の深さは任意に20に制限される。
+
+ネストされたマクロに法的な引数の区切り文字を含む引数を渡すには、以下のコーディング例に示すように、マクロ定義の引数を上向き矢印で囲みます。 この入れ子の各レベルに対する追加の区切り記号のセットは、マクロ呼び出しではなく、マクロ定義で必要である。
+
 ```
         .macro  level1  dum1,dum2 
         level2  ^/dum1/ level2  ^/dum2/ 
@@ -3508,11 +3698,16 @@ To  pass  an argument containing legal argument delimiters to nested macros, enc
 ```
 
 A call to the level1 macro, as shown below, for example:
+
+例えば以下のようなレベル1マクロの呼び出しは、
+
 ```
         level1  ^/leaz    0,x/,^/tfr     x,z/
 ```
 
 causes the following macro expansion to occur:
+
+マクロ展開されて以下のようになる。
 ```
         leaz    0,x 
         add     #10,z 
@@ -3522,6 +3717,9 @@ causes the following macro expansion to occur:
 ```
 
 When  macro  definitions are nested, the inner definition cannot be called until the outer macro has been  called  and  expanded. For example, in the following code:
+
+マクロ定義が入れ子になっている場合、外側のマクロが呼び出されて展開されるまで、内側の定義を呼び出すことはできない。例えば、以下のコードでは
+
 ```
         .macro  lv1     a,b 
         . 
@@ -3537,9 +3735,14 @@ When  macro  definitions are nested, the inner definition cannot be called until
 
 the  lv2 macro cannot be called and expanded until the lv1 macro has been expanded.  Likewise, any macro defined within  the  lv2 macro  definition  cannot  be  called and expanded until lv2 has also been expanded.
 
+lv1マクロが展開されるまでは、lv2マクロを呼び出して展開することはできない。 同様に、lv2マクロ定義内で定義されたマクロは、lv2が展開されるまで呼び出され展開されることはできない。
+
 ### 2.3.2  Special Characters in Macro Arguments
 
 If  an  argument  does not contain spaces, tabs, or commas it may include special  characters  without  enclosing  them  in  a delimited construction.  For example:
+
+引数にスペース、タブ、カンマが含まれていない場合、区切り構文で囲むことなく特殊文字を含めることができる。 例えば
+
 ```
         .macro  push    arg 
         mov     arg,-(sp) 
@@ -3555,7 +3758,10 @@ causes the following code to be generated:
 
 ### 2.3.3  Passing Numerical Arguments as Symbols
 
-If the unary operator backslash (\) precedes an argument, the macro treats the argument as a numeric value in the current program  radix.   The  ascii characters representing this value are inserted in the macro expansion, and their function  is  defined in  the context of the resulting code, as shown in the following example:
+If the unary operator backslash (\\) precedes an argument, the macro treats the argument as a numeric value in the current program  radix.   The  ascii characters representing this value are inserted in the macro expansion, and their function  is  defined in  the context of the resulting code, as shown in the following example:
+
+単項演算子バックスラッシュ(\\)が引数の前にある場合、マクロは引数を現在のプログラム基数の数値として扱います。  次の例に示すように、この値を表す ascii 文字がマクロ展開に挿入され、その機能は結果のコードのコンテキストで定義されます：
+
 ```
         .macro  inc     a,b 
         con     a,\b 
@@ -3580,15 +3786,24 @@ The above macro call (inc) would thus expand to:
 In  this  expanded  code,  the  label x0:  results from the concatenation  of  two  real  arguments.   The  single  quote   (') character  in  the  label a'b:  concatenates the real argument x and 0 as they are passed during  the  expansion  of  the  macro. This  type  of argument construction is described in more detail in a following section.
 
 A  subsequent  call to the same macro would generate the following code:
+
+この展開されたコードでは、ラベル x0: は2つの実引数を連結した結果である。  ラベル a'b: のシングルクォート (') 文字は、マクロの展開中に渡された実引数 x と 0 を連結したものである。このような引数の構成については、次のセクションで詳しく説明する。
+
+同じマクロを続けて呼び出すと、後で呼び出すための、次のようなコードが生成される：
+
 ```
         x1:     .word   4
 ```
 
 and  so  on,  for  later  calls.   The two macro definitions are necessary because the symbol associated with the dummy  argument b (that is, symbol c) cannot be updated in the con macro definition, because the character 0 has replaced  c  in  the  argument string  (inc  x,c).   In  the  con  macro definition, the number passed is treated as a string argument.  (Where the value of the real  argument  is 0, only a single 0 character is passed to the macro expansion.
 
+2つのマクロ定義が必要である。  この2つのマクロ定義が必要なのは、conマクロ定義では、引数文字列(inc x,c)において文字0がcに置き換わっているため、仮引数bに関連するシンボル（つまりシンボルc）を更新できないからである。  conマクロ定義では、渡された数値は文字列引数として扱われる。 (実引数の値が 0 の場合、マクロ展開に渡されるのは 1 文字の 0 だけである。
+
 ### 2.3.4  Number of Arguments in Macro Calls
 
 A  macro  can  be defined with or without arguments.  If more arguments appear in the macro call than in the macro definition, a  `<q>`  error  is  generated.   If fewer arguments appear in the macro call than in the macro definition, missing  arguments  are assumed to be null values.  The conditional directives .if b and .if nb can be used within the macro to detect missing arguments. The number of arguments can be determined using the .narg directive.
+
+A macro can be defined with or without arguments.  マクロ定義よりも多くの引数がマクロ呼び出しに含まれる場合、 `<q>` エラーが発生します。  マクロ呼び出しに現れる引数がマクロ定義に現れる引数より少ない場合、見つからない引数はヌル値とみなされる。マクロ内で .if b と .if nb という条件指示子を使用して、引数の欠落を検出することができる。引数の数は .narg 指示子を用いて決定することができる。
 
 ### 2.3.5  Creating Local Symbols Automatically
 
@@ -3596,7 +3811,14 @@ A  label is often required in an expanded macro.  In the conventional macro faci
 
 ASxxxx  allows temporary symbols of the form n$, where n is a decimal integer.  Automatically created symbols are  created  in numerical order beginning at 10000$.
 
+拡張マクロではラベルが必要になることが多い。 これまで説明してきた従来のマクロ機能では、各マクロ呼び出しの引数としてラベルを明示的に指定しなければならない。 ラベルの重複を避けるため、同じマクロを続けて呼び出す際には注意が必要である。 この心配は、拡張マクロでラベルが必要な場合に一意のシンボルを作成するASxxxxマクロ機能の機能によって解消できる。
+
+ASxxxxでは、n$（nは10進整数）という形式の一時記号を使用できます。 自動的に作成されるシンボルは、10000$から始まる番号順に作成される。
+
 The  automatic generation of local symbols is invoked on each call of a macro whose definition contains a dummy argument  preceded  by the question mark (?) character, as shown in the macro definition below:
+
+以下のマクロ定義のように、ローカルシンボルの自動生成は、疑問符(?)を前置したダミー引数を含むマクロ呼び出し1回ごとに呼び出される。
+
 ```
         .macro  beta    a,?b    ;dummy argument b with ? 
         tst     a 
@@ -3607,6 +3829,9 @@ b:
 ```
 
 A  local symbol is created automatically only when a real argument of the macro call is either null or missing, as shown  in Example 1 below.  If the real argument is specified in the macro call, however, generation of the local symbol is  inhibited  and normal argument replacement occurs, as shown in Example 2 below. (Examples 1 and 2 are both expansions of the beta macro  defined above.)
+
+ローカルシンボルは、以下の例 1 に示すように、マクロ呼び出しの実引数が NULL または欠落している場合にのみ自動的に生成される。 しかし、マクロ呼び出しで実引数が指定されている場合、ローカルシンボルの生成は抑制され、以下の例2に示すように、通常の引数置換が行われる。(例1と例2はどちらも上で定義したβマクロの展開である)。
+
 
 Example 1:  Create a Local Symbol for the Missing Argument
 ```
@@ -3630,6 +3855,11 @@ Automatically created local symbols resulting from the expansion of a macro, as 
 
 When  a  macro  has several arguments earmarked for automatic local symbol generation, substituting a specific label  for  one such  argument  risks  assembly errors because the arguments are constructed at the point of macro invocation.  Therefor, the appearance of a label in the macro expansion will create a new local symbol block.  The new local symbol block could leave  local symbol references in the previous block and their symbol definitions in the new one, causing error codes in the assembly  listing.   Furthermore  a  later  macro expansion that creates local symbols in the new block may duplicate one  of  the  symbols  in question,  causing  an additional error code `<p>` in the assembly listing.
 
+上記のように、マクロの展開によって自動的に生成されるローカルシンボルは、それ自体ではローカルシンボルブロックを確立しない。
+
+マクロにローカルシンボルの自動生成のために指定された複数の引数がある場合、そのような引数の 1 つに特定のラベルを代入すると、マクロ呼び出しの時点で引数が構築されるため、アセンブリエラーが発生する危険性がある。 そのため、マクロ展開でラベルが出現すると、新しいローカルシンボルブロックが作成される。 新しいローカル・シンボル・ブロックは、前のブロックにローカル・シンボル参照を残し、新しいブロックにそのシンボル定義を残す可能性があり、アセンブリ・リストでエラーコードを引き起こす。  さらに、新しいブロックにローカル・シンボルを作成する後のマクロ展開では、問題のシンボルの1つが重複する可能性があり、アセンブリ・リストで追加のエラー・コード `<p>` が発生します。
+
+
 ### 2.3.6  Keyword Arguments
 
 Format:
@@ -3648,7 +3878,14 @@ The  keyword  argument may not contain embedded argument separators unless delim
 
 Macros may be defined with, and/or called with, keyword arguments.  When a keyword argument appears in  the  dummy  argument list  of  a  macro  definition, the specified string becomes the default real argument at macro call.  When  a  keyword  argument appears  in the real argument list of a macro call, however, the specified string becomes the real argument for the  dummy  argument  that  matches the specified name, whether or not the dummy argument was defined with a keyword.  If a match  fails,  a  'q' error will be reported.  If it is desired to pass a non-matching argument  of  the  keyword  style  then  the  argument  must  be delimited.
 
+キーワード引数には、前述のように区切られていない限り、引数の区切り文字を埋め込むことはできない。
+
+マクロはキーワード引数で定義したり、キーワード引数で呼び出したりすることができる。 キーワード引数がマクロ定義の仮引数リストに現れると、指定された文字列がマクロ呼び出し時のデフォルトの実引数になる。 しかし、キーワード引数がマクロ呼び出しの実引数リストに現れると、指定された文字列は、ダミー引数がキーワードで定義されているかどうかにかかわらず、指定された名前にマッチするダミー引数の実引数になる。 マッチに失敗すると、'q'エラーが報告される。 キーワード形式のマッチしない引数を渡したい場合は、その引数を区切らなければならない。
+
 A  keyword argument may be specified anywhere in the argument list of a macro definition and is part of the positional  ordering  of  macro arguments.  A keyword argument may also be specified anywhere in the real argument list of a macro call, but  in this  case, does not effect the positional ordering of the arguments.
+
+キーワード引数は、マクロ定義の引数リストのどこにでも指定でき、マクロ引数の位置順序の一部となる。 キーワード引数は、マクロ呼び出しの実引数リストのどこにでも指定できるが、この場合、引数の位置順序には影響しない。
+
 ```
                   1         .list  (me) 
                   2 
@@ -3691,6 +3928,9 @@ A  keyword argument may be specified anywhere in the argument list of a macro de
 ### 2.3.7  Concatenation of Macro Arguments
 
 The  apostrophe  or  single quote character (') operates as a legal delimiting character in macro definitions.  A single quote that precedes and/or follows a dummy argument in a macro definition is removed, and the substitution of the real  argument  occurs at that point.  For example, in the following statements:
+
+アポストロフィまたは単一引用符文字（'）は、マクロ定義において合法的な区切り文字として動作する。 マクロ定義で仮引数の前や後にある単一引用符は削除され、その時点で実引数の置換が行われる。 例えば、以下の文では
+
 ```
         .macro  def     A,B,C 
 A'B:    asciz   "C" 
