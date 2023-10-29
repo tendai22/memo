@@ -1,263 +1,262 @@
 # ASxxxx Assemblers<br>and<br>ASLINK Relocating Linker
 
-## Version   5.50
-## September 2023
+## Version   5.50, September 2023
 
 
 ## Table Of Contents
 
 
 ## CHAPTER 1  THE ASSEMBLER                                     1-1
-## 1.1     THE ASXXXX ASSEMBLERS                              1-1
-## 1.1.1     Assembly Pass 1                                  1-2
-## 1.1.2     Assembly Pass 2                                  1-2
-## 1.1.3     Assembly Pass 3                                  1-3
-## 1.2     SOURCE PROGRAM FORMAT                              1-3
-## 1.2.1     Statement Format                                 1-3
-## 1.2.1.1     Label Field                                    1-4
-## 1.2.1.2     Operator Field                                 1-5
-## 1.2.1.3     Operand Field                                  1-6
-## 1.2.1.4     Comment Field                                  1-6
-## 1.3     SYMBOLS AND EXPRESSIONS                            1-7
-## 1.3.1     Character Set                                    1-7
-## 1.3.2     User-Defined Symbols                            1-11
-## 1.3.3     Reusable Symbols                                1-12
-## 1.3.4     Current Location Counter                        1-13
-## 1.3.5     Numbers                                         1-15
-## 1.3.6     Terms                                           1-15
-## 1.3.7     Expressions                                     1-16
-## 1.4     GENERAL ASSEMBLER DIRECTIVES                      1-18
-## 1.4.1     .module Directive                               1-18
-## 1.4.2     .title Directive                                1-18
-## 1.4.3     .sbttl Directive                                1-19
-## 1.4.4     .list and .nlist Directives                     1-19
-## 1.4.5     .page Directive                                 1-21
-## 1.4.6     .msg Directive                                  1-21
-## 1.4.7     .error Directive                                1-22
-## 1.4.8     .byte, .db, and .fcb Directives                 1-22
-## 1.4.9     .word, .dw, and .fdb Directives                 1-23
-## 1.4.10    .3byte and .triple Directives                   1-23
-## 1.4.11    .dl, .long, .4byte, and .quad Directives        1-24
-## 1.4.12    .blkb, .ds, .rmb, and .rs Directives            1-24
-## 1.4.13    .blkw, .blkl, .blk3, and .blk4 Directives       1-25
-## 1.4.14    .ascii, .str, and .fcc Directives               1-25
-## 1.4.15    .ascis and .strs Directives                     1-26
-## 1.4.16    .asciz and .strz Directives                     1-26
-## 1.4.17    Non-Printing Characters In Strings              1-27
-## 1.4.18    .assume Directive                               1-27
-## 1.4.19    .radix Directive                                1-28
-## 1.4.20    .even Directive                                 1-28
-## 1.4.21    .odd Directive                                  1-28
-## 1.4.22    .bndry Directive                                1-29
-## 1.4.23    .area Directive                                 1-30
-## 1.4.24    .psharea and .poparea Directives                1-33
-## 1.4.25    .bank Directive                                 1-34
-## 1.4.26    .org Directive                                  1-35
-## 1.4.27    .globl Directive                                1-35
-## 1.4.28    .local Directive                                1-36
-## 1.4.29    .equ, .gblequ, and .lclequ Directives           1-37
-## 1.4.30    .if, .else, and .endif Directives               1-37
-## 1.4.31    .iff, .ift, and .iftf Directives                1-38
-## 1.4.32    .ifxx Directives                                1-39
-## 1.4.33    .ifdef Directive                                1-40
-## 1.4.34    .ifndef Directive                               1-42
-## 1.4.35    .ifb Directive                                  1-43
-## 1.4.36    .ifnb Directive                                 1-44
-## 1.4.37    .ifidn Directive                                1-45
-## 1.4.38    .ifdif Directive                                1-46
-## 1.4.39    Alternate .if Directive Forms                   1-47
-## 1.4.40    Immediate Conditional Assembly Directives       1-48
-## 1.4.41    .incbin Directive                               1-49
-## 1.4.42    .include Directive                              1-50
-## 1.4.42.1    Including Files In Windows/DOS                1-52
-## 1.4.42.2    Including Files in Linux                      1-53
-## 1.4.43    .define and .undefine Directives                1-54
-## 1.4.44    .enabl and .dsabl Directives                    1-55
-## 1.4.45    .setdp Directive                                1-55
-## 1.4.46    .16bit, .24bit, and .32bit Directives           1-57
-## 1.4.47    .msb Directive                                  1-58
-## 1.4.48    .lohi and .hilo Directives                      1-59
-## 1.4.49    .trace and .ntrace Directives                   1-59
-## 1.4.50    .end Directive                                  1-61
-## 1.5     INVOKING ASXXXX                                   1-62
-## 1.6     ERRORS                                            1-66
-## 1.7     LISTING FILE                                      1-68
-## 1.8     SYMBOL TABLE FILE                                 1-71
-## 1.9     OBJECT FILE                                       1-71
-## 1.10    HINT FILE                                         1-72
+#### 1.1     THE ASXXXX ASSEMBLERS                              1-1
+#### 1.1.1     Assembly Pass 1                                  1-2
+#### 1.1.2     Assembly Pass 2                                  1-2
+#### 1.1.3     Assembly Pass 3                                  1-3
+#### 1.2     SOURCE PROGRAM FORMAT                              1-3
+#### 1.2.1     Statement Format                                 1-3
+#### 1.2.1.1     Label Field                                    1-4
+#### 1.2.1.2     Operator Field                                 1-5
+#### 1.2.1.3     Operand Field                                  1-6
+#### 1.2.1.4     Comment Field                                  1-6
+#### 1.3     SYMBOLS AND EXPRESSIONS                            1-7
+#### 1.3.1     Character Set                                    1-7
+#### 1.3.2     User-Defined Symbols                            1-11
+#### 1.3.3     Reusable Symbols                                1-12
+#### 1.3.4     Current Location Counter                        1-13
+#### 1.3.5     Numbers                                         1-15
+#### 1.3.6     Terms                                           1-15
+#### 1.3.7     Expressions                                     1-16
+#### 1.4     GENERAL ASSEMBLER DIRECTIVES                      1-18
+#### 1.4.1     .module Directive                               1-18
+#### 1.4.2     .title Directive                                1-18
+#### 1.4.3     .sbttl Directive                                1-19
+#### 1.4.4     .list and .nlist Directives                     1-19
+#### 1.4.5     .page Directive                                 1-21
+#### 1.4.6     .msg Directive                                  1-21
+#### 1.4.7     .error Directive                                1-22
+#### 1.4.8     .byte, .db, and .fcb Directives                 1-22
+#### 1.4.9     .word, .dw, and .fdb Directives                 1-23
+#### 1.4.10    .3byte and .triple Directives                   1-23
+#### 1.4.11    .dl, .long, .4byte, and .quad Directives        1-24
+#### 1.4.12    .blkb, .ds, .rmb, and .rs Directives            1-24
+#### 1.4.13    .blkw, .blkl, .blk3, and .blk4 Directives       1-25
+#### 1.4.14    .ascii, .str, and .fcc Directives               1-25
+#### 1.4.15    .ascis and .strs Directives                     1-26
+#### 1.4.16    .asciz and .strz Directives                     1-26
+#### 1.4.17    Non-Printing Characters In Strings              1-27
+#### 1.4.18    .assume Directive                               1-27
+#### 1.4.19    .radix Directive                                1-28
+#### 1.4.20    .even Directive                                 1-28
+#### 1.4.21    .odd Directive                                  1-28
+#### 1.4.22    .bndry Directive                                1-29
+#### 1.4.23    .area Directive                                 1-30
+#### 1.4.24    .psharea and .poparea Directives                1-33
+#### 1.4.25    .bank Directive                                 1-34
+#### 1.4.26    .org Directive                                  1-35
+#### 1.4.27    .globl Directive                                1-35
+#### 1.4.28    .local Directive                                1-36
+#### 1.4.29    .equ, .gblequ, and .lclequ Directives           1-37
+#### 1.4.30    .if, .else, and .endif Directives               1-37
+#### 1.4.31    .iff, .ift, and .iftf Directives                1-38
+#### 1.4.32    .ifxx Directives                                1-39
+#### 1.4.33    .ifdef Directive                                1-40
+#### 1.4.34    .ifndef Directive                               1-42
+#### 1.4.35    .ifb Directive                                  1-43
+#### 1.4.36    .ifnb Directive                                 1-44
+#### 1.4.37    .ifidn Directive                                1-45
+#### 1.4.38    .ifdif Directive                                1-46
+#### 1.4.39    Alternate .if Directive Forms                   1-47
+#### 1.4.40    Immediate Conditional Assembly Directives       1-48
+#### 1.4.41    .incbin Directive                               1-49
+#### 1.4.42    .include Directive                              1-50
+#### 1.4.42.1    Including Files In Windows/DOS                1-52
+#### 1.4.42.2    Including Files in Linux                      1-53
+#### 1.4.43    .define and .undefine Directives                1-54
+#### 1.4.44    .enabl and .dsabl Directives                    1-55
+#### 1.4.45    .setdp Directive                                1-55
+#### 1.4.46    .16bit, .24bit, and .32bit Directives           1-57
+#### 1.4.47    .msb Directive                                  1-58
+#### 1.4.48    .lohi and .hilo Directives                      1-59
+#### 1.4.49    .trace and .ntrace Directives                   1-59
+#### 1.4.50    .end Directive                                  1-61
+#### 1.5     INVOKING ASXXXX                                   1-62
+#### 1.6     ERRORS                                            1-66
+#### 1.7     LISTING FILE                                      1-68
+#### 1.8     SYMBOL TABLE FILE                                 1-71
+#### 1.9     OBJECT FILE                                       1-71
+#### 1.10    HINT FILE                                         1-72
 
 ## CHAPTER 2  THE MACRO PROCESSOR                               2-1
-## 2.1     DEFINING MACROS                                    2-1
-## 2.1.1     .macro Directive                                 2-2
-## 2.1.2     .endm Directive                                  2-3
-## 2.1.3     .mexit Directive                                 2-3
-## 2.2     CALLING MACROS                                     2-4
-## 2.3     ARGUMENTS IN MACRO DEFINITIONS AND MACRO CALLS     2-5
-## 2.3.1     Macro Nesting                                    2-6
-## 2.3.2     Special Characters in Macro Arguments            2-7
-## 2.3.3     Passing Numerical Arguments as Symbols           2-8
-## 2.3.4     Number of Arguments in Macro Calls               2-9
-## 2.3.5     Creating Local Symbols Automatically             2-9
-## 2.3.6     Keyword Arguments                               2-10
-## 2.3.7     Concatenation of Macro Arguments                2-12
-## 2.4     MACRO ATTRIBUTE DIRECTIVES                        2-13
-## 2.4.1     .narg Directive                                 2-13
-## 2.4.2     .nchr Directive                                 2-14
-## 2.4.3     .ntyp Directive                                 2-15
-## 2.4.4     .nval Directive                               v  2-16
-## 2.5     INDEFINITE REPEAT BLOCK DIRECTIVES                2-16
-## 2.5.1     .irp Directive                                  2-17
-## 2.5.2     .irpc Directive                                 2-18
-## 2.6     REPEAT BLOCK DIRECTIVE                            2-19
-## 2.6.1     .rept Directive                                 2-19
-## 2.7     MACRO DELETION DIRECTIVE                          2-20
-## 2.7.1     .mdelete Directive                              2-20
-## 2.8     MACRO INVOCATION DETAILS                          2-20
-## 2.9     CONTROLLING MACRO LISTINGS                        2-21
-## 2.10    BUILDING A MACRO LIBRARY                          2-22
-## 2.10.1    .mlib Macro Directive                           2-22
-## 2.10.2    .mcall Macro Directive                          2-23
-## 2.11    EXAMPLE MACRO CROSS ASSEMBLERS                    2-25
+#### 2.1     DEFINING MACROS                                    2-1
+#### 2.1.1     .macro Directive                                 2-2
+#### 2.1.2     .endm Directive                                  2-3
+#### 2.1.3     .mexit Directive                                 2-3
+#### 2.2     CALLING MACROS                                     2-4
+#### 2.3     ARGUMENTS IN MACRO DEFINITIONS AND MACRO CALLS     2-5
+#### 2.3.1     Macro Nesting                                    2-6
+#### 2.3.2     Special Characters in Macro Arguments            2-7
+#### 2.3.3     Passing Numerical Arguments as Symbols           2-8
+#### 2.3.4     Number of Arguments in Macro Calls               2-9
+#### 2.3.5     Creating Local Symbols Automatically             2-9
+#### 2.3.6     Keyword Arguments                               2-10
+#### 2.3.7     Concatenation of Macro Arguments                2-12
+#### 2.4     MACRO ATTRIBUTE DIRECTIVES                        2-13
+#### 2.4.1     .narg Directive                                 2-13
+#### 2.4.2     .nchr Directive                                 2-14
+#### 2.4.3     .ntyp Directive                                 2-15
+#### 2.4.4     .nval Directive                               v  2-16
+#### 2.5     INDEFINITE REPEAT BLOCK DIRECTIVES                2-16
+#### 2.5.1     .irp Directive                                  2-17
+#### 2.5.2     .irpc Directive                                 2-18
+#### 2.6     REPEAT BLOCK DIRECTIVE                            2-19
+#### 2.6.1     .rept Directive                                 2-19
+#### 2.7     MACRO DELETION DIRECTIVE                          2-20
+#### 2.7.1     .mdelete Directive                              2-20
+#### 2.8     MACRO INVOCATION DETAILS                          2-20
+#### 2.9     CONTROLLING MACRO LISTINGS                        2-21
+#### 2.10    BUILDING A MACRO LIBRARY                          2-22
+#### 2.10.1    .mlib Macro Directive                           2-22
+#### 2.10.2    .mcall Macro Directive                          2-23
+#### 2.11    EXAMPLE MACRO CROSS ASSEMBLERS                    2-25
 ## CHAPTER 3  THE LINKER                                        3-1
-## 3.1     ASLINK RELOCATING LINKER                           3-1
-## 3.2     INVOKING ASLINK                                    3-3
-## 3.3     LIBRARY PATH(S) AND FILE(S)                        3-7
-## 3.4     ASLINK PROCESSING                                  3-8
-## 3.5     ASXXXX VERSION 5.XX (4.XX) LINKING                3-11
-## 3.5.1     Object Module Format                            3-11
-## 3.5.2     Header Line                                     3-12
-## 3.5.3     Module Line                                     3-12
-## 3.5.4     Merge Mode Line                                 3-12
-## 3.5.5     Bank Line                                       3-13
-## 3.5.6     Area Line                                       3-13
-## 3.5.7     Symbol Line                                     3-14
-## 3.5.8     T Line                                          3-14
-## 3.5.9     R Line                                          3-14
-## 3.5.10    P Line                                          3-15
-## 3.5.11    24-Bit and 32-Bit Addressing                    3-16
-## 3.5.12    ASlink V5.xx (V4.xx) Error Messages             3-16
-## 3.6     ASXXXX VERSION 3.XX LINKING                       3-19
-## 3.6.1     Object Module Format                            3-19
-## 3.6.2     Header Line                                     3-20
-## 3.6.3     Module Line                                     3-20
-## 3.6.4     Area Line                                       3-20
-## 3.6.5     Symbol Line                                     3-20
-## 3.6.6     T Line                                          3-21
-## 3.6.7     R Line                                          3-21
-## 3.6.8     P Line                                          3-22
-## 3.6.9     24-Bit and 32-Bit Addressing                    3-22
-## 3.6.10    ASlink V3.xx Error Messages                     3-23
-## 3.7     HINT FILE FORMAT FOR RELOCATED LISTINGS           3-25
-## 3.8     INTEL HEX OUTPUT FORMAT                           3-27
-## 3.9     MOTOROLA S1-S9 OUTPUT FORMAT (16-BIT)             3-29
-## 3.10    MOTOROLA S2-S8 OUTPUT FORMAT (24-BIT)             3-30
-## 3.11    MOTOROLA S3-S7 OUTPUT FORMAT (32-BIT)             3-31
-## 3.12    TANDY COLOR COMPUTER DISK BASIC FORMAT            3-32
+#### 3.1     ASLINK RELOCATING LINKER                           3-1
+#### 3.2     INVOKING ASLINK                                    3-3
+#### 3.3     LIBRARY PATH(S) AND FILE(S)                        3-7
+#### 3.4     ASLINK PROCESSING                                  3-8
+#### 3.5     ASXXXX VERSION 5.XX (4.XX) LINKING                3-11
+#### 3.5.1     Object Module Format                            3-11
+#### 3.5.2     Header Line                                     3-12
+#### 3.5.3     Module Line                                     3-12
+#### 3.5.4     Merge Mode Line                                 3-12
+#### 3.5.5     Bank Line                                       3-13
+#### 3.5.6     Area Line                                       3-13
+#### 3.5.7     Symbol Line                                     3-14
+#### 3.5.8     T Line                                          3-14
+#### 3.5.9     R Line                                          3-14
+#### 3.5.10    P Line                                          3-15
+#### 3.5.11    24-Bit and 32-Bit Addressing                    3-16
+#### 3.5.12    ASlink V5.xx (V4.xx) Error Messages             3-16
+#### 3.6     ASXXXX VERSION 3.XX LINKING                       3-19
+#### 3.6.1     Object Module Format                            3-19
+#### 3.6.2     Header Line                                     3-20
+#### 3.6.3     Module Line                                     3-20
+#### 3.6.4     Area Line                                       3-20
+#### 3.6.5     Symbol Line                                     3-20
+#### 3.6.6     T Line                                          3-21
+#### 3.6.7     R Line                                          3-21
+#### 3.6.8     P Line                                          3-22
+#### 3.6.9     24-Bit and 32-Bit Addressing                    3-22
+#### 3.6.10    ASlink V3.xx Error Messages                     3-23
+#### 3.7     HINT FILE FORMAT FOR RELOCATED LISTINGS           3-25
+#### 3.8     INTEL HEX OUTPUT FORMAT                           3-27
+#### 3.9     MOTOROLA S1-S9 OUTPUT FORMAT (16-BIT)             3-29
+#### 3.10    MOTOROLA S2-S8 OUTPUT FORMAT (24-BIT)             3-30
+#### 3.11    MOTOROLA S3-S7 OUTPUT FORMAT (32-BIT)             3-31
+#### 3.12    TANDY COLOR COMPUTER DISK BASIC FORMAT            3-32
 ## CHAPTER 4  BUILDING ASXXXX AND ASLINK                        4-1
-## 4.1     BUILDING ASXXXX AND ASLINK WITH LINUX              4-2
-## 4.2     BUILDING ASXXXX AND ASLINK WITH CYGWIN             4-3
-## 4.3     BUILDING ASXXXX AND ASLINK WITH DJGPP              4-3
-## 4.4     BUILDING ASXXXX AND ASLINK WITH BORLAND'S
-## TURBO C++ 3.0                                      4-4
-## 4.4.1     Graphical User Interface                         4-4
-## 4.4.2     Command Line Interface                           4-4
-## 4.5     BUILDING ASXXXX AND ASLINK WITH
-## MS VISUAL C++ 6.0                                  4-5
-## 4.5.1     Graphical User Interface                         4-5
-## 4.5.2     Command Line Interface                           4-5
-## 4.6     BUILDING ASXXXX AND ASLINK WITH
-## MS VISUAL STUDIO 2005                              4-6
-## 4.6.1     Graphical User Interface                         4-6
-## 4.6.2     Command Line Interface                           4-6
-## 4.7     BUILDING ASXXXX AND ASLINK WITH
-## MS VISUAL STUDIO 2010                              4-7
-## 4.7.1     Graphical User Interface                         4-7
-## 4.7.2     Command Line Interface                           4-8
-## 4.8     BUILDING ASXXXX AND ASLINK WITH
-## MS VISUAL STUDIO 2013                              4-9
-## 4.8.1     Graphical User Interface                         4-9
-## 4.8.2     Command Line Interface                           4-9
-## 4.9     BUILDING ASXXXX AND ASLINK WITH
-## MS VISUAL STUDIO 2015                             4-10
-## 4.9.1     Graphical User Interface                        4-10
-## 4.9.2     Command Line Interface                          4-10
-## 4.10    BUILDING ASXXXX AND ASLINK WITH
-## MS VISUAL STUDIO 2019                             4-11
-## 4.10.1    Graphical User Interface                        4-11
-## 4.10.2    Command Line Interface                          4-11
-## 4.11    BUILDING ASXXXX AND ASLINK WITH
-## MS VISUAL STUDIO 2022                             4-12
-## 4.11.1    Graphical User Interface                        4-12
-## 4.11.2    Command Line Interface                          4-12
-## 4.12    BUILDING ASXXXX AND ASLINK WITH
-## OPEN WATCOM V1.9                                  4-13
-## 4.12.1    Graphical User Interface                        4-13
-## 4.12.2    Command Line Interface                          4-14
-## 4.13    BUILDING ASXXXX AND ASLINK WITH
-## SYMANTEC C/C++ V7.2                               4-15
-## 4.13.1    Graphical User Interface                        4-15
-## 4.13.2    Command Line Interface                          4-15
-## 4.14    THE _CLEAN.BAT AND _PREP.BAT FILES                4-16
-## 4.15    THE PRECOMPILED ASXXXX EXECUTABLES                4-16
-## APPENDIX A  ASXSCN LISTING FILE SCANNER                      A-1
-## APPENDIX B  ASXCNV LISTING CONVERTER                         B-1
-## APPENDIX C  S19OS9 CONVERSION UTILITY                        C-1
-## APPENDIX D  RELEASE NOTES                                    D-1
-## APPENDIX E  CONTRIBUTORS                                     E-1
-## APPENDIX F  NOTES AND TIPS                                   F-1
-## ---- Assembler Appendices ----
-## APPENDIX AA  ASCHECK ASSEMBLER                              AA-1
-## APPENDIX AB  AS1802 ASSEMBLER                               AB-1
-## APPENDIX AC  AS2650 ASSEMBLER                               AC-1
-## APPENDIX AD  AS4040 ASSEMBLER                               AD-1
-## APPENDIX AE  AS430 ASSEMBLER                                AE-1
-## APPENDIX AF  AS6100 ASSEMBLER                               AF-1
-## APPENDIX AG  AS61860 ASSEMBLER                              AG-1
-## APPENDIX AH  AS6500 ASSEMBLER                               AH-1
-## APPENDIX AI  AS6800 ASSEMBLER                               AI-1
-## APPENDIX AJ  AS6801 ASSEMBLER                               AJ-1
-## APPENDIX AK  AS6804 ASSEMBLER                               AK-1
-## APPENDIX AL  AS68(HC)05 ASSEMBLER                           AL-1
-## APPENDIX AM  AS68(HC[S])08 ASSEMBLER                        AM-1
-## APPENDIX AN  AS6809 ASSEMBLER                               AN-1
-## APPENDIX AO  AS6811 ASSEMBLER                               AO-1
-## APPENDIX AP  AS68(HC[S])12 ASSEMBLER                        AP-1
-## APPENDIX AQ  AS6816 ASSEMBLER                               AQ-1
-## APPENDIX AR  AS68CF ASSEMBLER                               AR-1
-## APPENDIX AS  AS68K ASSEMBLER                                AS-1
-## APPENDIX AT  AS740 ASSEMBLER                                AT-1
-## APPENDIX AU  AS78K0 ASSEMBLER                               AU-1
-## APPENDIX AV  AS78K0S ASSEMBLER                              AV-1
-## APPENDIX AW  AS8008 ASSEMBLER                               AW-1
-## APPENDIX AX  AS8008S ASSEMBLER                              AX-1
-## APPENDIX AY  AS8048 ASSEMBLER                               AY-1
-## APPENDIX AZ  AS8051 ASSEMBLER                               AZ-1
-## APPENDIX BA  AS8085 ASSEMBLER                               BA-1
-## APPENDIX BB  AS89LP ASSEMBLER                               BB-1
-## APPENDIX BC  AS8X300 ASSEMBLER                              BC-1
-## APPENDIX BD  AS8XCXXX ASSEMBLER                             BD-1
-## APPENDIX BE  ASAVR ASSEMBLER                                BE-1
-## APPENDIX BF  ASCOP4 ASSEMBLER                               BF-1
-## APPENDIX BG  ASCOP8 ASSEMBLER                               BG-1
-## APPENDIX BH  ASEZ8 ASSEMBLER                                BH-1
-## APPENDIX BI  ASEZ80 ASSEMBLER                               BI-1
-## APPENDIX BJ  ASF2MC8 ASSEMBLER                              BJ-1
-## APPENDIX BK  ASF8 ASSEMBLER                                 BK-1
-## APPENDIX BL  ASGB ASSEMBLER                                 BL-1
-## APPENDIX BM  ASH8 ASSEMBLER                                 BM-1
-## APPENDIX BN  ASM8C ASSEMBLER                                BN-1
-## APPENDIX BO  ASPDP11 ASSEMBLER                              BO-1
-## APPENDIX BP  ASPIC ASSEMBLER                                BP-1
-## APPENDIX BQ  ASRAB ASSEMBLER                                BQ-1
-## APPENDIX BR  ASRS08 ASSEMBLER                               BR-1
-## APPENDIX BS  ASSCMP ASSEMBLER                               BS-1
-## APPENDIX BT  ASST6 ASSEMBLER                                BT-1
-## APPENDIX BU  ASST7 ASSEMBLER                                BU-1
-## APPENDIX BV  ASST8 ASSEMBLER                                BV-1
-## APPENDIX BW  ASSX ASSEMBLER                                 BW-1
-## APPENDIX BX  ASZ8 ASSEMBLER                                 BX-1
-## APPENDIX BY  ASZ80 ASSEMBLER                                BY-1
-## APPENDIX BZ  ASZ280 ASSEMBLER                               BZ-1
+#### 4.1     BUILDING ASXXXX AND ASLINK WITH LINUX              4-2
+#### 4.2     BUILDING ASXXXX AND ASLINK WITH CYGWIN             4-3
+#### 4.3     BUILDING ASXXXX AND ASLINK WITH DJGPP              4-3
+#### 4.4     BUILDING ASXXXX AND ASLINK WITH BORLAND'S
+#### TURBO C++ 3.0                                      4-4
+#### 4.4.1     Graphical User Interface                         4-4
+#### 4.4.2     Command Line Interface                           4-4
+#### 4.5     BUILDING ASXXXX AND ASLINK WITH
+#### MS VISUAL C++ 6.0                                  4-5
+#### 4.5.1     Graphical User Interface                         4-5
+#### 4.5.2     Command Line Interface                           4-5
+#### 4.6     BUILDING ASXXXX AND ASLINK WITH
+#### MS VISUAL STUDIO 2005                              4-6
+#### 4.6.1     Graphical User Interface                         4-6
+#### 4.6.2     Command Line Interface                           4-6
+#### 4.7     BUILDING ASXXXX AND ASLINK WITH
+#### MS VISUAL STUDIO 2010                              4-7
+#### 4.7.1     Graphical User Interface                         4-7
+#### 4.7.2     Command Line Interface                           4-8
+#### 4.8     BUILDING ASXXXX AND ASLINK WITH
+#### MS VISUAL STUDIO 2013                              4-9
+#### 4.8.1     Graphical User Interface                         4-9
+#### 4.8.2     Command Line Interface                           4-9
+#### 4.9     BUILDING ASXXXX AND ASLINK WITH
+#### MS VISUAL STUDIO 2015                             4-10
+#### 4.9.1     Graphical User Interface                        4-10
+#### 4.9.2     Command Line Interface                          4-10
+#### 4.10    BUILDING ASXXXX AND ASLINK WITH
+#### MS VISUAL STUDIO 2019                             4-11
+#### 4.10.1    Graphical User Interface                        4-11
+#### 4.10.2    Command Line Interface                          4-11
+#### 4.11    BUILDING ASXXXX AND ASLINK WITH
+#### MS VISUAL STUDIO 2022                             4-12
+#### 4.11.1    Graphical User Interface                        4-12
+#### 4.11.2    Command Line Interface                          4-12
+#### 4.12    BUILDING ASXXXX AND ASLINK WITH
+#### OPEN WATCOM V1.9                                  4-13
+#### 4.12.1    Graphical User Interface                        4-13
+#### 4.12.2    Command Line Interface                          4-14
+#### 4.13    BUILDING ASXXXX AND ASLINK WITH
+#### SYMANTEC C/C++ V7.2                               4-15
+#### 4.13.1    Graphical User Interface                        4-15
+#### 4.13.2    Command Line Interface                          4-15
+#### 4.14    THE _CLEAN.BAT AND _PREP.BAT FILES                4-16
+#### 4.15    THE PRECOMPILED ASXXXX EXECUTABLES                4-16
+#### APPENDIX A  ASXSCN LISTING FILE SCANNER                      A-1
+#### APPENDIX B  ASXCNV LISTING CONVERTER                         B-1
+#### APPENDIX C  S19OS9 CONVERSION UTILITY                        C-1
+#### APPENDIX D  RELEASE NOTES                                    D-1
+#### APPENDIX E  CONTRIBUTORS                                     E-1
+#### APPENDIX F  NOTES AND TIPS                                   F-1
+#### ---- Assembler Appendices ----
+#### APPENDIX AA  ASCHECK ASSEMBLER                              AA-1
+#### APPENDIX AB  AS1802 ASSEMBLER                               AB-1
+#### APPENDIX AC  AS2650 ASSEMBLER                               AC-1
+#### APPENDIX AD  AS4040 ASSEMBLER                               AD-1
+#### APPENDIX AE  AS430 ASSEMBLER                                AE-1
+#### APPENDIX AF  AS6100 ASSEMBLER                               AF-1
+#### APPENDIX AG  AS61860 ASSEMBLER                              AG-1
+#### APPENDIX AH  AS6500 ASSEMBLER                               AH-1
+#### APPENDIX AI  AS6800 ASSEMBLER                               AI-1
+#### APPENDIX AJ  AS6801 ASSEMBLER                               AJ-1
+#### APPENDIX AK  AS6804 ASSEMBLER                               AK-1
+#### APPENDIX AL  AS68(HC)05 ASSEMBLER                           AL-1
+#### APPENDIX AM  AS68(HC[S])08 ASSEMBLER                        AM-1
+#### APPENDIX AN  AS6809 ASSEMBLER                               AN-1
+#### APPENDIX AO  AS6811 ASSEMBLER                               AO-1
+#### APPENDIX AP  AS68(HC[S])12 ASSEMBLER                        AP-1
+#### APPENDIX AQ  AS6816 ASSEMBLER                               AQ-1
+#### APPENDIX AR  AS68CF ASSEMBLER                               AR-1
+#### APPENDIX AS  AS68K ASSEMBLER                                AS-1
+#### APPENDIX AT  AS740 ASSEMBLER                                AT-1
+#### APPENDIX AU  AS78K0 ASSEMBLER                               AU-1
+#### APPENDIX AV  AS78K0S ASSEMBLER                              AV-1
+#### APPENDIX AW  AS8008 ASSEMBLER                               AW-1
+#### APPENDIX AX  AS8008S ASSEMBLER                              AX-1
+#### APPENDIX AY  AS8048 ASSEMBLER                               AY-1
+#### APPENDIX AZ  AS8051 ASSEMBLER                               AZ-1
+#### APPENDIX BA  AS8085 ASSEMBLER                               BA-1
+#### APPENDIX BB  AS89LP ASSEMBLER                               BB-1
+#### APPENDIX BC  AS8X300 ASSEMBLER                              BC-1
+#### APPENDIX BD  AS8XCXXX ASSEMBLER                             BD-1
+#### APPENDIX BE  ASAVR ASSEMBLER                                BE-1
+#### APPENDIX BF  ASCOP4 ASSEMBLER                               BF-1
+#### APPENDIX BG  ASCOP8 ASSEMBLER                               BG-1
+#### APPENDIX BH  ASEZ8 ASSEMBLER                                BH-1
+#### APPENDIX BI  ASEZ80 ASSEMBLER                               BI-1
+#### APPENDIX BJ  ASF2MC8 ASSEMBLER                              BJ-1
+#### APPENDIX BK  ASF8 ASSEMBLER                                 BK-1
+#### APPENDIX BL  ASGB ASSEMBLER                                 BL-1
+#### APPENDIX BM  ASH8 ASSEMBLER                                 BM-1
+#### APPENDIX BN  ASM8C ASSEMBLER                                BN-1
+#### APPENDIX BO  ASPDP11 ASSEMBLER                              BO-1
+#### APPENDIX BP  ASPIC ASSEMBLER                                BP-1
+#### APPENDIX BQ  ASRAB ASSEMBLER                                BQ-1
+#### APPENDIX BR  ASRS08 ASSEMBLER                               BR-1
+#### APPENDIX BS  ASSCMP ASSEMBLER                               BS-1
+#### APPENDIX BT  ASST6 ASSEMBLER                                BT-1
+#### APPENDIX BU  ASST7 ASSEMBLER                                BU-1
+#### APPENDIX BV  ASST8 ASSEMBLER                                BV-1
+#### APPENDIX BW  ASSX ASSEMBLER                                 BW-1
+#### APPENDIX BX  ASZ8 ASSEMBLER                                 BX-1
+#### APPENDIX BY  ASZ80 ASSEMBLER                                BY-1
+#### APPENDIX BZ  ASZ280 ASSEMBLER                               BZ-1
 ---- Link To The Assemblers Index ----
 
 # PREFACE
@@ -287,7 +286,7 @@ baldwin@shop-pdp.net
 
 baldwin@kent.edu
 
-# E N D   U S E R   L I C E N S E   A G R E E M E N T
+# END   USER   LICENSE   AGREEMENT
 
 Copyright (C) 1989-2023 Alan R.  Baldwin
 
@@ -311,7 +310,7 @@ Source Language:  C
 
 The  ASxxxx  assemblers are a series of microprocessor assemblers written in the C programming  language.   This  collection contains   cross   assemblers   for   the  1802,  S2650,  SC/MP, 4040(4004),  MPS430,   6100,   61860,   6500,   6800(6802/6808), 6801(6803/HD6303),   6804,   6805,   68HC(S)08,   6809,  68HC11, 68HC(S)12, 68HC16, 68CF 68K, 740, 78K/0,  78K/0S,  8008,  8008S, 8048(8041/8022/8021),  8051,  8085(8080),  AT89LP, 8X300(8X305), COP4,  COP8,  DS8XCXXX,  AVR,  EZ8,  EZ80,  F2MC8L/FX,  F8/3870, GameBoy(Z80),  H8/3xx,  Cypress  PSoC(M8C),  PDP11,  PIC, Rabbit 2000/3000, RS08, ST6, ST7, ST8, SX, Z8, Z80(HD64180),  and  Z280 series  microprocessors.   Each  assembler has a device specific section which includes:  
 
-ASxxxx アセンブラは、C 言語で記述されたマイクロプロセッサ用アセンブラの シリーズです。  このコレクションには、1802, S2650, SC/MP, 4040(4004), MPS430, 6100, 61860, 6500, 6800(6802/6808)、 6801(6803/hd6303), 6804, 6805, 68hc(s)08, 6809, 68hc11, 68hc(s)12, 68hc16, 68cf 68k, 740, 78k/0, 78k/0s, 8008, 8008s, 8048(8041/8022/8021)、  8051, 8085(8080), AT89LP, 8X300(8X305), COP4, COP8, DS8XCXXX, AVR, EZ8, EZ80, F2MC8L/FX, F8/3870, GameBoy(Z80), H8/3xx、  Cypress PSoC(M8C)、PDP11、PIC、Rabbit 2000/3000、RS08、ST6、ST7、ST8、SX、Z8、Z80(HD64180)、Z280 シリーズマイクロプロセッサ。  各アセンブラには、デバイス固有のセクションがあります：
+ASxxxx アセンブラは、C 言語で記述されたマイクロプロセッサ用アセンブラのシリーズです。  このコレクションには、1802, S2650, SC/MP, 4040(4004), MPS430, 6100, 61860, 6500, 6800(6802/6808)、 6801(6803/hd6303), 6804, 6805, 68hc(s)08, 6809, 68hc11, 68hc(s)12, 68hc16, 68cf 68k, 740, 78k/0, 78k/0s, 8008, 8008s, 8048(8041/8022/8021)、  8051, 8085(8080), AT89LP, 8X300(8X305), COP4, COP8, DS8XCXXX, AVR, EZ8, EZ80, F2MC8L/FX, F8/3870, GameBoy(Z80), H8/3xx、  Cypress PSoC(M8C)、PDP11、PIC、Rabbit 2000/3000、RS08、ST6、ST7、ST8、SX、Z8、Z80(HD64180)、Z280 シリーズ、以上のマイクロプロセッサ対応のアセンブラが含まれています。  各アセンブラには、以下の項目を含むデバイス固有のセクションがあります：
 
 1) device description, byte order, and file  extension  information,  
 2)  a table of assembler general directives, special directives, assembler  mnemonics  and  associated operation codes, 
@@ -321,9 +320,9 @@ The assemblers have a common device independent section which handles the detail
 
 1) デバイスの説明、バイトオーダー、ファイル拡張子情報、  
 2) アセンブラの一般命令、特殊命令、アセンブラのニーモニック、関連する操作コードの表、 
-3) デバイス・ニーモニック、アドレッシング・モード、特殊ディレクティブを処理するためのマシン固有コード。
+3) デバイスニーモニック、アドレッシングモード、特殊ディレクティブを処理するためのマシン固有コード。
 
-アセンブラには、ファイル入出力、シンボル・テーブル生成、プログラム/データ領域、式解析、アセンブラ指令処理の詳細を処理する共通のデバイス独立セクションがある。
+アセンブラには、ファイル入出力、シンボルテーブル生成、プログラム/データ領域、式解析、アセンブラ指令処理の詳細を処理する共通のデバイス独立セクションがある。
 
 The  assemblers  provide  the following features:  
 
@@ -337,14 +336,13 @@ The  assemblers  provide  the following features:
 
 アセンブラは以下の機能を提供する：  
 
-1) アルファベット順の、フォーマットされたシンボル・テーブル・リスト、
-2) リロケータブルオブジェクトモジュール、 
-3) オブジェクト・モジュールをリンクするためのグローバル・シンボル、 
+1) アルファベット順の、フォーマットされたシンボルテーブルリスト
+2) リロケータブルオブジェクトモジュール
+3) オブジェクトモジュールをリンクするためのグローバルシンボル
 4) 条件付きアセンブリ命令 
-5) 再利用可能なローカルシンボル、
-6) インクルードファイル処理  
-7) 一般的なマクロ処理機能。
-
+5) 再利用可能なローカルシンボル
+6) インクルードファイル処理
+7) 一般的なマクロ処理機能
 
 The  companion program ASLINK is a relocating linker performing the following functions:  
 
@@ -359,23 +357,22 @@ The  companion program ASLINK is a relocating linker performing the following fu
 9) produce a map of the linked memory image, and
 10) update the ASxxxx assembler  listing files with the absolute linked addresses and data.
 
-コンパニオンプログラムASLINKは、以下の機能を実行する再配置リンカーである：  
+ 添付のプログラムASLINKは、以下の機能を実行する再配置リンカである：  
 
-1) 複数のオブジェクト・モジュールを単一のメモリ・イメージにバインドする、  
-2) モジュール間のシンボル参照を解決する、  
-3) 指定されたオブジェクト・モジュールのライブラリから未定義シンボルを解決する、 
-4) データ・セクションとプログラム・セクションの絶対属性、相対属性、連結属性、オーバーレイ属性の処理、
-5) バイトおよびワードのプログラム・カウンタ相対（pc または pcr）アドレッシング計算の実行、
-6) リンク時に絶対シンボル値を定義する、 
-7) リンク時に絶対エリア・ベースアドレス値を定義する、 
-8) インテルHexレコード、モトローラSレコード、またはタンディCoCoディスクベーシック出力ファイルを作成する、 
-9) リンクされたメモリーイメージのマップを作成する。
-10) 絶対リンクアドレスとデータで ASxxxx アセンブラのリストファイルを更新する。
-
+1) 複数のオブジェクトモジュールを単一のメモリイメージにバインドする  
+2) モジュール間のシンボル参照を解決する
+3) 指定されたオブジェクトモジュールのライブラリから未定義シンボルを解決する
+4) データセクションとプログラムセクションの絶対属性、相対属性、連結属性、オーバーレイ属性の処理
+5) バイトおよびワードのプログラムカウンタ相対(pc または pcr)アドレッシング計算の実行
+6) リンク時に絶対シンボル値を定義する
+7) リンク時に絶対エリアベースアドレス値を定義する
+8) インテルHexレコード、モトローラSレコード、またはタンディCoCoディスクベーシック出力ファイルを作成する
+9) リンクされたメモリーイメージのマップを作成する
+10) 絶対リンクアドレスとデータで ASxxxx アセンブラのリストファイルを更新する
 
 The  assemblers  and  linker have been tested using Linux and DJGPP, Cygwin, Symantec C/C++ V7.2, Borland Turbo C++ 3.0,  Open Watcom V1.9, VC6, Visual Studio 2005, 2010, 2013, 2015, 2019 and 2022.  Complete source code and documentation for the assemblers and  linker  is  included  with the distribution.  Additionally, test code for each assembler and several microprocessor monitors (ASSIST05 for the 6805, MONDEB and ASSIST09 for the 6809, BUFFALO 2.5 for the 6811, and MONDEB for 8051 / AT89LP series ) are included as working examples of use of these assemblers.
 
-アセンブラとリンカは、LinuxとDJGPP、Cygwin、Symantec C/C++ V7.2、Borland Turbo C++ 3.0、Open Watcom V1.9、VC6、Visual Studio 2005、2010、2013、2015、2019、2022を使用してテストされています。 アセンブラとリンカの完全なソースコードとドキュメントが配布物に含まれています。 さらに、各アセンブラのテストコードと、いくつかのマイクロプロセッサ・モニター（6805用のASSIST05、6809用のMONDEBとASSIST09、6811用のBUFFALO 2.5、8051 / AT89LPシリーズ用のMONDEB）が、これらのアセンブラの使用例として含まれています。
+アセンブラとリンカは、Linux、DJGPP、Cygwin、Symantec C/C++ V7.2、Borland Turbo C++ 3.0、Open Watcom V1.9、VC6、Visual Studio 2005、2010、2013、2015、2019、2022を使用してテスト済です。 アセンブラとリンカの完全なソースコードとドキュメントが配布物に含まれています。 さらに、各アセンブラのテストコードと、いくつかのマイクロプロセッサモニター(6805用のASSIST05、6809用のMONDEBとASSIST09、6811用のBUFFALO 2.5、8051 / AT89LPシリーズ用のMONDEB)が、これらのアセンブラの使用例として含まれています。
 
 <div style="page-break-before:always"></div>
 
@@ -385,25 +382,27 @@ The  assemblers  and  linker have been tested using Linux and DJGPP, Cygwin, Sym
 
 The  ASxxxx  assemblers are a series of microprocessor assemblers written in the C programming language.  Each assembler has a device specific section which includes:
 
+ASxxxxアセンブラは、C言語で記述された一連のマイクロプロセッサアセンブラです。 各アセンブラには、以下のようなデバイス固有のセクションがあります：
+
 1.  device  description, byte order, and file extension information
 2.  a  table  of  the assembler general directives, special device directives, assembler mnemonics  and  associated operation codes
 3.  machine specific code for processing the device mnemonics, addressing modes, and special directives
 
-The device specific information is detailed in the appendices.
-
-The assemblers have a common device independent section which handles the details of file input/output, symbol  table  generation,  program/data  areas,  expression  analysis, and assembler directive processing.
-
-ASxxxxアセンブラは、C言語で記述された一連のマイクロプロセッサ・アセンブラです。 各アセンブラには、以下のようなデバイス固有のセクションがあります：
-
 1. デバイスの説明、バイト順序、ファイル拡張子情報。
-2. アセンブラの一般命令、特殊デバイス命令、アセンブラのニーモニック、関連するオペレーションコードの表。
-3. デバイス・ニーモニック、アドレッシング・モード、特殊ディレクティブを処理するためのマシン固有のコード。
+2. アセンブラの一般命令、特殊デバイス命令、アセンブラのニーモニック、関連するオペレーションコードの表
+3. デバイスニーモニック、アドレッシングモード、特殊ディレクティブを処理するためのマシン固有のコード
+
+The device specific information is detailed in the appendices.
 
 デバイス固有の情報については、付録を参照してください。
 
-アセンブラには、ファイル入出力、シンボル・テーブル生成、プログラム/データ領域、式解析、アセンブラ指令処理の詳細を処理する共通のデバイス非依存セクションがあります。
+The assemblers have a common device independent section which handles the details of file input/output, symbol  table  generation,  program/data  areas,  expression  analysis, and assembler directive processing.
+
+アセンブラには、ファイル入出力、シンボルテーブル生成、プログラム/データ領域、式解析、アセンブラ指令処理の詳細を処理する共通のデバイス非依存セクションがあります。
 
 The assemblers provide the following features:
+
+これらのアセンブラには以下の特徴があります。
 
 1.  Command string control of assembly functions
 2.  Alphabetized, formatted symbol table listing
@@ -412,28 +411,26 @@ The assemblers provide the following features:
 5.  Conditional assembly directives
 6.  Program sectioning directives
 
+1.  アセンブリ機能のコマンドストリング制御
+2.  アルファベット化され、フォーマットされたシンボルテーブルリスト
+3.  再配置可能なオブジェクトモジュール
+4.  オブジェクトモジュールをリンクするためのグローバルシンボル
+5.  条件付きアセンブリ指令
+6.  プログラムセクション化ディレクティブ
+
 ASxxxx assembles one or more source files into a single relocatable ascii object file.  The output of the ASxxxx  assemblers consists of an ascii relocatable object file(\*.rel), an assembly listing file(\*.lst), and a symbol file(\*.sym) each controlled by an  assembler  option.  If both the object and listing files are specified then a listing to relocated listing hint file  (\*.hlr) is  created  as  a  helper for the linker to properly create the relocated listing file.
 
-アセンブラーには以下のような特徴がある：
-
-1.  アセンブリー機能のコマンド・ストリング制御
-2.  アルファベット化され、フォーマットされたシンボル・テーブル・リスト
-3.  再配置可能なオブジェクトモジュール
-4.  オブジェクト・モジュールをリンクするためのグローバル・シンボル
-5.  条件付きアセンブリ指令
-6.  プログラム・セクション化ディレクティブ
-
-ASxxxx は、1 つまたは複数のソース・ファイルを 1 つのリロケータブルな ascii オブジェクト・ファイルにアセンブルします。 ASxxxx アセンブラの出力は、ascii リロケータブル・オブジェクト・ファイル( \*.rel)、アセンブリ・リスト・ファイル( \*.lst)、シンボル・ファイル( \*.sym) から構成され、それぞれがアセンブラ・オプションによって制御されます。 オブジェクト・ファイルとリスティング・ファイルの両方が指定された場合は、リンカーがリロケーショ ン・リスティング・ファイルを適切に作成するための補助として、リスティングからリロケーショ ン・リスティングへのヒント・ファイル( \*.hlr) が作成されます。
+ASxxxx は、1 つまたは複数のソースファイルを 1 つのリロケータブルな ascii オブジェクトファイルにアセンブルします。 ASxxxx アセンブラの出力は、ascii リロケータブルオブジェクトファイル( \*.rel)、アセンブリリストファイル( \*.lst)、シンボルファイル( \*.sym) から構成され、それぞれがアセンブラオプションによって制御されます。 オブジェクトファイルとリスティングファイルの両方が指定された場合は、リンカがリロケーショ ンリスティングファイルを適切に作成するための補助として、リスティングからリロケーショ ンリスティングへのヒントファイル( \*.hlr) が作成されます。
 
 ### 1.1.1  Assembly Pass 1
 
 During  pass  1, ASxxxx opens all source files and performs a rudimentary assembly of each source statement.  During this process  all symbol tables are built, program sections defined, and number of bytes for each assembled source line is estimated.
 
+パス1の間、ASxxxxはすべてのソースファイルを開き、各ソース文の初歩的なアセンブルを実行します。 この過程で、すべてのシンボルテーブルが構築され、プログラムセクションが定義され、アセンブルされた各ソース行のバイト数が推定されます。
+
 At the end of pass 1 all undefined symbols may be made global (external) using the ASxxxx switch -g, otherwise undefined  symbols will be flagged as errors during succeeding passes.
 
-パス1の間、ASxxxxはすべてのソースファイルを開き、各ソース文の初歩的なアセンブルを実行します。 この過程で、すべてのシンボル・テーブルが構築され、プログラム・セクションが定義され、アセンブルされた各ソース行のバイト数が推定されます。
-
-パス1の最後に、ASxxxxスイッチ-gを使用して、すべての未定義シンボルをグローバル（外部）にすることができます。
+パス1の最後に、ASxxxxスイッチ-gを使用して、すべての未定義シンボルをグローバル(外部)にすることができます。
 
 ### 1.1.2  Assembly Pass 2
 
@@ -445,11 +442,11 @@ During  pass  2  the ASxxxx assembler resolves forward references and determines
 
 Pass 3 by the assembler generates the listing file, the relocatable output file, the listing to relocated listing hint file, and  the  symbol  tables.  Also during pass 3 the errors will be reported.
 
+アセンブラによるパス3では、リスティングファイル、再配置可能な出力ファイル、リスティングから再配置されたリスティングへのヒントファイル、シンボルテーブルが生成される。 また、パス3の間にエラーが報告される。
+
 The  relocatable object file is an ascii file containing symbol references and definitions, program  area  definitions,  and the  relocatable assembled code, the linker ASLINK will use this information to generate an absolute load file  (Intel,  Motorola or Tandy CoCo Disk Basic formats).
 
-アセンブラによるパス3では、リスティング・ファイル、再配置可能な出力ファイル、リスティングから再配置されたリスティングへのヒント・ファイル、シンボル・テーブルが生成される。 また、パス3の間にエラーが報告される。
-
-再配置可能オブジェクト・ファイルは、シンボルの参照と定義、プログラム領域の定義、再配置可能なアセンブル・コードを含むasciiファイルで、リンカASLINKはこの情報を使用して絶対ロード・ファイル（インテル、モトローラ、タンディCoCoディスク・ベーシック形式）を生成します。
+再配置可能オブジェクトファイルは、シンボルの参照と定義、プログラム領域の定義、再配置可能なアセンブルコードを含むasciiファイルで、リンカASLINKはこの情報を使用して絶対ロードファイル(インテル、モトローラ、タンディCoCoディスクベーシック形式)を生成します。
 
 ## 1.2  SOURCE PROGRAM FORMAT
 
@@ -457,11 +454,11 @@ The  relocatable object file is an ascii file containing symbol references and d
 
 A source program is composed of assembly-language statements.  Each statement must be completed on one line.  A line  may  contain a maximum of 128 characters, longer lines are truncated and lost.
 
+ソースプログラムはアセンブリ言語のステートメントで構成される。 各ステートメントは1行で完結しなければならない。 1行に含めることができる文字数は最大128文字で、これより長い行は切り捨てられ、失われます。
+
 An  ASxxxx  assembler  statement  may  have  as  many as four fields.  These fields are identified by their order  within  the statement  and/or  by separating characters between fields.  The general format of the ASxxxx statement is:
 
-ソース・プログラムはアセンブリ言語のステートメントで構成される。 各ステートメントは1行で完結しなければならない。 1行に含めることができる文字数は最大128文字で、これより長い行は切り捨てられ、失われます。
-
-ASxxxxアセンブラ・ステートメントには4つのフィールドがあります。 これらのフィールドは、ステートメント内での順序やフィールド間の区切り文字によって識別されます。 ASxxxx文の一般的な書式は以下の通りです：
+ASxxxxアセンブラステートメントには4つのフィールドがあります。 これらのフィールドは、ステートメント内での順序やフィールド間の区切り文字によって識別されます。 ASxxxx文の一般的な書式は以下の通りです：
 
 ```
 [label:]  Operator        Operand         [;Comment(s)]
@@ -469,9 +466,9 @@ ASxxxxアセンブラ・ステートメントには4つのフィールドがあ�
 
 The  label and comment fields are optional.  The operator and operand fields are interdependent.  The operator field may be an assembler  directive or an assembly mnemonic.  The operand field may be optional or required as defined in  the  context  of  the operator.
 
-ASxxxx  interprets  and  processes source statements one at a time.  Each statement causes a particular operation to  be  performed.
+ラベルフィールドとコメントフィールドは任意である。 演算子フィールドとオペランドフィールドは相互に依存する。 演算子フィールドは、アセンブラ指令またはアセンブラのニーモニックである。 オペランドフィールドは、演算子のコンテキストで定義されたオプションまたは必須フィールドです。
 
-ラベルフィールドとコメントフィールドは任意である。 演算子フィールドとオペランドフィールドは相互に依存する。 演算子フィールドは、アセンブラ指令またはアセンブラのニーモニックである。 オペランド・フィールドは、演算子のコンテキストで定義されたオプションまたは必須フィールドです。
+ASxxxx  interprets  and  processes source statements one at a time.  Each statement causes a particular operation to  be  performed.
 
 ASxxxxはソース文を1つずつ解釈し、処理します。 各ステートメントでは、特定の操作が実行されます。
 
@@ -480,14 +477,14 @@ ASxxxxはソース文を1つずつ解釈し、処理します。 各ステート
 A  label is a user-defined symbol which is assigned the value of the current location counter and entered into  the  user  defined  symbol  table.   The  current location counter is used by ASxxxx to assign memory addresses to the source  program  statements as they are encountered during the assembly process.  Thus a label is a means  of  symbolically  referring  to  a  specific
 statement.  When  a program section is absolute, the value of the current location counter is absolute;  its value references an  absolute memory  address.   Similarly, when a program section is relocatable, the value of the current location counter is  relocatable.
 
+ラベルは、現在位置カウンタの値が割り当てられ、ユーザー定義シンボルテーブルに入力されるユーザー定義シンボルです。  カレントロケーションカウンタは、ASxxxxがアセンブリ処理中にソースプログラムステートメントにメモリアドレスを割り当てるために使用します。 このように、ラベルは特定のステートメントをシンボリックに参照する手段です。
+ステートメントをシンボリックに参照する手段です。 プログラムセクションが絶対の場合、現在位置カウンタの値は絶対で、その値は絶対メモリアドレスを参照します。  同様に、プログラムセクションが再配置可能な場合、現在位置カウンタの値は再配置可能である。
+
 A  relocation  bias  calculated at link time is added to the apparent value of the current location counter  to  establish  its effective  absolute  address  at  execution time.  (The user can also force the linker to relocate sections defined as  absolute.  This may be required under special circumstances.)
 
-If  present,  a  label  must  be  the first field in a source statement and must be terminated by a colon (:).   For  example, if  the  value  of  the  current  location  counter  is absolute 01F0(H), the statement:
-
-ラベルは、現在位置カウンタの値が割り当てられ、ユーザー定義シンボル・テーブルに入力されるユーザー定義シンボルです。  カレント・ロケーション・カウンタは、ASxxxxがアセンブリ処理中にソース・プログラム・ステートメントにメモリ・アドレスを割り当てるために使用します。 このように、ラベルは特定のステートメントをシンボリックに参照する手段です。
-ステートメントをシンボリックに参照する手段です。 プログラム・セクションが絶対の場合、現在位置カウンタの値は絶対で、その値は絶対メモリ・アドレスを参照します。  同様に、プログラム・セクションが再配置可能な場合、現在位置カウンタの値は再配置可能である。
-
 リンク時に計算された再配置バイアスが現在位置カウンタの見かけの値に加算され、実行時の実効絶対アドレスが確定する。 (ユーザは、絶対アドレスとして定義されたセクションの再配置をリンカに強制することもできる。 これは特別な状況下で必要とされるかもしれない)。
+
+If  present,  a  label  must  be  the first field in a source statement and must be terminated by a colon (:).   For  example, if  the  value  of  the  current  location  counter  is absolute 01F0(H), the statement:
 
 ラベルが存在する場合、ラベルはソース文の最初のフィールドでなければならず、コロン (:) で終了しなければならない。  例えば、現在位置カウンタの値が絶対値01F0(H)の場合、次のように記述する：
 
@@ -496,11 +493,11 @@ abcd:     nop
 ```
 assigns  the  value  01F0(H) to the label abcd.  If the location counter value were relocatable, the final value of abcd would be 01F0(H)+K, where K represents the relocation bias of the program section, as calculated by the linker at link time.
 
+はラベルabcdに01F0(H)を代入する。 もしロケーションカウンターの値が再配置可能であれば、 abcdの最終値は01F0(H)+Kとなり、Kはリンク時にリンカが計算した プログラムセクションの再配置バイアスを表す。
+
 More  than  one label may appear within a single label field.  Each label so specified is assigned the same address value.  For example,  if  the  value  of  the  current  location  counter is 1FF0(H), the multiple labels in the following statement are each assigned the value 1FF0(H):
 
-はラベルabcdに01F0(H)を代入する。 もしロケーション・カウンターの値が再配置可能であれば、 abcdの最終値は01F0(H)+Kとなり、Kはリンク時にリンカーが計算した プログラム・セクションの再配置バイアスを表す。
-
-1つのラベル・フィールドに複数のラベルを指定することができる。 このように指定された各ラベルには、同じアドレス値が割り当てられる。 例えば、カレント・ロケーション・カウンタの値が1FF0(H)の場合、以下の文の中の複数のラベルには、それぞれ1FF0(H)という値が割り当てられる：
+1つのラベルフィールドに複数のラベルを指定することができる。 このように指定された各ラベルには、同じアドレス値が割り当てられる。 例えば、カレントロケーションカウンタの値が1FF0(H)の場合、以下の文の中の複数のラベルには、それぞれ1FF0(H)という値が割り当てられる：
 
 ```
 abcd:     aq:     $abc:   nop
@@ -518,23 +515,22 @@ $abc:     nop
 
 likewise  cause  the  same value to be assigned to all three labels.
 
+は、同様に、3つのラベルすべてに同じ値を割り当てる。
+
 A  double  colon  (::)  defines the label as a global symbol.  For example, the statement
+
+ダブルコロン(::)は、ラベルをグローバルシンボルとして定義する。 例えば
 ```
 abcd::    nop
 ```
 
 establishes the label abcd as a global symbol.  The distinguishing attribute of a global symbol is that it  can  be  referenced from  within an object module other than the module in which the symbol is defined.  References to this label  in  other  modules are  resolved when the modules are linked as a composite executable image.
 
-同様に、3つのラベルすべてに同じ値が割り当てられる。
-
-ダブルコロン（::）は、ラベルをグローバルシンボルとして定義する。 例えば
-```
-abcd:: nop
-```
-
 はラベル abcd をグローバルシンボルとして定義します。 グローバルシンボルの特徴は、そのシンボルが定義されているモジュール以外の オブジェクトモジュールから参照できることです。 他のモジュール内のこのラベルへの参照は、モジュールが複合実行イメージとしてリンクされたときに解決されます。
 
 The legal characters for defining labels are:
+
+ラベルを定義するのに有効な文字は以下の通り：
 
 A through Z  
 a through z  
@@ -543,22 +539,18 @@ a through z
 \$ (Dollar sign)  
 \_ (underscore)  
 
-A  label  may  be  any  length,  however  only  the  first 79 characters are significant and, therefore must be  unique  among all  labels in the source program (not necessarily among separately compiled modules).  An error code(s) (`<m>` or `<p>`)  will  be generated  in the assembly listing if the first 79 characters in two or more labels are the same.  The `<m>` code is caused by  the
-redeclaration  of  the symbol or its reference by another statement.  The `<p>` code is generated because the symbols location is changing on each pass through the source file.
-
-The  label  must  not  start with the characters 0-9, as this designates a reusable symbol with special  attributes  described in a later section.
-
-ラベルを定義するのに有効な文字は以下の通り：
-
 A から Z  
 A から Z  
 0 から 9  
-. (ピリオド）  
+. (ピリオド)  
 \$ ドル記号  
 _ アンダースコア  
 
-ラベルはどのような長さでもかまいませんが、最初の79文字だけが重要であり、したがってソース・プログラム内のすべてのラベルの中で一意でなければなりません（別々にコンパイルされたモジュールの中で一意である必要はありません）。 2つ以上のラベルの最初の79文字が同じであれば、エラーコード (`<m>` または `<p>`) がアセンブリリストに生成されます。 `<m>`はシンボルの再宣言によって発生します。
-シンボルの再宣言または他のステートメントによる参照によって発生します。 `<p>`コードは、シンボルの位置がソースファイルを通過するたびに変化するために生成されます。
+A  label  may  be  any  length,  however  only  the  first 79 characters are significant and, therefore must be  unique  among all  labels in the source program (not necessarily among separately compiled modules).  An error code(s) (`<m>` or `<p>`)  will  be generated  in the assembly listing if the first 79 characters in two or more labels are the same.  The `<m>` code is caused by  the redeclaration  of  the symbol or its reference by another statement.  The `<p>` code is generated because the symbols location is changing on each pass through the source file.
+
+ラベルはどのような長さでもかまいませんが、最初の79文字だけが重要であり、したがってソースプログラム内のすべてのラベルの中で一意でなければなりません(別々にコンパイルされたモジュールの中で一意である必要はありません)。 2つ以上のラベルの最初の79文字が同じであれば、エラーコード (`<m>` または `<p>`) がアセンブリリストに生成されます。 `<m>`はシンボルの再宣言または他のステートメントによる参照によって発生します。 `<p>`コードは、シンボルの位置がソースファイルを通過するたびに変化するために生成されます。
+
+The  label  must  not  start with the characters 0-9, as this designates a reusable symbol with special  attributes  described in a later section.
 
 ラベルは0-9で始まってはいけません。これは後のセクションで説明する特別な属性を持つ再利用可能なシンボルを指定するためです。
 
@@ -567,17 +559,17 @@ _ アンダースコア
 
 The  operator field specifies the action to be performed.  It may consist of an instruction mnemonic (op code) or an assembler directive.
 
+演算子フィールドは、実行される動作を指定する。 これは、命令ニーモニック(オペコード)またはアセンブラ指令で構成される。
+
 When  the  operator is an instruction mnemonic, a machine instruction is generated and the assembler evaluates the addresses of  the operands which follow.  When the operator is a directive ASxxxx performs certain control actions or processing operations during assembly of the source program.
+
+演算子が命令ニーモニックの場合、機械命令が生成され、アセンブラはそれに続くオペランドのアドレスを評価します。 演算子がディレクティブの場合、ASxxxx はソースプログラムのアセンブル中に特定の制御動作や処理操作を実行します。
 
 Leading  and  trailing  spaces  or tabs in the operator field have no significance;  such characters serve  only  to  separate the operator field from the preceding and following fields.
 
-An operator is terminated by a space, tab or end of line.
-
-演算子フィールドは、実行される動作を指定する。 これは、命令ニーモニック（オペコード）またはアセンブラ指令で構成される。
-
-演算子が命令ニーモニックの場合、機械命令が生成され、アセンブラはそれに続くオペランドのアドレスを評価します。 演算子がディレクティブの場合、ASxxxx はソース・プログラムのアセンブル中に特定の制御動作や処理操作を実行します。
-
 演算子フィールドの先頭および末尾のスペースやタブは意味を持ちません。これらの文字は、演算子フィールドを前後のフィールドから分離するためだけに使用されます。
+
+An operator is terminated by a space, tab or end of line.
 
 演算子は、スペース、タブ、行末で終了します。
 
@@ -585,7 +577,7 @@ An operator is terminated by a space, tab or end of line.
 
 When  the  operator is an instruction mnemonic (op code), the operand  field  contains  program  variables  that  are  to   be evaluated/manipulated by the operator.
 
-演算子が命令ニーモニック（オペコード）の場合、オペランド・フィールドには、演算子によって評価／操作されるプログラム変数が格納される。
+演算子が命令ニーモニック(オペコード)の場合、オペランドフィールドには、演算子によって評価／操作されるプログラム変数が格納される。
 
 
 Operands  may  be  expressions  or  symbols, depending on the operator.  Multiple expressions used in the operand  fields  may be  separated  by  a comma.  An operand should be preceded by an operator field;  if it is not, the statement will give an  error (`<q>` or `<o>`).   All operands following instruction mnemonics are treated as expressions.
@@ -594,14 +586,14 @@ Operands  may  be  expressions  or  symbols, depending on the operator.  Multipl
 
 The operand field is terminated by a semicolon when the field is followed  by  a  comment.   For  example,  in  the  following statement:
 
-オペランド・フィールドの後にコメントが続く場合、オペランド・フィールドはセミコロンで終了します。  例えば、以下のステートメントでは
+オペランドフィールドの後にコメントが続く場合、オペランドフィールドはセミコロンで終了します。  例えば、以下のステートメントでは
 ```
 label:    lda     abcd,x          ;Comment field
 ```
 
 the  tab  between lda and abcd terminates the operator field and defines the beginning of the operand field;  a  comma  separates the operands abcd and x;  and a semicolon terminates the operand field and defines the beginning of the comment field.   When  no comment  field  follows,  the operand field is terminated by the end of the source line.
 
-ldaとabcdの間のタブは、演算子フィールドを終了し、オペランド・フィールドの開始を定義します。コンマは、オペランドabcdとxを区切り、セミコロンは、オペランド・フィールドを終了し、コメント・フィールドの開始を定義します。  コメント・フィールドが続かない場合、オペランド・フィールドはソース行の終端で終了する。
+ldaとabcdの間のタブは、演算子フィールドを終了し、オペランドフィールドの開始を定義します。コンマは、オペランドabcdとxを区切り、セミコロンは、オペランドフィールドを終了し、コメントフィールドの開始を定義します。  コメントフィールドが続かない場合、オペランドフィールドはソース行の終端で終了する。
 
 #### 1.2.1.4  Comment Field  -
 
@@ -610,7 +602,7 @@ The comment field begins with a semicolon and extends through the end of the lin
 Comments  do not affect assembly processing or program execution.
 
 
-コメント・フィールドはセミコロンで始まり、行末まで続く。 このフィールドはオプションであり、nullを除く任意の7ビットのアスキー文字を含めることができる。
+コメントフィールドはセミコロンで始まり、行末まで続く。 このフィールドはオプションであり、nullを除く任意の7ビットのアスキー文字を含めることができる。
 
 コメントはアセンブリ処理やプログラムの実行には影響しない。
 
@@ -631,12 +623,12 @@ sitive by using the -z command line option.)
 3.  The  characters . (period), \$ (dollar sign), and _ (underscore).
 4.  The special characters listed in Tables 1 through 6.
 
-ASxxxx ソース・プログラムでは、以下の文字が使用可能です：
+ASxxxx ソースプログラムでは、以下の文字が使用可能です：
 
-1.  大文字でも小文字でもかまいません。 デフォルトでは、アセンブラは大文字と小文字を区別します（ABCD と abcd は同じ記号ではありません）。 (アセンブラは大文字と小文字を区別しない。
+1.  大文字でも小文字でもかまいません。 デフォルトでは、アセンブラは大文字と小文字を区別します(ABCD と abcd は同じ記号ではありません)。 (アセンブラは大文字と小文字を区別しない。
 アセンブラは、-z コマンドラインオプションを使用することで、大文字と小文字を区別しないようにすることができる)。
 2.  0から9までの数字
-3.  .（ピリオド）、\$（ドル記号）、_（アンダースコア）。
+3.  .(ピリオド)、\$(ドル記号)、_(アンダースコア)。
 4.  表1～表6の特殊文字。
 
 
@@ -722,7 +714,7 @@ The  decimal  point, '.', following any numerical sequence not preceded by a tem
 When   the   'C  Style  Numbers'  option  is  enabled (see .enabl csn) all temporary radixs beginning with a 0 (zero),  except  0x  and  0X,  are disabled.  Number sequences beginning with 0x or 0X are interpreted as  hex,
 all other numbers beginning with 0 are octal, and numerical sequences not beginning with a 0 are decimal.
 
-「Cスタイル番号」オプションが有効な場合（.enabl csnを参照）、0xと0Xを除く、0（ゼロ）で始まるすべての一時基数が無効になる。 0xまたは0Xで始まる数列は16進数として解釈される、
+「Cスタイル番号」オプションが有効な場合(.enabl csnを参照)、0xと0Xを除く、0(ゼロ)で始まるすべての一時基数が無効になる。 0xまたは0Xで始まる数列は16進数として解釈される、
 0から始まるその他の数値は8進数、0から始まらない数値列は10進数として解釈される。
 
 ### 1.3.2  User-Defined Symbols
@@ -731,7 +723,7 @@ User-defined  symbols are those symbols that are equated to a specific value thr
 
 The following rules govern the creation of user-defined symbols:
 
-ユーザー定義記号とは、直接代入文によって特定の値と等号化されたり、ラベルとして表示されたりする記号のことです。 これらのシンボルは、アセンブリ中に遭遇したときにユーザー・シンボル・テーブルに追加されます。
+ユーザー定義記号とは、直接代入文によって特定の値と等号化されたり、ラベルとして表示されたりする記号のことです。 これらのシンボルは、アセンブリ中に遭遇したときにユーザーシンボルテーブルに追加されます。
 
 ユーザー定義記号の作成には、以下のルールがあります：
 
@@ -741,7 +733,7 @@ The following rules govern the creation of user-defined symbols:
 4.  Spaces and Tabs must not be embedded within a symbol.
 
 1.  記号は英数字、ドル記号(\$)、ピリオド(.)、アンダースコア(_)のみで構成することができる。
-2.  記号の最初の文字は数字であってはならない（再利用可能な記号の場合を除く）。
+2.  記号の最初の文字は数字であってはならない(再利用可能な記号の場合を除く)。
 3.  記号の最初の79文字は一意でなければならない。 記号は79文字以上で書くことができるが、80文字目以降は無視される。
 4.  記号の中にスペースやタブを入れてはならない。
    
@@ -760,7 +752,7 @@ Reusable  symbols are specially formatted symbols used as labels within a block 
 
 The range of a reusable symbol block consists of those statements between two normally constructed  symbolic  labels.   Note that a statement of the form:
 
-再利用可能なシンボル・ブロックの範囲は、通常構成される2つのシンボル・ラベルの間にあるステートメントで構成されます。  という形のステートメントに注意してください：
+再利用可能なシンボルブロックの範囲は、通常構成される2つのシンボルラベルの間にあるステートメントで構成されます。  という形のステートメントに注意してください：
 
 ```
 ALPHA = EXPRESSION
@@ -772,11 +764,11 @@ Note  that  the  range  of a reusable symbol block may extend across program are
 
 Reusable symbols provide a convenient means of generating labels for branch instructions and other  such  references  within reusable symbol blocks.  Using reusable symbols reduces the possibility of symbols with multiple definitions appearing within a user  program.   In  addition,  the use of reusable symbols differentiates entry-point labels from other labels, since reusable labels cannot be referenced from outside their respective symbol blocks.  Thus, reusable symbols of the same name can  appear  in other  symbol blocks without conflict.  Reusable symbols require less symbol table space  than  normal  symbols.   Their  use  is recommended.
 
-は直接代入文であるが、ラベルを作成しないので、再利用可能なシンボル・ブロックの範囲を区切らない。
+は直接代入文であるが、ラベルを作成しないので、再利用可能なシンボルブロックの範囲を区切らない。
 
-再利用可能なシンボル・ブロックの範囲は、プログラム領域にまたがる可能性があることに注意してください。
+再利用可能なシンボルブロックの範囲は、プログラム領域にまたがる可能性があることに注意してください。
 
-再利用可能なシンボルは、再利用可能なシンボル・ブロック内の分岐命令やその他の参照用のラベルを生成する便利な手段を提供します。 再利用可能なシンボルを使用することで、ユーザー・プログラム内に複数の定義を持つシンボルが出現する可能性を減らすことができます。  さらに、再利用可能なラベルはそれぞれのシンボル・ブロックの外から参照できないため、再利用可能なシンボルを使用することで、エントリー・ポイント・ラベルを他のラベルと区別することができます。 そのため、同じ名前の再利用可能なシンボルは、他のシンボル・ブロックに矛盾なく出現させることができます。 再利用可能なシンボルは、通常のシンボルよりもシンボルテーブルのスペースが少なくて済みます。  その使用を推奨する。
+再利用可能なシンボルは、再利用可能なシンボルブロック内の分岐命令やその他の参照用のラベルを生成する便利な手段を提供します。 再利用可能なシンボルを使用することで、ユーザープログラム内に複数の定義を持つシンボルが出現する可能性を減らすことができます。  さらに、再利用可能なラベルはそれぞれのシンボルブロックの外から参照できないため、再利用可能なシンボルを使用することで、エントリーポイントラベルを他のラベルと区別することができます。 そのため、同じ名前の再利用可能なシンボルは、他のシンボルブロックに矛盾なく出現させることができます。 再利用可能なシンボルは、通常のシンボルよりもシンボルテーブルのスペースが少なくて済みます。  その使用を推奨する。
 
 The  use  of  the  same reusable symbol within a symbol block will generate one or both of the `<m>` or `<p>` errors.
 
@@ -830,11 +822,11 @@ The  second  value represented by .+4 will be stored at location 0H0202, its val
 
 At the beginning of each assembly pass, ASxxxx resets the location counter.  Normally, consecutive memory locations are  assigned  to  each  byte  of  object code generated.  However, the value of the location counter can be changed  through  a  direct assignment statement of the following form:
 
-プログラム・カウンターの現在値を0H0200とすると、ASxxxxはアセンブル中に0H0200番地を起点とする3ワードのストレージを確保する。  最初の値である16進数定数FFFEは、場所0H0200に格納される。
+プログラムカウンターの現在値を0H0200とすると、ASxxxxはアセンブル中に0H0200番地を起点とする3ワードのストレージを確保する。  最初の値である16進数定数FFFEは、場所0H0200に格納される。
 
-.+4で表される2番目の値は、0H0202番地に格納され、その値は0H0206（= 0H0202 + 4）となる。  記号 QK で定義される 3 番目の値は、場所 0H0204 に配置されます。
+.+4で表される2番目の値は、0H0202番地に格納され、その値は0H0206(= 0H0202 + 4)となる。  記号 QK で定義される 3 番目の値は、場所 0H0204 に配置されます。
 
-各アセンブリ・パスの開始時に、ASxxxxはロケーション・カウンタをリセットします。 通常、生成されるオブジェクト・コードの各バイトには、連続したメモリ位置が割り当てられます。 しかし、ロケーション・カウンタの値は、以下の形式の直接代入文によって変更することができます：
+各アセンブリパスの開始時に、ASxxxxはロケーションカウンタをリセットします。 通常、生成されるオブジェクトコードの各バイトには、連続したメモリ位置が割り当てられます。 しかし、ロケーションカウンタの値は、以下の形式の直接代入文によって変更することができます：
 
 ```
 . = . + expression
@@ -845,7 +837,7 @@ The  new  location  counter can only be specified relative to the current locati
 
 The following coding illustrates the use of the current location counter:
 
-新しい位置カウンターは、現在の位置カウンターからの相対値でしか指定できない。 代入演算子の右辺の式とともに現在のプログラム・カウンタを指定しないと、<.>エラーが発生する。  (絶対プログラム領域は、現在のプログラム・カウンタの絶対位置を指定するために .org 指令を使用することができます)。
+新しい位置カウンターは、現在の位置カウンターからの相対値でしか指定できない。 代入演算子の右辺の式とともに現在のプログラムカウンタを指定しないと、<.>エラーが発生する。  (絶対プログラム領域は、現在のプログラムカウンタの絶対位置を指定するために .org 指令を使用することができます)。
 
 次のコーディングは、現在の位置カウンタの使用を示しています。
 
@@ -897,9 +889,9 @@ Negative  numbers  must  be preceded by a minus sign;  ASxxxx translates such nu
 
 Numbers are always considered to be absolute values, therefore they are never relocatable.
 
-ASxxxxでは、特に指定がない限り、ソース・プログラム中のすべての数値は10進数基数で解釈されるものとします。 .radix指令を使用すると、デフォルトを8進数、10進数、16進数に指定することができます。 個々の数値は、表6に示す一時的な基数接頭辞によって、2進数、8進数、10進数、16進数として指定することができる。
+ASxxxxでは、特に指定がない限り、ソースプログラム中のすべての数値は10進数基数で解釈されるものとします。 .radix指令を使用すると、デフォルトを8進数、10進数、16進数に指定することができます。 個々の数値は、表6に示す一時的な基数接頭辞によって、2進数、8進数、10進数、16進数として指定することができる。
 
-負の数の前にはマイナス記号を付けなければならない。ASxxxxはこのような数を2の補数形式に変換する。  正の数の前にはプラス記号を付けることができる（付ける必要はない）。
+負の数の前にはマイナス記号を付けなければならない。ASxxxxはこのような数を2の補数形式に変換する。  正の数の前にはプラス記号を付けることができる(付ける必要はない)。
 
 数値は常に絶対値とみなされるため、再配置可能ではありません。
 
@@ -924,9 +916,9 @@ A  term is a component of an expression and may be one of the following:
 2.  記号：
     1.  式でピリオド(.)を指定すると、現在の位置カウンタが使用される。
     2.  ユーザー定義記号。
-    3.  未定義シンボルにはゼロの値が割り当てられ、未定義シンボルとしてユーザー定義シンボル・テーブルに挿入される。
+    3.  未定義シンボルにはゼロの値が割り当てられ、未定義シンボルとしてユーザー定義シンボルテーブルに挿入される。
 3.  一重引用符の後にAECII文字1文字、または二重引用符の後にASCII文字2文字。
-4.  括弧で囲まれた式。 このように囲まれた式はすべて評価され、それが現れる式の残りの部分が評価される前に、1つの項へと縮小される。 括弧は、たとえば、式の左から右への評価を変更したり（A*B+CとA*(B+C)のように）、単項演算子を式全体に適用したり（-(A+B)のように）するのに使われる。
+4.  括弧で囲まれた式。 このように囲まれた式はすべて評価され、それが現れる式の残りの部分が評価される前に、1つの項へと縮小される。 括弧は、たとえば、式の左から右への評価を変更したり(A*B+CとA*(B+C)のように)、単項演算子を式全体に適用したり(-(A+B)のように)するのに使われる。
 5.  単項演算子の後に記号や数値を続けること。
 
 
@@ -937,7 +929,7 @@ Expressions  are  combinations  of  terms  joined together by binary operators. 
 
 Expressions are evaluate with an operand hierarchy as follows:
 
-式は、二項演算子によって結合された用語の組み合わせである。 式は値に還元される。  式の評価には、その属性の決定も含まれる。 結果として得られる式の値は、（このセクションで後述するように）再配置可能、絶対、外部という3つのタイプのいずれかになります。
+式は、二項演算子によって結合された用語の組み合わせである。 式は値に還元される。  式の評価には、その属性の決定も含まれる。 結果として得られる式の値は、(このセクションで後述するように)再配置可能、絶対、外部という3つのタイプのいずれかになります。
 
 式は次のようなオペランド階層で評価されます：
 
@@ -960,7 +952,7 @@ A missing or illegal operator terminates the expression analysis, causing error 
 
 演算子の欠落や不正は、式の解析を終了させ、式自体の文脈に応じてエラーコード `<o>` や `<q>` が生成される。
 
-アセンブリー時、外部（グローバル）式の値は、その式の絶対部分の値と等しくなる。しかし、この式はリンク時に評価されると、シンボル'external'の解決された値に 4 を加えた値になります。
+アセンブリ時、外部(グローバル)式の値は、その式の絶対部分の値と等しくなる。しかし、この式はリンク時に評価されると、シンボル'external'の解決された値に 4 を加えた値になります。
 
 Expressions,  when  evaluated  by  ASxxxx,  are  one of three types:  relocatable, absolute, or external.  The following  distinctions are important:
 
@@ -972,15 +964,15 @@ Expressions,  when  evaluated  by  ASxxxx,  are  one of three types:  relocatabl
 
 ASxxxxによって評価される式は、再配置可能、絶対、外部という3つのタイプのうちの1つである。 以下の区別は重要である：
 
-1.  リンク時にオフセット値が追加される。 同様に、現在のプログラムロケーションカウンタの値を表すリロケータブルプログラムエリア内のピリオド（.）
+1.  リンク時にオフセット値が追加される。 同様に、現在のプログラムロケーションカウンタの値を表すリロケータブルプログラムエリア内のピリオド(.)
 2.  式は、その値が固定であれば絶対である。 項が数字とアスキー文字である式は、絶対値に還元される。 評価される両方の要素が同じプログラム領域に属する場合、再配置可能な式または項から再配置可能な項を引いたものは絶対式である。 これは、プログラム領域内のすべての項が同じ再配置バイアスを持つためである。 一方の項から他方の項を引くと、再配置バイアスはゼロになる。
-3.  式が外部式（またはグローバル式）であるのは、現在のプログラム内で定義されていない1つのグローバル参照（プラスまたはマイナスの絶対式値）を含んでいる場合である。 したがって、外部式はアセンブリ後に部分的に定義されるだけであり、リンク時に解決されなければならない。
+3.  式が外部式(またはグローバル式)であるのは、現在のプログラム内で定義されていない1つのグローバル参照(プラスまたはマイナスの絶対式値)を含んでいる場合である。 したがって、外部式はアセンブリ後に部分的に定義されるだけであり、リンク時に解決されなければならない。
 
 ## 1.4  GENERAL ASSEMBLER DIRECTIVES
 
 An  ASxxxx  directive  is placed in the operator field of the source line.  Only one directive is  allowed  per  source  line.  Each  directive  may  have  a blank operand field or one or more operands.  Legal operands differ with each directive.
 
-ASxxxx 命令は、ソース行の演算子フィールドに置かれる。 ソース行ごとに 1 つの指令のみが許可される。 各指令は、空白のオペランド・フィールドを持つことも、1つ以上のオペランドを持つこともできます。 有効なオペランドは各指令によって異なります。
+ASxxxx 命令は、ソース行の演算子フィールドに置かれる。 ソース行ごとに 1 つの指令のみが許可される。 各指令は、空白のオペランドフィールドを持つことも、1つ以上のオペランドを持つこともできます。 有効なオペランドは各指令によって異なります。
 
 ### 1.4.1  .module Directive
 
@@ -1058,7 +1050,7 @@ The  'normal' listing mode .list is the combination of err, loc, bin, eqt, cyc, 
 
 The NOT option, !, is used to set the listing mode to the opposite of the .list or .nlist directive before applying the sublist options.  For example:
 
-通常の」リスティング・モード.listは、err、loc、bin、eqt、cyc、lin、src、 pag、lst、mdが有効で、me、meb、melが無効の組み合わせである。 通常の」リスティング・モード.nlistは、すべてのサブリスト項目が無効になっている。 サブリストオプションを指定する場合、オプションリストは括弧で囲み、複数のオプションをカンマで区切る必要があります。
+通常の」リスティングモード.listは、err、loc、bin、eqt、cyc、lin、src、 pag、lst、mdが有効で、me、meb、melが無効の組み合わせである。 通常の」リスティングモード.nlistは、すべてのサブリスト項目が無効になっている。 サブリストオプションを指定する場合、オプションリストは括弧で囲み、複数のオプションをカンマで区切る必要があります。
 
 NOTオプションの! は、サブリストオプションを適用する前に、.listまたは.nlistディレクティブと反対のリスティングモードを設定するために使われます。 例えば
 
@@ -1135,7 +1127,7 @@ where:  string  represents a text string.  The string is printed to the console 
 
 The  .msg  directive  is  useful to report assembly status or other information during the assembly process.
 
-.msgディレクティブは、アセンブリ・ステータスやその他の情報をアセンブリ・ プロセス中に報告するのに便利です。
+.msgディレクティブは、アセンブリステータスやその他の情報をアセンブリ プロセス中に報告するのに便利です。
 
 ### 1.4.7  .error Directive
 
@@ -1201,7 +1193,7 @@ where:
 ```
 The  .word, .dw, or .fdb directives are used to generate successive words of binary data in the object module.
 
-.word、.dw、.fdbディレクティブは、オブジェクト・モジュールのバイナリ・データの連続したワードを生成するために使われる。
+.word、.dw、.fdbディレクティブは、オブジェクトモジュールのバイナリデータの連続したワードを生成するために使われる。
 
 ### 1.4.10  .3byte and .triple Directives
 
@@ -1226,7 +1218,7 @@ where:
 ```
 The  .3byte  or .triple directive is used to generate successive triples of binary data in the object module.  (These directives   are  only  available  in  assemblers  supporting  24-bit addressing.)
 
-.3byteまたは.tripleディレクティブは、オブジェクト・モジュール内のバイナリ・データの連続する3つのトリプルを生成するために使用されます。 (これらのディレクティブは24ビットアドレッシングをサポートするアセンブラでのみ使用可能です)。
+.3byteまたは.tripleディレクティブは、オブジェクトモジュール内のバイナリデータの連続する3つのトリプルを生成するために使用されます。 (これらのディレクティブは24ビットアドレッシングをサポートするアセンブラでのみ使用可能です)。
 
 ### 1.4.11  .dl, .long, .4byte, and .quad Directives
 
@@ -1254,7 +1246,7 @@ where:
 
 The .dl, .long, .4byte or .quad directive is used to generate successive quads of binary data in the  object  module.   (These directives  are  only  available in assemblers supporting 32-bit addressing.)
 
-.dl、.long、.4byte、.quad 指令は、オブジェクト・モジュールにバイナリ・データの連続した4分の1を生成するために使用されます。  (これらのディレクティブは32ビットアドレッシングをサポートするアセンブラでのみ使用可能です)。
+.dl、.long、.4byte、.quad 指令は、オブジェクトモジュールにバイナリデータの連続した4分の1を生成するために使用されます。  (これらのディレクティブは32ビットアドレッシングをサポートするアセンブラでのみ使用可能です)。
 
 ### 1.4.12  .blkb, .ds, .rmb, and .rs Directives
 
@@ -1280,7 +1272,7 @@ Format:
 
 The .blkw directive reserves word blocks;  the .blk3 reserves 3  byte  blocks(available  in   assemblers   supporting   24-bit addressing);  the .blkl and .blk4 reserves 4 byte blocks (available in assemblers supporting 32-bit addressing).
 
-.blkw指令はワード・ブロックを予約し、.blk3は3バイト・ブロック（24ビット・アドレッシングをサポートするアセンブラで使用可能）を予約し、.blklと.blk4は4バイト・ブロック（32ビット・アドレッシングをサポートするアセンブラで使用可能）を予約する。
+.blkw指令はワードブロックを予約し、.blk3は3バイトブロック(24ビットアドレッシングをサポートするアセンブラで使用可能)を予約し、.blklと.blk4は4バイトブロック(32ビットアドレッシングをサポートするアセンブラで使用可能)を予約する。
 
 ### 1.4.14  .ascii, .str, and .fcc Directives
 
@@ -1381,7 +1373,7 @@ A  carriage return and line feed character have been appended to the string "Hel
 
 It   should  be  noted  that  multiple  string  segments  and non-printing character segments can  be  included  in  a  single string statemment:
 
-文字列 "Hello World!"にキャリッジリターンと改行文字が追加された。 非印字文字値は、常に現在の基数（指定されている場合は一時基数）で評価されます。文字値は、任意の正規表現で評価することができ、文字列に挿入される前に8ビット値に切り詰められます。
+文字列 "Hello World!"にキャリッジリターンと改行文字が追加された。 非印字文字値は、常に現在の基数(指定されている場合は一時基数)で評価されます。文字値は、任意の正規表現で評価することができ、文字列に挿入される前に8ビット値に切り詰められます。
 
 複数の文字列セグメントと非印刷文字セグメントを1つの文字列ステートメントに含めることができることに注意すべきである：
 
@@ -1474,7 +1466,7 @@ As  an  example, suppose there are two sections:  a CODE section and a DATA sect
 
 は現在の位置を4の倍数、つまり4バイト境界に変更する。
 
-境界の指定は、その領域内に含まれるすべての .odd、.even、.bndry ディレクティブに共通する最小の境界、すなわち境界係数としてリンカに伝えられる。 境界値1は.oddに相当し、境界値2は.evenに相当する。 領域は常に初期アドレス0（偶数アドレス）で組み立てられるので、.oddも.evenもモジュラス2の境界となります。
+境界の指定は、その領域内に含まれるすべての .odd、.even、.bndry ディレクティブに共通する最小の境界、すなわち境界係数としてリンカに伝えられる。 境界値1は.oddに相当し、境界値2は.evenに相当する。 領域は常に初期アドレス0(偶数アドレス)で組み立てられるので、.oddも.evenもモジュラス2の境界となります。
 
 例として、CODEセクションとDATAセクションの2つのセクションがあるとする。 プログラムコードは、このセクションに関連するデータがすぐに続くように書かれている。
 
@@ -1506,11 +1498,11 @@ When  multiple files containing the same area names (projects with multiple inde
 
 Boundary  specifications  will also be preserved when an area base address is specified with the -a linker option  and/or  the area is placed within a bank.
 
-CODEセクションとDATAセクションは1回のアセンブルで組み立てられるため（インクルードファイルにも適用される）、アセンブラはすべてのCODEセグメントを1つのエリアセグメントとしてコンパイルする。 24は、6と8で割り切れる最小の境界で、余りはありません。 アセンブルされたファイルがリンクされると、DATAエリアのデータの位置は、境界モジュラス24を持つアドレスにオフセットされる。
+CODEセクションとDATAセクションは1回のアセンブルで組み立てられるため(インクルードファイルにも適用される)、アセンブラはすべてのCODEセグメントを1つのエリアセグメントとしてコンパイルする。 24は、6と8で割り切れる最小の境界で、余りはありません。 アセンブルされたファイルがリンクされると、DATAエリアのデータの位置は、境界モジュラス24を持つアドレスにオフセットされる。
 
-同じエリア名を持つ複数のファイル（複数の独立したコンパイル・ファイルまたはライブラリ・ファイルを持つプロジェクト）が一緒にリンクされる場合、各エリア・セグメントはセグメントの境界モジュラスに合わせてオフセットされます。
+同じエリア名を持つ複数のファイル(複数の独立したコンパイルファイルまたはライブラリファイルを持つプロジェクト)が一緒にリンクされる場合、各エリアセグメントはセグメントの境界モジュラスに合わせてオフセットされます。
 
-エリア・ベース・アドレスが -a リンカ・オプションで指定されている場合や、エリアがバンク内に配置されている場合にも、境界の指定は保持されます。
+エリアベースアドレスが -a リンカオプションで指定されている場合や、エリアがバンク内に配置されている場合にも、境界の指定は保持されます。
 
 ### 1.4.23  .area Directive
 
@@ -1546,7 +1538,7 @@ The .area directive provides a means of defining and separating multiple program
 
 The options are specified within parenthesis and separated by commas as shown in the following example:
 
-.areaディレクティブは、複数のプログラミング・セクションとデータ・セクションを定義し、分離する手段を提供する。  この名前は、アセンブラとリンカが、別々にアセンブルされたさまざまなモジュールからコードを1つのセクションに集めるために使用する領域ラベルです。 名前の長さは1文字から79文字までである。
+.areaディレクティブは、複数のプログラミングセクションとデータセクションを定義し、分離する手段を提供する。  この名前は、アセンブラとリンカが、別々にアセンブルされたさまざまなモジュールからコードを1つのセクションに集めるために使用する領域ラベルです。 名前の長さは1文字から79文字までである。
 
 オプションは、次の例に示すように括弧で囲み、カンマで区切って指定する：
 
@@ -1577,11 +1569,11 @@ The options are specified within parenthesis and separated by commas as shown in
 
 The  default  area type is REL|CON;  i.e.  a relocatable section which is concatenated with other sections of code with  the same area name.  The ABS option indicates an absolute area.  The OVR and CON options indicate if program  sections  of  the  same name  will overlay each other (start at the same location) or be concatenated with each other (appended to each other).
 
-デフォルトの領域タイプはREL|CONである。つまり、同じ領域名を持つ他のセクションと連結される再配置可能なセクションである。 ABSオプションは絶対領域を示す。 OVRオプションとCONオプションは、同じ名前のプログラムセクションが互いに重なる（同じ位置から始まる）か、互いに連結される（互いに付加される）かを示す。
+デフォルトの領域タイプはREL|CONである。つまり、同じ領域名を持つ他のセクションと連結される再配置可能なセクションである。 ABSオプションは絶対領域を示す。 OVRオプションとCONオプションは、同じ名前のプログラムセクションが互いに重なる(同じ位置から始まる)か、互いに連結される(互いに付加される)かを示す。
 
 The  area can be specified as either a code segment, CSEG, or a data segment, DSEG.  The CSEG and DSEG descriptors are  useful when  the  microprocessor  code  and  data  unit allocations are unequal:  e.g.  the executable code  uses  an  allocation  of  2 bytes for each instruction and is addressed at an increment of 1 for every instruction, and the data uses an allocation of 1 byte for  each element and is addressed at an increment of 1 for each data byte.  The allocation units are defined by the architecture of the particular microprocessor.
 
-領域は、コード・セグメント（CSEG）またはデータ・セグメント（DSEG）として指定できる。 CSEGおよびDSEG記述子は、マイクロプロセッサのコード・ユニットとデータ・ユニットの割り当てが不均等な場合に便利です。例えば、実行コードは各命令に2バイトの割り当てを使用し、命令ごとに1のインクリメントでアドレス指定され、データは各要素に1バイトの割り当てを使用し、データ・バイトごとに1のインクリメントでアドレス指定されます。 割り当て単位は、特定のマイクロプロセッサのアーキテクチャによって定義されます。
+領域は、コードセグメント(CSEG)またはデータセグメント(DSEG)として指定できる。 CSEGおよびDSEG記述子は、マイクロプロセッサのコードユニットとデータユニットの割り当てが不均等な場合に便利です。例えば、実行コードは各命令に2バイトの割り当てを使用し、命令ごとに1のインクリメントでアドレス指定され、データは各要素に1バイトの割り当てを使用し、データバイトごとに1のインクリメントでアドレス指定されます。 割り当て単位は、特定のマイクロプロセッサのアーキテクチャによって定義されます。
 
 The  .area  directive also provides a means of specifying the bank this area is associated with.  All areas associated with  a particular  bank  are  combined  at  link  time  into a block of code/data.
 
@@ -1606,7 +1598,7 @@ The   ASxxxx   assemblers   automatically  provide  two  program sections:
 
 .areaディレクティブを同じ名前で複数回呼び出す場合は、同じオプションを指定するか、オプションフィールドを空白にする必要があります。
 
-ASxxxx アセンブラは自動的に 2 つのプログラム・セクションを提供します：
+ASxxxx アセンブラは自動的に 2 つのプログラムセクションを提供します：
 
 ```
     '_CODE'         This  is  the  default  code/data  area.
@@ -1624,7 +1616,7 @@ The  linker  -a option allows the repositioning of an area by specifying its sta
 
 .area名とオプションは決して大文字と小文字を区別しない。
 
-リンカーの -a オプションは、開始アドレスを指定することで領域の位置を変更できる。
+リンカの -a オプションは、開始アドレスを指定することで領域の位置を変更できる。
 
 ```
     -a TEST=arg
@@ -1701,12 +1693,12 @@ The  .bank  directive allows an arbitrary grouping of program and/or data areas 
 3.  FSFX, the file suffix to be used by the linker for this bank.  The suffix may not contain embedded white space.
 4.  MAP,  NOICE   mapping   parameter   for  this  bank  of code/data.
 
-.bankディレクティブは、プログラム領域とデータ領域の任意のグループ化をリンカに伝えることができる。  バンク・パラメーターはすべてオプションで、以下のように記述される：
+.bankディレクティブは、プログラム領域とデータ領域の任意のグループ化をリンカに伝えることができる。  バンクパラメーターはすべてオプションで、以下のように記述される：
 
-1.  BASE、バンクの開始アドレス（デフォルトは0）を定義することができる。 このアドレスは、リンカーの -b オプションを使って上書きすることができる。 バンクアドレスは常に「バイト」アドレッシングで指定される。 バイト」アドレスでない最初の領域（例えば、2バイト以上の「ワード」でアドレス指定されたプロセッサ）は、領域アドレスが「バイト」アドレスから始まるようにスケーリングされる。
-2.  SIZE（サイズ）：バイト単位で指定されるバンクの最大長。 サイズは常にバイト単位で指定される。
-3.  FSFX：このバンクのリンカーが使用するファイルサフィックス。 サフィックスに空白を含めることはできない。
-4.  MAP、このバンクのコード/データの NOICE マッピング・パラメータ。
+1.  BASE、バンクの開始アドレス(デフォルトは0)を定義することができる。 このアドレスは、リンカの -b オプションを使って上書きすることができる。 バンクアドレスは常に「バイト」アドレッシングで指定される。 バイト」アドレスでない最初の領域(例えば、2バイト以上の「ワード」でアドレス指定されたプロセッサ)は、領域アドレスが「バイト」アドレスから始まるようにスケーリングされる。
+2.  SIZE(サイズ)：バイト単位で指定されるバンクの最大長。 サイズは常にバイト単位で指定される。
+3.  FSFX：このバンクのリンカが使用するファイルサフィックス。 サフィックスに空白を含めることはできない。
+4.  MAP、このバンクのコード/データの NOICE マッピングパラメータ。
 
 The options are specified within parenthesis and separated by commas as shown in the following example:
 
@@ -1722,7 +1714,7 @@ The options are specified within parenthesis and separated by commas as shown in
 
 The parameters must be absolute (external symbols are not allowed.)
 
-パラメータは絶対値でなければならない（外部シンボルは使用不可）。
+パラメータは絶対値でなければならない(外部シンボルは使用不可)。
 
 ### 1.4.26  .org Directive
 
@@ -1760,9 +1752,9 @@ A  .globl directive may also have a label field and/or a comment field.
 
 The  .globl directive is provided to export (and thus provide linkage to) symbols not  otherwise  defined  as  global  symbols within  a  module.   In  exporting  global symbols the directive .globl J is similar to:
 
-.globl指示文は、ラベル・フィールドやコメント・フィールドを持つこともある。
+.globl指示文は、ラベルフィールドやコメントフィールドを持つこともある。
 
-.globl指示文は、モジュール内でグローバル・シンボルとして定義されていないシンボルを エクスポートする（つまり、リンクを提供する）ために用意されています。  グローバル・シンボルをエクスポートする場合、.globl J ディレクティブは次のようになります：
+.globl指示文は、モジュール内でグローバルシンボルとして定義されていないシンボルを エクスポートする(つまり、リンクを提供する)ために用意されています。  グローバルシンボルをエクスポートする場合、.globl J ディレクティブは次のようになります：
 
 ```
     J == expression or J::
@@ -1772,7 +1764,7 @@ Because  object  modules  are linked by global symbols, these symbols are vital 
 
 The  .globl directive and == construct can be overridden by a following .local directive.
 
-オブジェクト・モジュールはグローバル・シンボルによってリンクされているため、これらのシンボルはプログラムにとって不可欠である。 与えられたプログラム内に現れる内部シンボルは、パス1の終了時にすべて定義されていなければならず、そうでなければ未定義とみなされる。 アセンブリ指示文（-g）を使用すると、パス 1 の終了時にすべての未定義シンボルをグローバルにすることができます。
+オブジェクトモジュールはグローバルシンボルによってリンクされているため、これらのシンボルはプログラムにとって不可欠である。 与えられたプログラム内に現れる内部シンボルは、パス1の終了時にすべて定義されていなければならず、そうでなければ未定義とみなされる。 アセンブリ指示文(-g)を使用すると、パス 1 の終了時にすべての未定義シンボルをグローバルにすることができます。
 
 .globl指示文と==構成文は、次の.local指示文によって上書きすることができます。
 
@@ -1804,7 +1796,7 @@ The  .local  directive is provided to define symbols that are local to the curre
 
 .local指示文は、ラベルフィールドやコメントフィールドを持つこともある。
 
-.local ディレクティブは、現在のアセンブラプロセスに対してローカルなシンボルを 定義するために用意されています。 ローカル・シンボルは、アセンブラのオプション -a (make all symbols global) の影響を受けません。 ローカルシンボルを定義する場合、.local J 指令は次のようになります：
+.local ディレクティブは、現在のアセンブラプロセスに対してローカルなシンボルを 定義するために用意されています。 ローカルシンボルは、アセンブラのオプション -a (make all symbols global) の影響を受けません。 ローカルシンボルを定義する場合、.local J 指令は次のようになります：
 
 ```
     J =: expression
@@ -1814,7 +1806,7 @@ The  .local directive and the =:  construct are useful in defining symbols and c
 
 The `.local` directive and `=:`  construct can be overridden by a following .globl directive.
 
-.localディレクティブと=:コンストラクトは、.rel出力ファイルにエクスポートされるべきでない、現在のアセンブリプロセス固有のシンボルを多く含むヘッダーファイルや定義ファイル内でシンボルや定数を定義する場合に便利です。  典型的な使用例としては、マイクロプロセッサのSFR（Special Function Registers）の定義がある。
+.localディレクティブと=:コンストラクトは、.rel出力ファイルにエクスポートされるべきでない、現在のアセンブリプロセス固有のシンボルを多く含むヘッダーファイルや定義ファイル内でシンボルや定数を定義する場合に便利です。  典型的な使用例としては、マイクロプロセッサのSFR(Special Function Registers)の定義がある。
 
 .local`指示文と`=:`構成子は、次の.globl指示文によって上書きすることができる。
 
@@ -1930,7 +1922,7 @@ The use of the .iff, .ift, and .iftf directives makes the use of the .else direc
 
 1. 1.ブロックの条件が偽のとき、別のコード本体をアセンブルする。
 2. 2. 条件付きアセンブリブロック内で、ブロックに入る際の条件テストの結果に応じて、連続しないコード本体をアセンブリする。
-3. 条件付きアセンブリ・ブロック内のコード本体の無条件アセンブリ。
+3. 条件付きアセンブリブロック内のコード本体の無条件アセンブリ。
 
 .iff、.ift、.iftfディレクティブの使用は、.elseディレクティブの使用を冗長にする。
 
@@ -2234,7 +2226,7 @@ The  conditional .ifidn is most useful when used in macro definitions to determi
 
 条件付きアセンブリ指令は、テスト条件の評価に基づいて、アセンブリ処理中に ソースコードのブロックを含めたり除外したりすることができる。
 
-条件付き .ifidn は、引数が同一かどうかを判定するマクロ定義で使用すると最も便利です。  シンボル'sym$1'が'sym$2'と同一である場合（すなわち、大文字小文字を区別するフラグと一致するsym$1とsym$2の文字列が同一である場合）、真条件の範囲が処理されます。 このif文が、引数の置換が空白になる可能性のあるマクロの内部で発生する場合、引数は、各シンボルに対して/symbol/の形式で区切られなければならない。 真の条件の範囲は、.elseディレクティブと偽の条件の範囲と同様に任意である。  以下はすべて有効な.ifidn/.else/.endif構文です：
+条件付き .ifidn は、引数が同一かどうかを判定するマクロ定義で使用すると最も便利です。  シンボル'sym$1'が'sym$2'と同一である場合(すなわち、大文字小文字を区別するフラグと一致するsym$1とsym$2の文字列が同一である場合)、真条件の範囲が処理されます。 このif文が、引数の置換が空白になる可能性のあるマクロの内部で発生する場合、引数は、各シンボルに対して/symbol/の形式で区切られなければならない。 真の条件の範囲は、.elseディレクティブと偽の条件の範囲と同様に任意である。  以下はすべて有効な.ifidn/.else/.endif構文です：
 
 ```
     .ifidn  sym$1,sym$1     ;arguments are the same
@@ -2282,7 +2274,7 @@ The  conditional .ifdif is most useful when used in macro definitions to determi
 
 条件付きアセンブリ指令は、テスト条件の評価に基づいて、アセンブリ処理中に ソースコードのブロックを含めたり除外したりすることができる。
 
-条件付き .ifdif は、引数が異なるかどうかを判定するマクロ定義で使用すると最も便利です。  シンボル'sym$1'が'sym$2'と異なる場合（すなわち、大文字小文字を区別するフラグと一致するsym$1とsym$2の文字列が同じでない場合）、真条件の範囲が処理されます。 このif文が引数の置換が空白になる可能性のあるマクロの内部で発生する場合、引数は各シンボルに対して/symbol/の形式で区切られなければならない。 真の条件の範囲は、.elseディレクティブと偽の条件の範囲と同様に任意である。 以下はすべて有効な.ifdif/.else/.endif構文です：
+条件付き .ifdif は、引数が異なるかどうかを判定するマクロ定義で使用すると最も便利です。  シンボル'sym$1'が'sym$2'と異なる場合(すなわち、大文字小文字を区別するフラグと一致するsym$1とsym$2の文字列が同じでない場合)、真条件の範囲が処理されます。 このif文が引数の置換が空白になる可能性のあるマクロの内部で発生する場合、引数は各シンボルに対して/symbol/の形式で区切られなければならない。 真の条件の範囲は、.elseディレクティブと偽の条件の範囲と同様に任意である。 以下はすべて有効な.ifdif/.else/.endif構文です：
 
 ```
     .ifdif  sym$1,sym$2     ;arguments are different
@@ -2492,18 +2484,18 @@ The  default  directory  path,  if none is specified, for any .include file is t
 
 各 .include ファイルはアセンブラの各パスの間に開かれ、閉じられるので、別々に指定された .include ファイルの総数は無制限である。
 
-.includeファイルのデフォルトのディレクトリ・パスは、何も指定されていない場合、現在のファイルのディレクトリ・パスになります。  例えば、現在のソースファイル D:￢projfile1.asm に "include1" と指定されたファイルが含まれている場合、D:￢proj feininclude1.asm がオープンされます。
+.includeファイルのデフォルトのディレクトリパスは、何も指定されていない場合、現在のファイルのディレクトリパスになります。  例えば、現在のソースファイル D:￢projfile1.asm に "include1" と指定されたファイルが含まれている場合、D:￢proj feininclude1.asm がオープンされます。
 
 ### 1.4.42.1  Including Files In Windows/DOS  -
 
 Graphical Illustration of Include File Locations for the following command line entry:
 
-次のコマンドライン・エントリ
+次のコマンドラインエントリ
 
 ```
 __> bin\ascheck -l -o -s  obj\prjct.rel   src\prjct\prjct.asm
 ```
-についてのインクルード・ファイルの場所の図解は以下のようになります。
+についてのインクルードファイルの場所の図解は以下のようになります。
 
 <figure>
 <img width=700, src="img/001-1-4-42-1-including-files-in-windows-dos.png">
@@ -2513,12 +2505,12 @@ __> bin\ascheck -l -o -s  obj\prjct.rel   src\prjct\prjct.asm
 
 Graphical Illustration of Include File Locations for the following command line entry:
 
-次のコマンドライン・エントリ
+次のコマンドラインエントリ
 
 ```
 __$ bin/ascheck -l -o -s  obj/prjct.rel   src/prjct/prjct.asm
 ```
-についてのインクルード・ファイルの場所の図解は以下のようになります。
+についてのインクルードファイルの場所の図解は以下のようになります。
 
 <figure>
 <img width=700, src="img/002-1-4-42-2-including-files-in-linux.png">
@@ -2588,7 +2580,7 @@ The  'csn'  option  , C Style Numbers', is currently the only option available t
 
 Individual assemblers may have additional options specific to that assembler and will be described in its documentation. 
 
-csn' オプション（C スタイル番号）は、現在すべての ASxxxx アセンブラで使用できる唯一のオプションです。 'csn' オプションを有効にすると、16進数オプションの0xと0Xを除く、0（ゼロ）で始まるすべての一時基数オプションが無効になります。  0から始まるその他の数値はすべて8進数として評価され、1～9桁で始まる数値はすべて10進数として評価される。
+csn' オプション(C スタイル番号)は、現在すべての ASxxxx アセンブラで使用できる唯一のオプションです。 'csn' オプションを有効にすると、16進数オプションの0xと0Xを除く、0(ゼロ)で始まるすべての一時基数オプションが無効になります。  0から始まるその他の数値はすべて8進数として評価され、1～9桁で始まる数値はすべて10進数として評価される。
 
 個々のアセンブラには、そのアセンブラ固有のオプションが追加されている場合があり、そのオプションについてはそのアセンブラのドキュメントに記載されている。
 
@@ -2601,7 +2593,7 @@ Format:
 
 The set direct page directive has a common format in all the assemblers supporting a paged mode.  The .setdp directive is  used to  inform  the  assembler of the current direct page region and the offset address within the selected area.  The normal invocation methods are:
 
-set direct page 指令は、ページ・モードをサポートするすべてのアセンブラで共通 の書式を持っている。 .setdp指示文は、現在のダイレクト・ページ領域と選択された領域内のオフセット・アドレスをアセンブラに通知するために使用される。 通常の呼び出し方法は以下の通りである：
+set direct page 指令は、ページモードをサポートするすべてのアセンブラで共通 の書式を持っている。 .setdp指示文は、現在のダイレクトページ領域と選択された領域内のオフセットアドレスをアセンブラに通知するために使用される。 通常の呼び出し方法は以下の通りである：
 
 ```
     .area   DIRECT  (PAG)
@@ -2616,9 +2608,9 @@ for  all  the  68xx microprocessors (the 6804 has only the paged ram area).  The
 
 The  assembler  verifies  that  any  local variable used in a direct variable reference is located in this area.  Local  variable  and  constant value direct access addresses are checked to be within the address range from 0 to 255.
 
-コマンドは、すべての68xxマイクロプロセッサで使用できます(6804は、ページングされたラム・エリアのみを持っています)。 コマンドは、ダイレクト・ページがエリアDIRECTにあり、そのオフセット・アドレスが0（6809マイクロプロセッサを除くすべてのマイクロプロセッサで唯一有効な値）であることを指定します。 リンク時には、必ずDIRECTエリアを0番地に置くこと。 ベースアドレスと領域が指定されていない場合、0と現在の領域がデフォルトとなる。 .setdp指令が発行されない場合、アセンブラはデフォルトでオフセット0の領域"_CODE "にDIRECTページを配置します。
+コマンドは、すべての68xxマイクロプロセッサで使用できます(6804は、ページングされたラムエリアのみを持っています)。 コマンドは、ダイレクトページがエリアDIRECTにあり、そのオフセットアドレスが0(6809マイクロプロセッサを除くすべてのマイクロプロセッサで唯一有効な値)であることを指定します。 リンク時には、必ずDIRECTエリアを0番地に置くこと。 ベースアドレスと領域が指定されていない場合、0と現在の領域がデフォルトとなる。 .setdp指令が発行されない場合、アセンブラはデフォルトでオフセット0の領域"_CODE "にDIRECTページを配置します。
 
-アセンブラは、直接変数参照で使用されるローカル変数がこの領域にあるかどうかを確認します。 ローカル変数と定数値のダイレクト・アクセス・アドレスが 0 から 255 までのアドレス範囲内にあるかどうかがチェックされます。
+アセンブラは、直接変数参照で使用されるローカル変数がこの領域にあるかどうかを確認します。 ローカル変数と定数値のダイレクトアクセスアドレスが 0 から 255 までのアドレス範囲内にあるかどうかがチェックされます。
 
 External direct references are assumed by the assembler to be in the correct area and have valid  offsets.   The  linker  will check all direct page relocations to verify that they are within the correct area.
 
@@ -2626,7 +2618,7 @@ The  6809  microprocessor  allows the selection of the direct page to be on any 
 
 外部直接参照は、アセンブラによって正しい領域にあり、有効なオフセットを持っていると見なされる。  リンカはすべての直接ページ再配置をチェックし、正しい領域内にあるかどうかを確認する。
 
-6809マイクロプロセッサでは、dpレジスタに適切な値をロードすることで、任意の256バイト境界にダイレクト・ページを選択することができます。 通常、リンク時にページ境界を選択したい場合、次のような方法がある：
+6809マイクロプロセッサでは、dpレジスタに適切な値をロードすることで、任意の256バイト境界にダイレクトページを選択することができます。 通常、リンク時にページ境界を選択したい場合、次のような方法がある：
 
 ```
     .area   DIRECT  (PAG)   ; define the direct page
@@ -2653,7 +2645,7 @@ Both  the  area address and offset value must be specified (area and variable na
 
 The  preceding  sequence  could  be  repeated for multiple paged areas, however an alternate method is to define a non-paged area and use the .setdp directive to specify the offset value:
 
-領域アドレスとオフセット値の両方を指定する必要がある（領域名と変数名は独立）。  リンカは、再配置されたダイレクト・ページ・アクセスがダイレクト・ ページ内にあるかどうかを検証する。
+領域アドレスとオフセット値の両方を指定する必要がある(領域名と変数名は独立)。  リンカは、再配置されたダイレクトページアクセスがダイレクト ページ内にあるかどうかを検証する。
 
 前述の手順を複数のページングされた領域に対して繰り返すこともできますが、別の方法として、ページングされていない領域を定義し、.setdp 命令を使用してオフセット値を指定することもできます：
 
@@ -2678,9 +2670,9 @@ The  linker  will  verify that subsequent direct page references are in the spec
 
 For  those  cases  where a single piece of code must access a defined data structure within a direct page and there  are  many pages,  define  a  dummy  direct page linked at address 0.  This dummy page is used only to define  the  variable  labels.   Then load the dp register with the real base address but do not use a .setdp directive.  This method is equivalent to indexed addressing,  where the dp register is the index register and the direct addressing is the offset.
 
-リンカは、後続の直接ページ参照が指定された領域とオフセット・アドレス範囲にあることを確認する。 指定された .setdp ベース・アドレスに対応する正しいページ・セグメントを dp レジスタにロードするのは、プログラマーの責任である。
+リンカは、後続の直接ページ参照が指定された領域とオフセットアドレス範囲にあることを確認する。 指定された .setdp ベースアドレスに対応する正しいページセグメントを dp レジスタにロードするのは、プログラマーの責任である。
 
-単一コードがダイレクト・ページ内の定義されたデータ構造にアクセスしなければならず、ページ数が多い場合には、アドレス0にリンクされたダミー・ダイレクト・ページを定義する。 このダミー・ページは、変数ラベルを定義するためだけに使用される。  次に、dpレジスタに実際のベース・アドレスをロードするが、.setdpディレクティブは使用しない。 この方法はインデックス・アドレッシングと同じで、dpレジスタはインデックス・レジスタで、ダイレクト・アドレッシングはオフセットである。
+単一コードがダイレクトページ内の定義されたデータ構造にアクセスしなければならず、ページ数が多い場合には、アドレス0にリンクされたダミーダイレクトページを定義する。 このダミーページは、変数ラベルを定義するためだけに使用される。  次に、dpレジスタに実際のベースアドレスをロードするが、.setdpディレクティブは使用しない。 この方法はインデックスアドレッシングと同じで、dpレジスタはインデックスレジスタで、ダイレクトアドレッシングはオフセットである。
 
 ### 1.4.46  .16bit, .24bit, and .32bit Directives
 
@@ -2715,7 +2707,7 @@ The assembler directive   .msb n  configures the assembler to select a particula
 
 アセンブラ演算子 '>' は、アセンブラ命令に含まれる場合、上位バイト (MSB) を選択します。  デフォルトのアセンブラモードでは、ビット<15:8>をMSBとして選択する。 .msb命令により、アドレス空間が16ビットより大きい場合、プログラマーは特定のバイトを「MSB」として指定することができる。
 
-アセンブラの .msb n 指令は、アセンブラが特定のバイトを MSB として選択するように設定します。 MNmnの32ビットアドレス（M(3)は<31:24>、N(2)は<23:16>、m(1)は<15:8>、n(0)は<7:0>）が与えられた場合、以下の例は特定のアドレスバイトを選択する方法を示している：
+アセンブラの .msb n 指令は、アセンブラが特定のバイトを MSB として選択するように設定します。 MNmnの32ビットアドレス(M(3)は<31:24>、N(2)は<23:16>、m(1)は<15:8>、n(0)は<7:0>)が与えられた場合、以下の例は特定のアドレスバイトを選択する方法を示している：
 
 ```
     .msb 1          ;select byte 1 of address
@@ -2765,7 +2757,7 @@ Format:
 
 The  .trace and .ntrace directives are used to trace the process of inserting assembler text lines, opening and closing of assembler  and  include  files,  and  the  processing of macros.  The directives have the following tracing options:
 
-.trace ディレクティブと .ntrace ディレクティブは、アセンブラのテキスト行の挿入、 アセンブラとインクルード・ファイルのオープンとクローズ、 マクロの処理の過程をトレースするために使用されます。 ディレクティブには以下のトレースオプションがあります：
+.trace ディレクティブと .ntrace ディレクティブは、アセンブラのテキスト行の挿入、 アセンブラとインクルードファイルのオープンとクローズ、 マクロの処理の過程をトレースするために使用されます。 ディレクティブには以下のトレースオプションがあります：
 
 ```
     ins     -       line insertion
@@ -2783,9 +2775,9 @@ The 'normal' tracing mode .trace is the combination of ins, asm, inc, mcr and rp
 
 The NOT option, !, is used to set the tracing mode to the opposite of the .trace or .ntrace directive  before  applying  the tracing options.
 
-通常の」トレースモード.traceは、ins、asm、inc、mcr、rptの組み合わせが有効になっている。 通常の」非トレースモード .ntrace は、すべてのトレース項目を無効にします。 トレース・オプションを指定する場合、オプション・リストは括弧で囲み、複数のオプションをカンマで区切らなければならない。
+通常の」トレースモード.traceは、ins、asm、inc、mcr、rptの組み合わせが有効になっている。 通常の」非トレースモード .ntrace は、すべてのトレース項目を無効にします。 トレースオプションを指定する場合、オプションリストは括弧で囲み、複数のオプションをカンマで区切らなければならない。
 
-NOTオプション「！」は、トレース・オプションを適用する前に、トレース・モードを.traceまたは.ntraceディレクティブの反対に設定するために使用します。
+NOTオプション「！」は、トレースオプションを適用する前に、トレースモードを.traceまたは.ntraceディレクティブの反対に設定するために使用します。
 
 For example:
 ```
@@ -2797,7 +2789,7 @@ For example:
 
 When  tracing  is invoked each trace option inserts a comment line into the  assembler  listing  denoting  when  a  particular traced  action  occurs.   The inserted lines contain information related to the type of traced action:
 
-トレースが実行されると、各トレース・オプションは、特定のトレース・アクションが発生したことを示すコメント行をアセンブラ・リストに挿入します。  挿入される行には、トレースされるアクションのタイプに関連する情報が含まれる：
+トレースが実行されると、各トレースオプションは、特定のトレースアクションが発生したことを示すコメント行をアセンブラリストに挿入します。  挿入される行には、トレースされるアクションのタイプに関連する情報が含まれる：
 
 ```
     ins     at insertion    ;N>>
@@ -2861,7 +2853,7 @@ The  .end  directive is used to specify a code entry point to be included in the
 
 The .end directive without an expression is ignored.
 
-.end指示文は、リンカ出力ファイルに含めるコード・エントリ・ポイントを指定す るために使用する。 詳細については、リンカのセクションで説明されている I86 と S レコードの書式を確認してください。
+.end指示文は、リンカ出力ファイルに含めるコードエントリポイントを指定す るために使用する。 詳細については、リンカのセクションで説明されている I86 と S レコードの書式を確認してください。
 
 式を指定しない .end 指令は無視されます。
 
@@ -2871,7 +2863,7 @@ The .end directive without an expression is ignored.
 
 Starting  an  ASxxxx assembler without any arguments provides the following option list and then exits:
 
-引数なしでASxxxxアセンブラを起動すると、以下のオプション・リストが表示され、終了します：
+引数なしでASxxxxアセンブラを起動すると、以下のオプションリストが表示され、終了します：
 
 ```
 Usage: [-Options] [-Option with arg] file1 [file2 ...]
@@ -3068,7 +3060,7 @@ The  .rel  file contains a radix directive so that the linker will use the prope
 
 The  ASxxxx  assemblers  also  have  several 'hidden' options which are not shown in the usage message.  These are:
 
-.lst、.rel、.hlr、.symファイルのファイル名は、コマンドラインで指定された最初のファイル名です。 すべての出力ファイルはアスキー・テキスト・ファイルであり、編集、コピーなどが可能である。 出力ファイルはすべての入力ファイルを連結したものであり、ファイルを個別にアセンブルする場合は、ファイルごとにアセンブラを起動する。
+.lst、.rel、.hlr、.symファイルのファイル名は、コマンドラインで指定された最初のファイル名です。 すべての出力ファイルはアスキーテキストファイルであり、編集、コピーなどが可能である。 出力ファイルはすべての入力ファイルを連結したものであり、ファイルを個別にアセンブルする場合は、ファイルごとにアセンブラを起動する。
 
 .relファイルにはradixディレクティブが含まれており、リンカはこのファイルに対して適切なonversionを使用します。 リンクされたファイルの基数は異なる場合があります。
 
@@ -3099,9 +3091,9 @@ The  ASxxxx assemblers provide limited diagnostic error codes during the assembl
 
 The assembler reports the errors on the stderr device as
 
-ASxxxxアセンブラは、アセンブリ処理中に限定的な診断エラー・コードを提供し、これらのエラーはリスト・ファイルに記録され、標準エラー・デバイスに出力されます。
+ASxxxxアセンブラは、アセンブリ処理中に限定的な診断エラーコードを提供し、これらのエラーはリストファイルに記録され、標準エラーデバイスに出力されます。
 
-アセンブラは標準エラー・デバイスに次のようにエラーを報告します。
+アセンブラは標準エラーデバイスに次のようにエラーを報告します。
 
 ```
         ?ASxxxx-Error-<*> in line nnn of filename
@@ -3167,7 +3159,7 @@ The  listing  file (.lst) will have the first and third lines of the error messa
 
 最初の行は、xxxx行目の基本的なエラーメッセージである。 2行目には実際のエラー行が記載され、3行目にはより具体的なエラーが記載される。
 
-リスト・ファイル(.lst)には、エラーを含む行の前にエラー・メッセージの1行目と3行目が挿入される。
+リストファイル(.lst)には、エラーを含む行の前にエラーメッセージの1行目と3行目が挿入される。
 
 
 
@@ -3194,17 +3186,17 @@ Each succeeding line contains six fields:
 (-l)オプションは、ascii出力のリストファイルを生成する。 出力の各ページには5行のヘッダーが含まれる：
 
 1.  ASxxxxプログラム名とページ番号
-2.  アセンブラの基数、アドレス・ビット、日付、時刻
-3.  .titleディレクティブによるタイトル（もしあれば）
+2.  アセンブラの基数、アドレスビット、日付、時刻
+3.  .titleディレクティブによるタイトル(もしあれば)
 4.  .sbttlディレクティブによるサブタイトル (もしあれば)
 5.  空白行
 
 続く各行は6つのフィールドを含む：
 
-1.  エラーフィールド（行の最初の2文字）
+1.  エラーフィールド(行の最初の2文字)
 2.  現在地カウンター
 3.  バイト形式の生成コード
-4.  オペコード・サイクル・カウント
+4.  オペコードサイクルカウント
 5.  ソーステキストの行番号
 6.  ソーステキスト
 
@@ -3214,11 +3206,11 @@ The  current  location  counter  field  displays  the 16-bit, 24-bit, or 32-bit 
 
 The generated code follows the program location.  The listing radix determines the number of bytes that will be  displayed  in this field.  Hexadecimal listing allows six bytes of data within the field, decimal and octal allow four bytes within the  field.  If more than one field of data is generated from the assembly of a single line of source code, then the data field is repeated on successive lines.
 
-エラー・フィールドには、このソース・コード行のアセンブル中に発生したエラーを示すエラー・フラグを 2 つまで含めることができる。
+エラーフィールドには、このソースコード行のアセンブル中に発生したエラーを示すエラーフラグを 2 つまで含めることができる。
 
-現在位置カウンタ・フィールドには、16 ビット、24 ビット、または 32 ビットのプログラム位置が表示されます。 このフィールドは選択された基数になります。
+現在位置カウンタフィールドには、16 ビット、24 ビット、または 32 ビットのプログラム位置が表示されます。 このフィールドは選択された基数になります。
 
-生成されるコードはプログラム位置に従います。 リスト基数によって、このフィールドに表示されるバイト数が決まります。 16進リスティングではフィールド内に6バイトのデータが表示され、10進リスティングと8進リスティングではフィールド内に4バイトのデータが表示されます。 1行のソース・コードのアセンブリから複数のデータ・フィールドが生成される場合、データ・フィールドは連続した行で繰り返されます。
+生成されるコードはプログラム位置に従います。 リスト基数によって、このフィールドに表示されるバイト数が決まります。 16進リスティングではフィールド内に6バイトのデータが表示され、10進リスティングと8進リスティングではフィールド内に4バイトのデータが表示されます。 1行のソースコードのアセンブリから複数のデータフィールドが生成される場合、データフィールドは連続した行で繰り返されます。
 
 The  opcode cycles count is printed within the delimiters [ ] on the line with the source text.  This reduces  the  number  of generated code bytes displayed on the line with the source listing by one.  (The -c option disables all opcode cycle listing.)
 
@@ -3226,15 +3218,15 @@ The source text line number is printed in decimal and is followed by the source 
 
 Two  additional options are available for printing the source line text.  If the -b option is specified then the listed source line  contains all the .define substitutions.  If the -bb option is specified then the original source line is printed before the source line with substitutions.
 
-オペコード・サイクル・カウントは、ソース・テキストの行の区切り記号 [ ] 内に表示される。 これにより、ソース・リストの行に表示される生成コード・バイト数が 1 つ減ります。 (-c オプションは、すべてのオペコード・サイクル・リスティングを無効にする)。
+オペコードサイクルカウントは、ソーステキストの行の区切り記号 [ ] 内に表示される。 これにより、ソースリストの行に表示される生成コードバイト数が 1 つ減ります。 (-c オプションは、すべてのオペコードサイクルリスティングを無効にする)。
 
-ソース・テキストの行番号は 10 進数で表示され、その後にソース・テキストが続きます。 .page 指示子を持つソース行は決してリストされません。 (-u オプションはこの動作を上書きする)。
+ソーステキストの行番号は 10 進数で表示され、その後にソーステキストが続きます。 .page 指示子を持つソース行は決してリストされません。 (-u オプションはこの動作を上書きする)。
 
 ソース行テキストの表示には、さらに 2 つのオプションがあります。 b オプションを指定すると、リストされるソース行にすべての .define 置換が含まれます。 bb オプションが指定されると、元のソース行が置換を含むソース行の前に表示されます。
 
 Two  data  field  options  are  available to flag those bytes which will be relocated by the linker.   If  the  -f  option  is specified then each byte to be relocated will be preceded by the '`' character.  If the -ff option is specified then each byte to be   relocated   will  be  preceded  by  one  of  the  following characters:
 
-リンカによって再配置されるバイトにフラグを付けるために、2つのデータ・ フィールド・オプションが利用できる。  fオプションを指定すると、再配置される各バイトの前に'`'文字が付く。 ffオプションが指定された場合、再配置される各バイトの前には以下の文字のいずれかが付きます：
+リンカによって再配置されるバイトにフラグを付けるために、2つのデータ フィールドオプションが利用できる。  fオプションを指定すると、再配置される各バイトの前に'`'文字が付く。 ffオプションが指定された場合、再配置される各バイトの前には以下の文字のいずれかが付きます：
 
 1.  `*`   paged relocation
 2.  `u`   low  byte of unsigned word or unsigned byte
@@ -3288,19 +3280,19 @@ The sorted list of symbols and/or labels contains the following information:
 
 シンボルテーブルには2つの部分がある：
 
-1.  ソース・プログラムで定義または参照されているシンボルやラベルをアルファベット順に並べたリスト。
+1.  ソースプログラムで定義または参照されているシンボルやラベルをアルファベット順に並べたリスト。
 
-2.  ソース・プログラムのアセンブリ中に定義されたプログラム領域のリスト。
+2.  ソースプログラムのアセンブリ中に定義されたプログラム領域のリスト。
 
 ソートされたシンボルやラベルのリストには、以下の情報が含まれています：
 
-1.  プログラム領域番号（絶対値または外部の場合はなし）。
+1.  プログラム領域番号(絶対値または外部の場合はなし)。
 
 2.  シンボルまたはラベル
 
 3.  直接割り当てられた記号は(=)記号で示す。
 
-4.  シンボルの値、プログラム領域のベースアドレス（=0）に対するラベルの位置、またはシンボルやラベルが未定義であることを示す****。
+4.  シンボルの値、プログラム領域のベースアドレス(=0)に対するラベルの位置、またはシンボルやラベルが未定義であることを示す****。
 
 5.  以下の文字:  
     G - global,  
@@ -3310,13 +3302,13 @@ The sorted list of symbols and/or labels contains the following information:
 
 The list of program areas provides the correspondence between the program area numbers and the defined program areas, the size of the program areas, and the area flags (attributes).
 
-プログラム・エリアのリストは、プログラム・エリア番号と定義されたプログラム・エリアの対応、プログラム・エリアのサイズ、およびエリア・フラグ（属性）を提供する。
+プログラムエリアのリストは、プログラムエリア番号と定義されたプログラムエリアの対応、プログラムエリアのサイズ、およびエリアフラグ(属性)を提供する。
 
 ## 1.9  OBJECT FILE
 
 The  object  file is an ascii file containing the information needed by the linker to bind multiple object modules into a complete  loadable  memory  image.   The object module contains the following designators:
 
-オブジェクト・ファイルは、リンカが複数のオブジェクト・モジュールを完全なローダブル・メモリ・イメージにバインドするために必要な情報を含むアスキー・ファイルです。  オブジェクト・モジュールには以下のデジグネータが含まれます：
+オブジェクトファイルは、リンカが複数のオブジェクトモジュールを完全なローダブルメモリイメージにバインドするために必要な情報を含むアスキーファイルです。  オブジェクトモジュールには以下のデジグネータが含まれます：
 
 ```
     [XDQ][HL][234]
@@ -3345,13 +3337,13 @@ The  object  file is an ascii file containing the information needed by the link
 
 Refer to the linker for a detailed description of each of the designators and the format of the information contained  in  the object file.
 
-各デジグネータの詳細と、オブジェクト・ファイルに含まれる情報のフォーマットについては、リンカを参照してください。
+各デジグネータの詳細と、オブジェクトファイルに含まれる情報のフォーマットについては、リンカを参照してください。
 
 ## 1.10  HINT FILE
 
 The  hint file is an ascii file containing information needed by the linker to convert the listing file into a relocated listing  file.   Each  line in the .hlr file corresponds to a single line in the listing file.  The text line usually contains 3 or 4 parameters  in  the radix selected for the assembler as shown in the following table:
 
-ヒント・ファイルは、リンカがリスティング・ファイルを再配置リスティング・ ファイルに変換するために必要な情報を含むアスキー・ファイルです。  .hlrファイルの各行は、リスティング・ファイルの1行に対応しています。 テキスト行には通常、次の表に示すように、アセンブラで選択された基数のパラメータが 3 つまたは 4 つ含まれています：
+ヒントファイルは、リンカがリスティングファイルを再配置リスティング ファイルに変換するために必要な情報を含むアスキーファイルです。  .hlrファイルの各行は、リスティングファイルの1行に対応しています。 テキスト行には通常、次の表に示すように、アセンブラで選択された基数のパラメータが 3 つまたは 4 つ含まれています：
 
 ```
 Line Position:  123456789012 
@@ -3363,7 +3355,7 @@ Hex:             11 22 33
 
 Parameter 1 specifies the parameters listed in the line. A bit is set for each listing option enabled during the assembly of the line.
 
-パラメータ1は、その行にリストされているパラメータを指定する。ビットは、行の組み立て中に有効化されたリスト・オプションごとに設定される。
+パラメータ1は、その行にリストされているパラメータを指定する。ビットは、行の組み立て中に有効化されたリストオプションごとに設定される。
 
 ```
     BIT 0   - LIST_ERR      Error Code(s) 
@@ -3378,7 +3370,7 @@ Parameter 1 specifies the parameters listed in the line. A bit is set for each l
 
 Parameter 2 is the internal assembler listing mode value specified for this line during the assembly process:
 
-パラメータ 2 は、アセンブル処理中にこの行に指定された内部アセンブラ・リスティング・モードの値である：
+パラメータ 2 は、アセンブル処理中にこの行に指定された内部アセンブラリスティングモードの値である：
 
 ```
     0 - NLIST       No listing 
@@ -3406,7 +3398,7 @@ Area Name:       equatearea
 
 When  the  line number is output to the .hlr file (-r option) the line number is prepended to the 3 or 4 parameters  described above.   The  line  number is always in decimal in the following format:
 
-行番号が.hlrファイルに出力されるとき（-rオプション）、行番号は上記の3つまたは4つのパラメータの前に付加される。  行番号は常に10進数で、以下の形式である：
+行番号が.hlrファイルに出力されるとき(-rオプション)、行番号は上記の3つまたは4つのパラメータの前に付加される。  行番号は常に10進数で、以下の形式である：
 
 ```
 Line Position:  1234567 
@@ -3416,7 +3408,7 @@ Decimal:          LLLLL
 
 Thus the four formats (for each radix) that may be present in a .hlr file are:
 
-したがって、.hlrファイルに含まれる可能性のある4つのフォーマット（各基数）は以下の通りである：
+したがって、.hlrファイルに含まれる可能性のある4つのフォーマット(各基数)は以下の通りである：
 
 ```
 Line Position:  123456789012345678901234567890
@@ -3429,7 +3421,7 @@ Line Position:  123456789012345678901234567890
 
 The  linker understands these formats without any user interaction.
 
-リンカーは、ユーザーが操作しなくてもこれらのフォーマットを理解する。
+リンカは、ユーザーが操作しなくてもこれらのフォーマットを理解する。
 
 <br>
 <br>
@@ -3449,7 +3441,7 @@ Macro  expansion  is  the insertion of the macro source lines into the main  pro
 
 Macro  directives provide a means to manipulate the macro expansions.  Only one directive is allowed per source line.   Each directive  may  have  a  blank  operand  field  or  one  or more operands.  Legal  operands  differ  with  each  directive.   The macros  and  their  associated  directives  are detailed in this chapter.
 
-マクロを使うことで、プログラマーは1行を使ってソース・プログラムに一連の行を挿入することができる。
+マクロを使うことで、プログラマーは1行を使ってソースプログラムに一連の行を挿入することができる。
 
 マクロ定義は、.macroディレクティブの後にソース行が続く。 ソース行には、オプションで仮引数を含めることができる。 そのような引数が使用される場合、各引数は .macro ディレクティブにリストされる。
 
@@ -3605,7 +3597,7 @@ directive before the macro can be called and expanded within the source program.
 
 When a macro name is the same as a user label, the appearance of the symbol in the operator field designates the symbol  as  a macro  call;   the appearance of the symbol in the operand field designates it as a label, as shown below:
 
-マクロの定義は、ソース・プログラム内でマクロを呼び出して展開する前に、.macro
+マクロの定義は、ソースプログラム内でマクロを呼び出して展開する前に、.macro
 
 ディレクティブによって確立されなければならない。
 
@@ -3631,9 +3623,9 @@ Macro  definition  arguments (dummy) and macro call arguments (real) maintain a 
 
 For  example,  the  following  macro definition and its associated macro call contain multiple arguments:
 
-マクロ内の複数の引数は、正規の区切り文字（カンマ、スペース、タブ）で区切らなければならない。
+マクロ内の複数の引数は、正規の区切り文字(カンマ、スペース、タブ)で区切らなければならない。
 
-マクロ定義引数（仮引数）とマクロ呼び出し引数（実引数）は、厳密な位置関係を維持する。 つまり、マクロ呼び出しの最初の実引数は、マクロ定義の最初の仮引数に対応する。
+マクロ定義引数(仮引数)とマクロ呼び出し引数(実引数)は、厳密な位置関係を維持する。 つまり、マクロ呼び出しの最初の実引数は、マクロ定義の最初の仮引数に対応する。
 
 たとえば、次のマクロ定義とそれに関連するマクロ呼び出しには複数の引数が含まれる：
 
@@ -3666,7 +3658,7 @@ to  replace all occurrences of the symbol a in the macro definition.  Real argum
 
 The  up-arrow  (^)  construction also allows another up-arrow construction to be passed as part of the  argument.   This  construction,  for example, could have been used in the above macro call, as follows:
 
-上向き矢印（^）構文は、引数の一部として別の上向き矢印構文を渡すこともできる。  この構文は、例えば、上記のマクロ呼び出しで次のように使用することができる：
+上向き矢印(^)構文は、引数の一部として別の上向き矢印構文を渡すこともできる。  この構文は、例えば、上記のマクロ呼び出しで次のように使用することができる：
 
 ```
     new     ^!^/exg    x,y/!,#44,ij
@@ -3797,7 +3789,7 @@ A  subsequent  call to the same macro would generate the following code:
 
 and  so  on,  for  later  calls.   The two macro definitions are necessary because the symbol associated with the dummy  argument b (that is, symbol c) cannot be updated in the con macro definition, because the character 0 has replaced  c  in  the  argument string  (inc  x,c).   In  the  con  macro definition, the number passed is treated as a string argument.  (Where the value of the real  argument  is 0, only a single 0 character is passed to the macro expansion.
 
-2つのマクロ定義が必要である。  この2つのマクロ定義が必要なのは、conマクロ定義では、引数文字列(inc x,c)において文字0がcに置き換わっているため、仮引数bに関連するシンボル（つまりシンボルc）を更新できないからである。  conマクロ定義では、渡された数値は文字列引数として扱われる。 (実引数の値が 0 の場合、マクロ展開に渡されるのは 1 文字の 0 だけである。
+2つのマクロ定義が必要である。  この2つのマクロ定義が必要なのは、conマクロ定義では、引数文字列(inc x,c)において文字0がcに置き換わっているため、仮引数bに関連するシンボル(つまりシンボルc)を更新できないからである。  conマクロ定義では、渡された数値は文字列引数として扱われる。 (実引数の値が 0 の場合、マクロ展開に渡されるのは 1 文字の 0 だけである。
 
 ### 2.3.4  Number of Arguments in Macro Calls
 
@@ -3813,7 +3805,7 @@ ASxxxx  allows temporary symbols of the form n$, where n is a decimal integer.  
 
 拡張マクロではラベルが必要になることが多い。 これまで説明してきた従来のマクロ機能では、各マクロ呼び出しの引数としてラベルを明示的に指定しなければならない。 ラベルの重複を避けるため、同じマクロを続けて呼び出す際には注意が必要である。 この心配は、拡張マクロでラベルが必要な場合に一意のシンボルを作成するASxxxxマクロ機能の機能によって解消できる。
 
-ASxxxxでは、n$（nは10進整数）という形式の一時記号を使用できます。 自動的に作成されるシンボルは、10000$から始まる番号順に作成される。
+ASxxxxでは、n$(nは10進整数)という形式の一時記号を使用できます。 自動的に作成されるシンボルは、10000$から始まる番号順に作成される。
 
 The  automatic generation of local symbols is invoked on each call of a macro whose definition contains a dummy argument  preceded  by the question mark (?) character, as shown in the macro definition below:
 
@@ -3857,7 +3849,7 @@ When  a  macro  has several arguments earmarked for automatic local symbol gener
 
 上記のように、マクロの展開によって自動的に生成されるローカルシンボルは、それ自体ではローカルシンボルブロックを確立しない。
 
-マクロにローカルシンボルの自動生成のために指定された複数の引数がある場合、そのような引数の 1 つに特定のラベルを代入すると、マクロ呼び出しの時点で引数が構築されるため、アセンブリエラーが発生する危険性がある。 そのため、マクロ展開でラベルが出現すると、新しいローカルシンボルブロックが作成される。 新しいローカル・シンボル・ブロックは、前のブロックにローカル・シンボル参照を残し、新しいブロックにそのシンボル定義を残す可能性があり、アセンブリ・リストでエラーコードを引き起こす。  さらに、新しいブロックにローカル・シンボルを作成する後のマクロ展開では、問題のシンボルの1つが重複する可能性があり、アセンブリ・リストで追加のエラー・コード `<p>` が発生します。
+マクロにローカルシンボルの自動生成のために指定された複数の引数がある場合、そのような引数の 1 つに特定のラベルを代入すると、マクロ呼び出しの時点で引数が構築されるため、アセンブリエラーが発生する危険性がある。 そのため、マクロ展開でラベルが出現すると、新しいローカルシンボルブロックが作成される。 新しいローカルシンボルブロックは、前のブロックにローカルシンボル参照を残し、新しいブロックにそのシンボル定義を残す可能性があり、アセンブリリストでエラーコードを引き起こす。  さらに、新しいブロックにローカルシンボルを作成する後のマクロ展開では、問題のシンボルの1つが重複する可能性があり、アセンブリリストで追加のエラーコード `<p>` が発生します。
 
 
 ### 2.3.6  Keyword Arguments
@@ -3929,7 +3921,7 @@ A  keyword argument may be specified anywhere in the argument list of a macro de
 
 The  apostrophe  or  single quote character (') operates as a legal delimiting character in macro definitions.  A single quote that precedes and/or follows a dummy argument in a macro definition is removed, and the substitution of the real  argument  occurs at that point.  For example, in the following statements:
 
-アポストロフィまたは単一引用符文字（'）は、マクロ定義において合法的な区切り文字として動作する。 マクロ定義で仮引数の前や後にある単一引用符は削除され、その時点で実引数の置換が行われる。 例えば、以下の文では
+アポストロフィまたは単一引用符文字(')は、マクロ定義において合法的な区切り文字として動作する。 マクロ定義で仮引数の前や後にある単一引用符は削除され、その時点で実引数の置換が行われる。 例えば、以下の文では
 
 ```
         .macro  def     A,B,C 
@@ -3951,13 +3943,17 @@ xy:     asciz   "V05.00"
 
 In  expanding  the  first  line, the scan for the first argument terminates upon finding  the  first  apostrophe  (')  character. Since A is a dummy argument, the apostrophe (') is removed.  The scan then resumes with B;  B is also noted as another dummy  argument.  The two real arguments x and y are then concatenated to form the label xy:.  The third dummy argument is  noted  in  the operand field of the .asciz directive, causing the real argument V05.00 to be substituted in this field.
 
-When  evaluating  the arguments of the .byte directive during expansion of the second line, the scan  begins  with  the  first apostrophe (') character.  Since it is neither preceded nor followed by a dummy argument, this apostrophe remains in the  macro expansion.   The  scan  then  encounters  the second apostrophe, which is followed by a dummy argument and is therefor discarded. The scan of argument A is terminated upon encountering the comma (,).  The third apostrophe is neither preceded nor followed by a
+最初の行を展開する際、最初の引数のスキャンは、最初のアポストロフィ(')文字を見つけた時点で終了する。Aは仮引数なので、アポストロフィ(')は削除される。 その後、スキャンはBで再開される。Bもまた、別のダミー引数として記録される。 次に、2つの実引数xとyが連結され、ラベルxy:となる。 第3の仮引数は、.asciz指令のオペランドフィールドに記され、このフィールドに実引数V05.00が代入される。
 
-dummy  argument  and  again remains in the macro expansion.  The fourth (and last) apostrophe is followed by another dummy  argument and is likewise discarded.  (Four apostrophe (') characters were necessary in the macro definition  to  generate  two  apostrophe (') characters in the macro expansion.)
+When  evaluating  the arguments of the .byte directive during expansion of the second line, the scan  begins  with  the  first apostrophe (') character.  Since it is neither preceded nor followed by a dummy argument, this apostrophe remains in the  macro expansion.   The  scan  then  encounters  the second apostrophe, which is followed by a dummy argument and is therefor discarded. The scan of argument A is terminated upon encountering the comma (,).  The third apostrophe is neither preceded nor followed by a dummy  argument  and  again remains in the macro expansion.  The fourth (and last) apostrophe is followed by another dummy  argument and is likewise discarded.  (Four apostrophe (') characters were necessary in the macro definition  to  generate  two  apostrophe (') characters in the macro expansion.)
+
+2行目の展開中に.byte指示文の引数を評価する場合、スキャンは最初のアポストロフィ(')文字から始まる。 このアポストロフィの前にも後ろにも仮引数がないので、このアポストロフィはマクロ展開の中に残る。  スキャンは次に2つ目のアポストロフィに遭遇するが、これはダミー引数が続いているため、破棄される。引数Aのスキャンは、コンマ(,)に遭遇した時点で終了する。 番目のアポストロフィは、その前にも後にもダミー引数 もなく、再びマクロ展開の中に残る。 4番目の(そして最後の)アポストロフィは、別のダミー引数が続き、同様に破棄される。 (マクロ展開で2つのアポストロフィ(')文字を生成するには、マクロ定義で4つのアポストロフィ(')文字が必要であった)。
 
 ## 2.4  MACRO ATTRIBUTE DIRECTIVES
 
 The  ASxxxx  assemblers  have  four directives that allow the user to determine certain attributes of macro arguments:  .narg, .nchr,  .ntyp,  and  .nval.  The use of these directives permits selective modifications of a macro expansion, depending  on  the nature  of  the  arguments  being  passed.  These directives are described below.
+
+ASxxxxアセンブラには、マクロ引数の属性を決定する4つのディレクティブがあります。 .narg, .nchr, .ntyp, .nval である。これらのディレクティブを使用すると、渡される引数の性質に応じてマクロ展開を選択的に変更することができる。 これらのディレクティブについて以下に説明する。
 
 ### 2.4.1  .narg Directive
 
@@ -3966,13 +3962,20 @@ Format:
         [label:]        .narg   symbol
 ```
 
-where:  label   represents an optional statement label.
+where:  
+```
+label   represents an optional statement label.
 
-symbol  represents any legal symbol. This symbol is equated to the number of arguments in the macro call currently being expanded. If a symbol is not specified, the .narg directive is flagged with a `<q>` error.
+        symbol  represents any legal symbol. This symbol is equated to the number of arguments in the macro call currently being expanded. If a symbol is not specified, the .narg directive is flagged with a q error.
+```
 
 The .narg directive is used to determine the number of arguments in the macro call currently being expanded.   Hence,  the  .narg directive  can appear only within a macro definition;  if it appears elsewhere, an `<n>` error is generated.
 
+.narg指示文は現在展開されているマクロ呼び出しの引数の数を決定するために使用されます。  したがって、.nargディレクティブはマクロ定義内にのみ現れることができます。
+
 The  argument  count  includes null arguments as shown in the following:
+
+引数の数には、以下のようにNULL引数も含まれる：
 ```
         .macro  pack    A,B,C 
         .narg   cnt 
@@ -3987,6 +3990,8 @@ The  argument  count  includes null arguments as shown in the following:
 ```
 
 When  the  first macro pack is invoked .narg will assign a value of three (3) to the number of arguments cnt, which includes  the empty  argument.  The second invocation of macro pack has only a single argument specified and .narg will assign a value  of  one (1) to cnt.
+
+最初のマクロ pack が呼び出されると、.narg は、空の引数を含む引数の数 cnt に 3 の値を代入する。 マクロ pack の 2 回目の呼び出しでは、引数は 1 つしか指定されておらず、.narg は cnt に 1 の値を代入する。
 
 ### 2.4.2  .nchr Directive
 
@@ -4021,6 +4026,8 @@ where:
 
 The .nchr directive, which can appear anywhere in an ASxxxx program, is used to determine the number of characters in a  specified  character string.  This directive is useful in calculating the length of macro arguments.
 
+.nchr 指令は、ASxxxx プログラムのどこにでも現れることができ、指定された文字列の文字数を決定するために使用されます。 このディレクティブは、マクロの引数の長さを計算するのに便利です。
+
 ### 2.4.3  .ntyp Directive
 
 Format:
@@ -4050,6 +4057,8 @@ where:
 
 The .ntyp directive, which can appear anywhere in an ASxxxx program, is used to determine the symbol or expression type as  absolute (0) or relocatable (1).
 
+.ntyp指示文はASxxxxプログラムのどこにでも書くことができ、シンボルや式のタイプを絶対型(0)か再配置可能型(1)かを決定するために使用されます。
+
 ### 2.4.4  .nval Directive
 
 Format:
@@ -4076,11 +4085,17 @@ where:
 
 The .nval directive, which can appear anywhere in an ASxxxx program, is used to determine the value of arg and make the  result an absolute value.
 
+.nval指令は、ASxxxxプログラムのどこにでも現れることができ、argの値を決定し、その結果を絶対値にするために使用される。
+
 ## 2.5  INDEFINITE REPEAT BLOCK DIRECTIVES
 
 An  indefinite  repeat block is similar to a macro definition with only one dummy argument.  At each expansion  of  the  indefinite  repeat  range, this dummy argument is replaced with successive elements of a real  argument  list.   Since  the  repeat directive  and its associated range are coded in-line within the source program, this type of macro definition and expansion does not require calling the macro by name, as required in the expansion of the conventional macros previously described.
 
 An  indefinite  repeat  block  can  appear  within or outside another macro definition, indefinite  repeat  block,  or  repeat block.   The  rules specifying indefinite repeat block arguments are the same as for specifying macro arguments.
+
+不定反復ブロックは、1つの仮引数だけを持つマクロ定義に似ている。 不定反復範囲の拡張ごとに、この仮引数は実引数リストの連続する要素に置き換えられる。  repeat命令とそれに関連する範囲はソースプログラム内でインラインでコード化されるため、このタイプのマクロ定義と展開では、先に説明した従来のマクロの展開で必要なように、マクロを名前で呼び出す必要はない。
+
+不定反復ブロックは、他のマクロ定義、不定反復ブロック、または反復ブロックの中にも外にも現れることができる。  不定反復ブロック引数の指定規則は、マクロ引数の指定規則と同じである。
 
 ### 2.5.1  .irp Directive
 
@@ -4128,6 +4143,8 @@ where:
 
 The .irp directive is used to replace a dummy argument with successive real arguments specified  in  an  argument  list.   This replacement process occurs during the expansion of an indefinite repeat block range.
 
+.irp指令は、引数リストで指定された連続する実引数で仮引数を置き換えるために使用される。  この置き換え処理は、不定反復ブロック範囲の拡張中に発生する。
+
 ### 2.5.2  .irpc Directive
 
 Format:
@@ -4169,11 +4186,18 @@ where:
 
 The .irpc directive is available to permit single character substition.  On each iteration of the indefinite repeat range,  the dummy  argument  is  replaced  with successive characters in the specified string.
 
+.irpc指令は、1文字の置換を許可するために使用できる。 不定反復範囲の各反復で、仮引数は指定された文字列の連続した文字で置き換えられる。
+
 ## 2.6  REPEAT BLOCK DIRECTIVE
 
 A repeat block is similar to a macro definition with only one argument.  The argument specifies the number of times the repeat block  is  inserted  into the assembly stream.  Since the repeat directive and its associated range are coded in-line within  the source program, this type of macro definition and expansion does not require calling the macro by name, as required in the expansion of the conventional macros previously described.
 
 A repeat block can appear within or outside another macro definition, indefinite repeat block, or repeat block.
+
+リピートブロックはマクロ定義に似ているが、引数が1つしかない。 引数は、繰り返しブロックをアセンブリストリームに挿入する回数を指定する。 repeat 命令とそれに関連する範囲はソースプログラム内でインラインでコード化されるので、このタイプのマクロ定義と拡張では、先に説明した従来のマクロの拡張で必要なように、名前でマクロを呼び出す必要はありません。
+
+リピートブロックは、他のマクロ定義、不定リピートブロック、リピートブロックの内部にも外部にも現れることができる。
+
 
 ### 2.6.1  .rept Directive
 
@@ -4209,9 +4233,13 @@ where:
 
 The  .rept  directive  is  used  to duplicate a block of code, a certain number of times, in line with other source code.
 
+.reptディレクティブは、あるコードブロックを、他のソースコードと一緒に、ある回数だけ複製するために使われる。
+
 ## 2.7  MACRO DELETION DIRECTIVE
 
 The  .mdelete directive deletes the definitions of the specified macro(s).
+
+.mdelete ディレクティブは、指定されたマクロの定義を削除します。
 
 ### 2.7.1  .mdelete Directive
 
@@ -4238,9 +4266,22 @@ At  the  point  a  macro,  indefinite repeat block, or repeat block is called th
 2. The initial .list-.nlist state is saved.
 3. The macro, indefinite repeat block, or repeat block is inserted into the assembler source code stream.  All argument substitution is performed at this point.
 
+マクロ、不定反復ブロック、反復ブロックの呼び出しは、.if-.else-.endif 構文と .list-.nlist ディレクティブに特有の意味を持つ。
+
+マクロ、不定反復ブロック、反復ブロックが呼び出された時点で、次のことが起こる：
+
+1. 最初の.if-.else-.endifの状態が保存される。
+2. 最初の.list-.nlist状態が保存される。
+3. マクロ、不定反復ブロック、または反復ブロックがアセンブラソースコードストリームに挿入される。 すべての引数の置換はこの時点で実行される。
+
 When  the  macro  completes and after each pass through an indefinite repeat block or repeat  block  the  .if-.else-.endif  and .list-.nlist state is reset to the initial state.
 
 The  reset of the .if-.else-.endif state means that the invocation of a macro, indefinite repeat block, or repeat block cannot  change the .if-.else-.endif state of the calling code.  For example the following code does not change the  .if-.else-.endif condition at macro completion:
+
+マクロが完了したとき、および不定反復ブロックまたは反復ブロックを通過するたびに、.if-.else-.endif および .list-.nlist 状態は初期状態にリセットされる。
+
+.if-.else-.endif状態のリセットは、マクロ、不定反復ブロック、または反復ブロックの呼び出しが、呼び出しコードの.if-.else-.endif状態を変更できないことを意味する。 たとえば、次のコードはマクロ完了時に .if-.else-.endif 状態を変更しない：
+
 ```
         .macro  fnc     A 
           .if nb,^!A! 
@@ -4263,6 +4304,12 @@ Similarly,  when  the  .list-.nlist state is changed within a macro the change i
 
 The  normal  .if-.else-.endif  processing verifies that every .if has a corresponding .endif.  When a macro, indefinite repeat block,  or repeat block terminates by using the .mexit directive the .if-.endif checking is bypassed  because  all  source  lines between the .mexit and .endm directives are skipped.
 
+マクロ内で.if条件はfalseになるが、その条件はマクロの外部に伝搬されない。
+
+同様に、.list-.nlist 状態がマクロ内で変更されても、その変更はマクロの外部には伝搬されない。
+
+通常の .if-.else-.endif 処理は、すべての .if が対応する .endif を持つことを確認します。 マクロ、不定反復ブロック、反復ブロックが .mexit ディレクティブを使用して終了する場合、.mexit ディレクティブと .endm ディレクティブの間のすべてのソース行がスキップされるため、.if-.endif のチェックはバイパスされます。
+
 ## 2.9  CONTROLLING MACRO LISTINGS
 
 The  basic  .list  directive enables listing of all fields in the assembler listing and clears the 'me', 'meb' and  'mel'  options.
@@ -4273,11 +4320,23 @@ When  a  macro is entered the listing is by default inhibited unless the 'me' (e
 
 Within  a  macro the .list/.nlist directives can set or clear any of the listing options but listing will only occur when  the 'me' option is set.
 
+基本的な .list ディレクティブは、アセンブラリストの全フィールドのリストを有効にし、 'me'、'meb'、'mel' オプションをクリアする。
+
+マクロが入力されると、'me' (リストを有効にする)、'meb' (バイナリと場所のみをリストする)、'mel' (バイナリと場所を強制的にリストする) オプションが指定されていない限り、デフォルトではリストが禁止される。 me' オプションは、以前に設定されていた一覧表示オプションを有効にするだけである。  meb' オプションはすべての一覧表示オプションを消去し、 'bin' と 'loc' オプションを設定する。 mel' オプションを指定すると、以前に設定した一覧表示オプションが有効 になり、'bin' と 'loc' オプションが強制的に設定される。
+
+bin' と 'loc' オプションを強制する。 リスティングオプションが設定されていない場合、 list 'me' オプションを指定してもリスティングは行われない。
+
+マクロ内の .list/.nlist ディレクティブは、リストオプションの設定や解除を行うことができるが、 リストされるのは 'me' オプションが設定されているときだけである。
+
 ## 2.10  BUILDING A MACRO LIBRARY
 
 Using  the macro facilities of the ASxxxx assemblers a simple macro library can be built.  The macro library is built by  combining individual macros, sets of macros, or include file directives into a single file.  Each macro entity is enclosed  within a .if/.endif block that selects the desired macro definitions.
 
 The  selection  of specific macros to be imported into a program is performed by three macros, .mlib,  .mcall,  and  .mload, contained in the file mlib.def.
+
+ASxxxxアセンブラのマクロ機能を使用して、簡単なマクロライブラリを構築することができます。 マクロライブラリは、個々のマクロ、マクロのセット、またはインクルードファイルのディレクティブを1つのファイルにまとめることで構築されます。 各マクロエンティティは、必要なマクロ定義を選択する.if/.endifブロックで囲まれます。
+
+プログラムにインポートする特定のマクロの選択は、mlib.defファイルに含まれる.mlib、.mcall、.mloadの3つのマクロによって実行される。
 
 ### 2.10.1  .mlib Macro Directive
 
@@ -4300,6 +4359,13 @@ The .mlib directive defines two macros, .mcall and .mload, which when invoked wi
 The  .mload  directive  is an internal directive which simply includes the macro library file with the listing disabled.
 
 The  following  is the mlib.def file which defines the macros .mlib, .mcall, and .mload.
+
+.mlibディレクティブは、.mcallと.mloadという2つのマクロを定義します。この2つのマクロが起動されると、ファイルを読み込み、特定のマクロ定義をインポートします。  以前の .mcall と .mload ディレクティブは、新しい .mcall と .mload ディレクティブが定義される前に削除されます。
+
+.mloadディレクティブは内部ディレクティブで、単にマクロライブラリファイルのリストを無効にした状態でインクルードします。
+
+以下は、マクロ.mlib、.mcall、.mloadを定義するmlib.defファイルです。
+
 ```
 ;************************************************ 
 ;*                                              * 
@@ -4355,6 +4421,11 @@ where:
 As  can  be  seen  from the macro definition of .mlib and .mcall shown above, when .mcall is invoked temporary  symbols  are  defined  for  each macro or macro set that is to be imported.  The macro .mload is then invoked to  load  the  macro  library  file specified in the call to .mlib.
 
 For example, when the following macros are invoked:
+
+上に示した.mlibと.mcallのマクロ定義からわかるように、.mcallが呼び出されると、インポートされる各マクロまたはマクロセットに対してテンポラリシンボルが定義される。 .mloadマクロは、.mlibの呼び出しで指定されたマクロライブラリファイルをロードするために呼び出される。
+
+例えば、以下のマクロが呼び出される：
+
 ```
         .mlib   crossasm.sml    ; Cross Assembler Macros 
         .mcall  M6809           ; M6809 Macro Group
@@ -4363,6 +4434,11 @@ For example, when the following macros are invoked:
 The  .mlib  macro  defines the .mload macro to access the system macro file crossasm.sml.  Invoking the .mcall  macro  creates  a temporary symbol, '.$$.M6809', and then invokes the macro .mload to import the system macro file crossasm.sml.   The  file  crossasm.sml  contains  conditional  statements  that define the required macros and creates  a  temporary  symbol  'M6809.$$.'  to indicate  the  macro group was found.  If the macro is not found an error message is generated.
 
 The  following  is a small portion of the crossasm.sml system macro file which shows the M6809 macro group:
+
+.mlibマクロは、システムマクロファイルcrossasm.smlにアクセスするための.mloadマクロを定義する。 .mcallマクロを起動すると、一時的なシンボル'.$$.M6809'が作成され、.mloadマクロを起動してシステムマクロファイルcrossasm.smlをインポートする。  ファイルcrossasm.smlには、必要なマクロを定義する条件文が含まれており、マクログループが見つかったことを示す一時的なシンボル「M6809.$$.  マクロが見つからない場合はエラーメッセージが生成される。
+
+以下は、crossasm.sml システムマクロファイルの一部で、M6809 マクログループを示す：
+
 ```
         .title  Cross Assembler Macro Library
 
@@ -4388,6 +4464,9 @@ The  following  is a small portion of the crossasm.sml system macro file which s
 ## 2.11  EXAMPLE MACRO CROSS ASSEMBLERS
 
 The  'ascheck'  subdirectory 'macroasm' contains 7 assemblers written using only the general macro processing facility of  the ASxxxx assemblers:
+
+ascheck'サブディレクトリ'macroasm'には、ASxxxxアセンブラの一般的なマクロ処理機能のみを使用して書かれた7つのアセンブラが含まれている：
+
 ```
         i8085.mac       -  8085 Microprocessor 
         m6800.mac       -  6800 Microprocessor 
@@ -4398,6 +4477,9 @@ The  'ascheck'  subdirectory 'macroasm' contains 7 assemblers written using only
         s2650.mac       -  2650 Microprocessor
 ```
 These  absolute  macro  cross  assemblers are included to illustrate the  functionality  of  the  general  macro  processing facility  of  the ASxxxx assemblers.  In general they are useful examples of actual macro implementations.
+
+これらのアブソリュートマクロクロスアセンブラは、ASxxxx アセンブラの一般的なマクロ処理機能の機能を説明するために含まれています。 一般的に、これらは実際のマクロ実装の例として役立ちます。
+
 
 <br>
 <br>
@@ -4431,11 +4513,37 @@ The  program ASLINK is a general relocating linker performing the following func
 
 10.  Produce  an updated listing file with the relocated addresses and data
 
+ASLINK は、ASxxxx アセンブラのコンパニオンリンカです。このリンカは、ASxxxx アセンブラのバージョン 3.xx、4.xx、および 5.xx をサポートしています。 バージョン 3、4、5 のオブジェクトファイルは、リンク時に自由に混在させることができます。 バージョン3のオブジェクトファイルには、バージョン4と5で利用可能なオプションのサブセットしか含まれていないことに注意してください。
+
+ASLINK プログラムは、以下の機能を実行する一般的な再配置リンカです：
+
+1.  複数のオブジェクトモジュールを1つのメモリイメージにバインドする。
+
+2.  モジュール間のシンボル参照の解決
+
+3.  複数のオブジェクトファイルから同じ領域に属するコードを1つの連続したメモリ領域にまとめる。
+
+4.  未定義のグローバル変数に対するオブジェクトモジュールライブラリの検索とインポート
+
+5.  バイトとワードのプログラムカウンタ相対(pc または pcr)アドレッシング計算を実行する。
+
+6.  リンク時の絶対シンボル値の定義
+
+7.  リンク時に絶対エリアベースアドレス値を定義する。
+
+8.  Intel Hex、Motorola S、または Tandy CoCo Disk Basic 出力ファイルの作成
+
+9.  リンクされたメモリーイメージのマップの作成
+
+10.  再配置されたアドレスとデータを含む更新されたリストファイルを生成する。
+
 <div style="page-break-before:always"></div>
 
 ## 3.2  INVOKING ASLINK
 
 Starting  ASlink without any arguments provides the following option list and then exits:
+
+引数なしでASlinkを起動すると、以下のオプションリストが表示され、終了します：
 ```
 Usage: [-Options] [-Option with arg] file1 [file2 ...] 
   -h   or NO ARGUMENTS  Show this help list 
@@ -4481,14 +4589,20 @@ End:
 <p style="text-align: center">NOTE
 
 When  ASlink  is  invoked  with  a  single or multiple filenames the first filename is  the  output  filename and  the  remaining files, if any, are linked together into the output filename.
+
+ASlinkが単一または複数のファイル名で起動された場合、最初のファイル名が出力ファイル名となり、残りのファイルがある場合は、出力ファイル名にリンクされます。
 </p>
 
 Most  sytems  require  the  options to be entered on the command line:
+
+ほとんどのシステムでは、オプションをコマンドラインで入力する必要がある：
 ```
 aslink [-Options] [-Options with args] file1 [file2 ...]
 ```
 
 Some  systems  may  request  the  arguments  after the linker is started at a system specific prompt:
+
+システムによっては、リンカの起動後にシステム固有のプロンプトで引数を要求する場合がある：
 
 ```
 aslink 
@@ -4496,6 +4610,8 @@ argv: [-Options] [-Option with args] file1 [file2 ...]
 ```
 
 The linker commands are explained in some more detail:
+
+リンカコマンドについてもう少し詳しく説明する：
 ```
         -h      or NO ARGUMENTS show this help list
 
@@ -4619,11 +4735,17 @@ The linker commands are explained in some more detail:
 
 When  using  the command line all options and file(s) must be on a single line.
 
+コマンドラインを使用する場合、すべてのオプションとファイルは1行にまとめなければならない。
+
 When using the -c option (ASlink >>) or a command file [.lnk] options should precede the file(s).  The files  may  be  on  the same  line  as the options or on a separate line(s) one file per line or multiple files separated by spaces or tabs.  The use  of multiple  -o and -v options is available only with the interractive, ASlink >>, or command file modes.
+
+cオプション(ASlink >>)またはコマンドファイル[.lnk]を使用する場合は、オプションの前にファイルを記述します。 ファイルは、オプションと同じ行に書くことも、1 行に 1 ファイルずつ書くことも、複数のファイルをスペースやタブで区切って書くこともできます。 複数の -o オプションと -v オプションを使用できるのは、 interractive モード、ASlink >> モード、コマンドファイルモードの場合だけである。
 
 ## 3.3  LIBRARY PATH(S) AND FILE(S)
 
 The process of resolving undefined symbols after scanning the input object  files  includes  the  scanning  of  object  module libraries.   The  linker will search through all combinations of the library path specifications (input by the -k option) and the library  file  specifications (input by the -l option) that lead to an existing library file.  Each library file contains a  list (one  file  per  line)  of  modules  included in this particular library.  Each existing object module is scanned for a match  to the undefined symbol.  The first module containing the symbol is then linked with the previous modules to resolve the symbol  definition.   The  library  object  modules are rescanned until no more symbols can be resolved.   The  scanning  algorithm  allows resolution  of  back references.  No errors are reported for non existent library files or object modules.
+
+入力オブジェクトファイルをスキャンした後、未定義シンボルを解決するプロセ スには、オブジェクトモジュールライブラリのスキャンも含まれる。  リンカは、ライブラリパス指定(-k オプションで入力)とライブラリファイル指定(-l オプションで入力)のすべての組み合わせの中から、既存のライブラリファイルにつながるものを検索します。 各ライブラリファイルには、この特定のライブラリに含まれるモジュールのリスト(1行に1ファイル)が含まれています。 既存の各オブジェクトモジュールは、未定義のシンボルにマッチするかどうかスキャンされる。 そして、シンボルを含む最初のモジュールが、シンボル定義を解決するために前のモジュールとリンクされる。  シンボルが解決できなくなるまで、ライブラリーのオブジェクトモジュールが再スキャンされる。  スキャンアルゴリズムにより、後方参照を解決することができる。 存在しないライブラリファイルやオブジェクトモジュールについては、エラーは報告されません。
 
 The  library  file  specification may be formed in one of two ways:
 
@@ -4632,12 +4754,22 @@ The  library  file  specification may be formed in one of two ways:
 2.  If  the  library  file  contains  a  relative path/file specification then the concatenation of  the  path  and this  file  specification  becomes  the object module's path/file. (i.e.  \...  or /...)
 
 As  an example, assume there exists a library file termio.lib in the syslib directory specifying the following object modules:
+
+ライブラリファイルの指定は、次の2つの方法のいずれかで行う：
+
+1.  ライブラリファイルに絶対パス/ファイル指定が含まれていた場合、これはオブジェ クトモジュールのパス/ファイルとなります。(例：C:˶...またはC:/...)
+
+2.  ライブラリファイルに相対パス/ファイル指定が含まれている場合、パスとこのファイル指定の連結がオブジェクトモジュールのパス/ファイルになります。(例: \... または /...)
+
+例として、syslib ディレクトリに termio.lib というライブラリファイルがあり、以下のオブジェクトモジュールが指定されているとする：
 ```
 \6809\io_disk        first object module 
 d:\special\io_comm   second object module
 ```
 
 and the following parameters were specified to the linker:
+
+リンカには以下のパラメータが指定されている：
 ```
 -k c:\iosystem\    the first path 
 -k c:\syslib\      the second path
@@ -4648,6 +4780,7 @@ and the following parameters were specified to the linker:
 
 The  linker  will attempt to use the following object modules to resolve any undefined symbols:
 
+リンカは、未定義のシンボルを解決するために、以下のオブジェクトモジュールの使用を試みる：
 ```
 c:\syslib\6809\io_disk.rel     (concatenated path/file) 
 d:\special\io_comm.rel         (absolute path/file)
@@ -4655,15 +4788,22 @@ d:\special\io_comm.rel         (absolute path/file)
 
 all  other path(s)/file(s) don't exist.  (No errors are reported for non existent path(s)/file(s).)
 
+他のすべてのパス(複数可)/ファイル(複数可)が存在しない。 (存在しないパス(複数可)/ファイル(複数可)については、エラーは報告されません)。
+
 ## 3.4  ASLINK PROCESSING
 
 The  linker  processes  the  files  in  the  order  they  are presented.  The first pass through the input files  is  used  to define  all  program  areas, the section area sizes, and symbols defined or referenced.  Undefined symbols will initiate a search of any specified library file(s) and the importing of the module containing the symbol definition.  After the first pass  the  -a (area  base  address) and the -b (bank base address) definitions ,if any, are processed and the areas linked.
 
-The  area  linking proceeds by first examining the area types ABS, CON, REL, OVR and PAG.  Absolute areas (ABS) from  separate object  modules are always overlaid and have been assembled at a specific address, these are not normally relocated (if a -a  option  is  used  on an absolute area the area will be relocated). Relative areas (normally defined as REL|CON) have a base address of 0x0000 as read from the object files, the -a option specifies the beginning address of  the  area.   All  subsequent  relative areas will be concatenated with preceding relative areas.  Where specific ordering is desired, the first linker input file should have  the area definitions in the desired order.  At the completion of the area linking all area  addresses  and  lengths  have been  determined.  The areas of type PAG are verified to be on a
+リンカは、入力されたファイルを順番に処理する。 入力ファイルの最初のパスでは、すべてのプログラムエリア、セクションエリアサイズ、定義または参照されているシンボルが定義されます。 未定義のシンボルは、指定されたライブラリファイルの検索と、シンボル定義を含むモジュー ルのインポートを開始する。 最初のパスの後、-a(エリアベースアドレス)と-b(バンクベースアドレス)の定義(もしあれば)が処理され、エリアがリンクされる。
 
-256 byte boundary and that the length does not exceed 256 bytes. Any errors are noted on stderr and in the map file.
+The  area  linking proceeds by first examining the area types ABS, CON, REL, OVR and PAG.  Absolute areas (ABS) from  separate object  modules are always overlaid and have been assembled at a specific address, these are not normally relocated (if a -a  option  is  used  on an absolute area the area will be relocated). Relative areas (normally defined as REL|CON) have a base address of 0x0000 as read from the object files, the -a option specifies the beginning address of  the  area.   All  subsequent  relative areas will be concatenated with preceding relative areas.  Where specific ordering is desired, the first linker input file should have  the area definitions in the desired order.  At the completion of the area linking all area  addresses  and  lengths  have been  determined.  The areas of type PAG are verified to be on a 256 byte boundary and that the length does not exceed 256 bytes. Any errors are noted on stderr and in the map file.
+
+領域リンクは、まず領域タイプABS、CON、REL、OVR、PAGを調べることで進行する。 別個のオブジェクトモジュールからの絶対領域(ABS)は常にオーバーレイされ、特定のアドレスでアセンブルされており、これらは通常再配置されません(-aオプションが絶対領域に使用された場合、領域は再配置されます)。相対領域 (通常 REL|CON と定義される) のベースアドレスはオブジェクトファイルから読み込まれる 0x0000 であり、-a オプションはその領域の開始アドレスを指定する。  それ以降の相対領域は、先行する相対領域と連結される。 特定の順序が必要な場合は、最初のリンカ入力ファイルに、必要な順序で領域定義を記述する。 領域のリンクが完了すると、すべての領域のアドレスと長さが決定される。 PAG型の領域は、256バイトの境界上にあり、長さが256バイトを超えないことが検証される。エラーは標準エラー出力とマップファイルに記録される。
 
 The  linker  also  automatically  generates two symbols for each linked program area:
+
+リンカはまた、リンクされたプログラム領域ごとに2つのシンボルを自動的に生成する：
+
 ```
     'a_<area>'      The starting address of the area.
 
@@ -4671,6 +4811,8 @@ The  linker  also  automatically  generates two symbols for each linked program 
 ```
 
 and two symbols for each area segment:
+
+そして、各エリアセグメントに2つのシンボルがある：
 ```
     'm_<area>_n'    The boundary modulus of the area segment.
 
@@ -4689,6 +4831,18 @@ Constants  defined  as global in more than one module will be flagged as multipl
 
 After  the  preceding  processes  are complete the linker may output a map file (-m option).  This file provides the following information:
 
+n'は、リンクされたエリア内のエリアセグメント番号を示す。
+
+これらの記号は一般に診断にのみ有用であり、外部からは見えない。 ただし、-m1リンカオプションを使用すると、これらのシンボルはマップファイルに出力される。
+
+次に、グローバルシンボル定義(-gオプション)があれば、それを処理する。 この時点までシンボル定義が遅れているのは、すべての内部シンボルの絶対アドレ スがわかっており、式の計算に使用できるからである。
+
+リンク処理を続行する前に、シンボルテーブルがスキャンされ、参照はされているが 定義されていないシンボルがないかどうかが調べられる。 .moduleディレクティブがアセンブルされたファイルに含まれていた場合、この未定義変数を参照しているモジュールが表示されます。
+
+複数のモジュールでグローバルとして定義された定数は、その値が同一でない場合、多重定義としてフラグが立てられます。
+
+前述の処理が完了すると、リンカはマップファイルを出力します(-m オプション)。 このファイルには以下の情報が記載されています：
+
 1.  Global symbol values and label absolute addresses
 
 2.  Defined areas and there lengths
@@ -4701,15 +4855,35 @@ After  the  preceding  processes  are complete the linker may output a map file 
 
 6.  List of -a, -b and -g definitions
 
+1.  グローバルシンボル値とラベル絶対アドレス
+
+2.  定義された領域とその長さ
+
+3.  残りの未定義シンボル
+
+4.  リンクされているモジュールのリスト
+
+5.  リンクされたライブラリモジュールのリスト
+
+6.  a、-b、-g定義のリスト
+
 The final step of the linking process is performed during the second pass of the input files.  As the xxx.rel files  are  read the code is relocated by substituting the physical addresses for the referenced symbols and areas and may  be  output  in  Intel, Motorola, or Tandy CoCo Disk Basic formats.  The number of files linked and symbols defined/referenced is limited by the  processor  space  available to build the area/symbol lists.  If the -u option is specified then the listing files (file.lst) associated with  the  relocation  files  (file.rel) are scanned and used to create a new file (file.rst) which has all  addresses  and  data relocated to their final values.
 
+リンク処理の最終段階は、入力ファイルの2回目の通過時に実行される。 xxx.relファイルが読み込まれると、参照されたシンボルや領域の物理アドレスが置き換えられてコードが再配置され、Intel、Motorola、TandyのCoCo Disk Basic形式で出力されます。 リンクされるファイルの数、定義/参照されるシンボルの数は、領域/シンボルリストを構築するために利用可能なプロセッサスペースによって制限される。 uオプションを指定すると、再配置ファイル(file.rel)に関連付けられたリストファイル(file.lst)がスキャンされ、すべてのアドレスとデータが最終的な値に再配置された新しいファイル(file.rst)を作成するために使用される。
+
 The  -o/-v  options  allow the simple creation of loadable or overlay modules.  Loadable and overlay modules normally need  to be  linked  with  a  main module(s) to resolve external symbols. The -o/-v options can be used to enable object  output  for  the loadable  or overlay module(s) and suppress the object code from the linked main module(s).  The -o/-v  options  can  be  applied repeatedly  to specify a single linked file, groups of files, or libraries for object code inclusion or suppression.
+
+o/-vオプションは、ローダブルモジュールやオーバーレイモジュールの簡単な作成を可能にする。 ローダブルモジュールやオーバーレイモジュールは通常、外部シンボルを解決するためにメインモジュールとリンクする必要があります。o/-vオプションを使用すると、ローダブルモジュールやオーバーレイモジュールのオブジェクト出力を有効にし、リンクされたメインモジュールからのオブジェクトコードを抑制することができます。 o/-vオプションを繰り返し適用して、1つのリンクファイル、ファイルグループ、またはライブラリを指定し、オブジェクトコードの包含または抑制を行うことができます。
 
 ## 3.5  ASXXXX VERSION 5.XX (4.XX) LINKING
 
 The  linkers'  input  object file is an ascii file containing the information needed by the linker  to  bind  multiple  object modules into a complete loadable memory image.
 
 The object module contains the following designators:
+
+リンカの入力オブジェクトファイルは、リンカが複数のオブジェクトモジュールを完全なローダブルメモリイメージにバインドするために必要な情報を含むアスキーファイルです。
+
+オブジェクトモジュールには以下のデジグネータが含まれる：
 ```
         [XDQ][HL][234] 
                 X       Hexadecimal radix 
@@ -4738,12 +4912,16 @@ The object module contains the following designators:
 
 The   first   line   of   an   object   module  contains  the [XDQ][HL][234] format specifier  (i.e.   XH2  indicates  a  hexadecimal  file  with  most significant byte first and 16-bit addressing) for the following designators.
 
+オブジェクトモジュールの最初の行は、以下のデジグネータの[XDQ][HL][234]フォーマット指定子(すなわち、XH2は最上位バイトが最初の16ビットアドレッシングの16進数ファイルを示す)を含む。
+
 ### 3.5.2  Header Line
 ```
         H aa areas gg global symbols
 ```
 
 The  header  line  specifies  the number of areas(aa) and the number of global symbols(gg) defined or referenced in  this  object module segment.
+
+ヘッダー行には、このオブジェクトモジュールセグメントで定義または参照されているエリアの数(aa)とグローバルシンボル(gg)の数が指定されている。
 
 ### 3.5.3  Module Line
 
@@ -4752,6 +4930,8 @@ The  header  line  specifies  the number of areas(aa) and the number of global s
 ```
 
 The  module  line  specifies  the module name from which this header segment was assembled.  The module line will  not  appear if the .module directive was not used in the source program.
+
+module 行は、このヘッダーセグメントが組み立てられたモジュール名を指定します。 .moduleディレクティブがソースプログラムで使用されていない場合、module行は表示されません。
 
 ### 3.5.4  Merge Mode Line
 
@@ -4767,7 +4947,17 @@ The  mode  structure  contains  the specification (or partial specification) of 
 
 3.   00 ...  merge mode bit elements
 
+モード構造体には、アセンブラのマージモードの1つの仕様(または部分的な仕様)が含まれる。  1行に16ビットを指定することができる。 各アセンブラは少なくとも1つのマージモードを指定しなければならない。 マージ指定では、アクティブビットとビット位置を任意に定義できる。 32個の要素配列は0から31までのインデックスを持つ。 インデックス0はビット0、...に対応し、31は通常の整数値のビット31に対応する。
+
+1. nnはマージモード番号
+
+2. ii は次のデータの開始ビット位置である。
+
+3.   00 ... マージモードビットエレメント
+
 The value of the element specifies if the normal integer bit is active (bit `<7>` is set, 0x80) and  what destination  bit  (bits  <4:0>,  0  -  31) should be loaded with this normal integer bit.
+
+この要素の値は、通常の整数ビットがアクティブかどうか(ビット `<7>` がセットされているかどうか、0x80)と、この通常の整数ビットでロードされるべきデスティネーションビット(ビット <4:0>、0～31)を指定する。
 
 ### 3.5.5  Bank Line
 
@@ -4777,6 +4967,8 @@ The value of the element specifies if the normal integer bit is active (bit `<7>
 
 The  B  line  defines a bank identifier as name.  A bank is a structure containing a collection of areas.  The bank is treated as  a  unique linking structure separate from other banks.  Each bank can have a unique base  address  (starting  address).   The size  specification  may  be  used to signal the overflow of the banks' allocated space.  The Linker combines all areas  included within  a  bank  as  separate from other areas.  The code from a bank may be output to a unique file by specifying the File  Suffix  parameter  (fsfx).   This allows the separation of multiple data and code segments into  isolated  output  files.   The  map parameter  is  for  NOICE processing.  The flags indicate if the parameters have been set.
 
+B行はバンクの識別子をnameとして定義している。 バンクはエリアの集合を含む構造体である。 バンクは、他のバンクから切り離されたユニークなリンク構造として扱われる。 各バンクは一意のベースアドレス(開始アドレス)を持つことができる。  サイズ指定は、バンクに割り当てられた領域のオーバーフローを知らせるために使われる。 リンカは、バンクに含まれるすべての領域を、他の領域から分離されたものとして結合する。 ファイルサフィックスパラメーター(fsfx)を指定することで、バンクからのコードを一意のファイルに出力することができる。  これにより、複数のデータセグメントとコードセグメントを分離した出力ファイルにすることができます。  map パラメーターは NOICE 処理用です。 フラグは、パラメータが設定されているかどうかを示します。
+
 ### 3.5.6  Area Line
 
 ```
@@ -4784,6 +4976,8 @@ The  B  line  defines a bank identifier as name.  A bank is a structure containi
 ```
 
 The  area  line  defines the area label, the size (ss) of the area in bytes, the area  flags  (ff),  the  optional  [bank  bb] specifies  the  bank  this area is a member of, and the optional [bndry mm] which specifies the boundary modulus  for  this  area segment.  The area flags specify the ABS, REL, CON, OVR, and PAG parameters:
+
+オプションの[bank bb]は、このエリアが属するバンクを指定し、オプションの[bndry mm]は、このエリアセグメントの境界モジュラスを指定する。 領域フラグは、ABS、REL、CON、OVR、PAG パラメータを指定する：
 ```
         OVR/CON  (0x04/0x00 i.e.  bit position 2)
 
@@ -4795,6 +4989,10 @@ The  area  line  defines the area label, the size (ss) of the area in bytes, the
 The  bank label is optional and only specified if the area is to be included within a bank.
 
 When  this area (area segment) is linked and their is a boundary modulus specified then the code/data beginning address will be  increased to match the boundary modulus.  This will also increase the area (area segment) size by the same amount.
+
+バンクラベルはオプションであり、そのエリアがバンク内に含まれる場合にのみ指定される。
+
+このエリア(エリアセグメント)がリンクされ、境界モジュラスが指定されると、コード/データ開始アドレスは境界モジュラスに合わせて増加する。 この場合、エリア(エリアセグメント)のサイズも同じだけ大きくなる。
 
 ### 3.5.7  Symbol Line
 
@@ -4808,6 +5006,8 @@ When  this area (area segment) is linked and their is a boundary modulus specifi
 
 The symbol line defines (Def) or references (Ref) the identifier name with the value nnnn.  The defined value is relative to the  current area base address.  References to constants and external global symbols will always appear before the  first  area definition.  References to external symbols will have a value of zero.
 
+シンボル行は、nnnn という値の識別子名を定義(Def)または参照(Ref)する。 定義された値は、現在の領域のベースアドレスからの相対値である。 定数と外部グローバルシンボルへの参照は、常に最初の領域定義の前に現れる。 外部シンボルへの参照は、値がゼロになる。
+
 ### 3.5.8  T Line
 
 ```
@@ -4816,11 +5016,17 @@ The symbol line defines (Def) or references (Ref) the identifier name with the v
 
 The  T  line contains the assembled code output by the assembler with xx xx being the offset address from the  current  area base address and nn being the assembled instructions and data in byte format.  (xx xx and nn nn can be 2, 3, or 4 bytes as specified by the .REL file header.)
 
+T行には、アセンブラによって出力されたアセンブルされたコードが含まれ、xx xxは現在の領域のベースアドレスからのオフセットアドレス、nnはアセンブルされた命令とデータをバイト形式で表します(xx xxとnn nnは、.RELファイルヘッダで指定された2バイトまたは3バイトまたは4バイトです)。 (xx xxとnn nnは、.RELファイルヘッダで指定されているように、2バイト、3バイト、または4バイトにすることができる)。
+
 ### 3.5.9  R Line
 
+```
 R 0 0 nn nn n1 n2 xx xx ...
+```
 
 The R line provides the relocation information to the linker. The nn nn value is the current area index, i.e.  which area  the current  values  were  assembled.  Relocation information is encoded in groups of 4 bytes:
+
+R行はリンカに再配置情報を提供する。nn nnの値は、現在の領域インデックス、つまり現在の値がどの領域でアセンブルされたかを示す。 再配置情報は4バイトのグループでエンコードされる：
 
 ```
     1.  n1 is the relocation mode and object format. 
@@ -4848,6 +5054,8 @@ The R line provides the relocation information to the linker. The nn nn value is
 
 The groups of 4 bytes are repeated for each item requiring relocation in the preceding T line.
 
+4バイトのグループは、直前のT行で再配置を必要とする各項目について繰り返される。
+
 ### 3.5.10  P Line
 
 ```
@@ -4855,6 +5063,8 @@ The groups of 4 bytes are repeated for each item requiring relocation in the pre
 ```
 
 The  P  line provides the paging information to the linker as specified by a .setdp directive.  The format of  the  relocation information is identical to that of the R line.  The corresponding T line has the following information: 
+
+P行は、.setdp命令で指定されたページング情報をリンカに提供する。 再配置情報の書式はR行と同じである。 対応するT行は以下の情報を持つ：
 ```
 T xx xx aa aa bb bb
 ```
@@ -4863,9 +5073,15 @@ Where  aa aa is the area reference number which specifies the selected page area
 
 The  linker  defaults any direct page references to the first area defined in the input REL file.  All ASxxxx assemblers  will specify the _CODE area first, making this the default page area.
 
+bb bbは、P行に'n1 n2 xx xx'が指定されている場合、再配置処理を必要とする。 リンカは、ベースアドレスが256バイト境界上にあり、PAGタイプで定義された領域のページ長が256バイトより大きくないことを確認する。
+
+リンカは、直接ページ参照を入力 REL ファイルで定義された最初の領域にデフォルト設定します。 すべてのASxxxxアセンブラは_CODEエリアを最初に指定し、これをデフォルトのページエリアとします。
+
 ### 3.5.11  24-Bit and 32-Bit Addressing
 
 When  24-bit  or  32-bit  addressing is specified in the file format line [XDQ][HL][234] then the S and T Lines have  modified formats: 
+
+ファイルフォーマット行[XDQ][HL][234]で24ビットまたは32ビットアドレッシングが指定されている場合、S行とT行のフォーマットは変更される：
 ```
         S name Defnnnnnn                        (24-bit) 
         S name Refnnnnnn                        (24-bit) 
@@ -4878,9 +5094,13 @@ When  24-bit  or  32-bit  addressing is specified in the file format line [XDQ][
 
 The  multibyte  formats for byte data replace the 2-byte form for 16-bit data with 3-byte or 4-byte data for 24-bit or  32-bit data  respectively.  The 2nd byte format (also named MSB) always uses the second byte of the 2, 3, or 4-byte data.
 
+バイトデータのマルチバイトフォーマットは、16ビットデータの2バイトフォーマットを、それぞれ24ビットデータまたは32ビットデータの3バイトデータまたは4バイトデータに置き換えたものである。 2ndバイトフォーマット(MSBとも呼ばれる)は、常に2、3、4バイトデータの2バイト目を使用する。
+
 ### 3.5.12  ASlink V5.xx (V4.xx) Error Messages
 
 The linker provides detailed error messages allowing the programmer to quickly find the errant code.   As  the  linker  completes  pass 1  over  the  input  file(s)  it  reports  any page boundary or page length errors as follows:
+
+リンカは詳細なエラーメッセージを表示するので、プログラマはエラーコードをすぐに見つけることができる。  リンカは入力ファイルに対してパス1を完了すると、ページ境界やページ長のエラーを次のように報告する：
 
 ```
 ?ASlink-Warning-Paged Area PAGE0 Boundary Error
@@ -4902,8 +5122,18 @@ During  Pass  two the linker reads the T, R, and P lines performing the necessar
 
 The P line processing can produce only one possible error:
 
-?ASlink-Warning-Page Definition Boundary Error 
+ここで、PAGE0 はページングされた領域である。
+
+また、パス1の間、バンクサイズ(長さ)のエラーは以下のように報告される：
+
+ASlink-Warning-Size exceeded limit in bank BANK(BANKはバンク名)。
+
+パス 2 では、リンカが T、R、P 行を読み取り、必要な再配置を実行して絶対コードを出力する。 このプロセスでは、さまざまなエラーが報告される。
+
+P 行の処理で発生する可能性のあるエラーは 1 つだけである：
+
 ```
+?ASlink-Warning-Page Definition Boundary Error 
         file        module      pgarea    pgoffset 
 PgDef   t6809l      t6809l      PAGE0         0001
 ```
@@ -4911,6 +5141,11 @@ PgDef   t6809l      t6809l      PAGE0         0001
 The error message specifies the file and module where the .setdp direct was issued and indicates  the  page  area  and  the  page offset value determined after relocation.
 
 The R line processing produces various error messages:
+
+エラーメッセージには、.setdp direct が発行されたファイルとモジュールが指定され、再配置後に決定されたページ領域とページオフセット値が示される。
+
+Rライン処理では、さまざまなエラーメッセージが生成される：
+
 ```
 ?ASlink-Warning-Signed value error 
 ?ASlink-Warning-Unsigned value error 
@@ -4926,6 +5161,9 @@ The R line processing produces various error messages:
 ```
 
 These  error  messages  also specify the file, module, area, and offset within the area of the code referencing (Refby)  and  defining (Defin) the symbol:
+
+これらのエラーメッセージは、シンボルを参照(Refby)および定義(Definition)しているコードのファイル、モジュール、領域、領域内のオフセットも指定している：
+
 ```
 ?ASlink-Warning-Signed value error for symbol  two56 
          file        module      area        offset 
@@ -4936,6 +5174,10 @@ These  error  messages  also specify the file, module, area, and offset within t
 If the symbol is defined in the same module as the reference the linker is unable to report the symbol name.  The assembler listing  file(s) should be examined at the offset from the specified area to locate the offending code.
 
 The errors are:
+
+シンボルが参照と同じモジュールで定義されている場合、リンカはシンボル名を報告できない。 アセンブラのリストファイル(複数可)を、指定された領域からのオフセットで調べ、問題のあるコードを特定する必要がある。
+
+エラーは以下のとおり：
 
 1.  The  Signed value error indicates an indexing value exceeded the maximum negative or maximum  positive  value for the current variable size.
 
@@ -4959,6 +5201,28 @@ The errors are:
 
 11.  The  Unsigned/Overflow  Merge Bit Range error indicates an indexing value was  greater  than  maximum  positive value for the current unsigned merge variable size.
 
+1.  符号付き値エラーは、インデックス値が現在の変数サイズの最大負値または最大正値を超えたことを示す。
+
+2.  符号なし値エラーは、インデックス値が現在の変数サイズの最大正値を超えたことを示す。
+
+3.  バイトPCRエラーは、pc相対バイト分岐範囲を超えたために発生します。
+
+4.  ワードPCRエラーは、PC相対ワード分岐範囲を超えたために発生する。
+
+5.  3バイトPCRエラーは、PC相対3バイト分岐範囲を超えたために発生する。
+
+6.  4バイトPCRエラーは、PC相対4バイト分岐範囲を超えたために発生する。
+
+7.  Page0 エラーは、直接ページ変数が page0 の範囲 0～255 にない場合に発生する。
+
+8.  直接ページ変数が 0 から 255 までの N 番目のページ範囲内にない場合、PageN エラーが発生する。
+
+9.  直接ページ変数が拡張ページ範囲内にない場合、PageX エラーが発生する。
+
+10.  符号付きマージビット範囲エラーは、インデックス値が現在の符号付きマージ変数サイズの最大負の値または最大正の値を超えたことを示す。
+
+11.  符号なし/オーバーフローマージビット範囲エラーは、インデックス値が現在の符号なしマージ変数サイズの最大正値を超えたことを示す。
+
 <div style="page-break-before:always"></div>
 
 ## 3.6  ASXXXX VERSION 3.XX LINKING
@@ -4966,6 +5230,11 @@ The errors are:
 The  linkers'  input  object file is an ascii file containing the information needed by the linker  to  bind  multiple  object modules into a complete loadable memory image.
 
 The object module contains the following designators:
+
+リンカの入力オブジェクトファイルは、リンカが複数のオブジェクトモジュールを完全なローダブルメモリイメージにバインドするために必要な情報を含むアスキーファイルです。
+
+オブジェクトモジュールには以下のデジグネータが含まれる：
+
 ```
         [XDQ][HL][234] 
             X       Hexadecimal radix 
@@ -4992,6 +5261,8 @@ The object module contains the following designators:
 
 The   first   line   of   an   object   module  contains  the [XDQ][HL][234] format specifier  (i.e.   XH2  indicates  a  hexadecimal  file  with  most significant byte first and 16-bit addressing) for the following designators.
 
+オブジェクトモジュールの最初の行は、以下のデジグネータの[XDQ][HL][234]フォーマット指定子(すなわち、XH2は最上位バイトが最初の16ビットアドレッシングの16進数ファイルを示す)を含む。
+
 ### 3.6.2  Header Line
 
 ```
@@ -4999,6 +5270,8 @@ The   first   line   of   an   object   module  contains  the [XDQ][HL][234] for
 ```
 
 The  header  line  specifies  the number of areas(aa) and the number of global symbols(gg) defined or referenced in  this  object module segment.
+
+ヘッダー行には、このオブジェクトモジュールセグメントで定義または参照されているエリアの数(aa)とグローバルシンボル(gg)の数が指定されている。
 
 ### 3.6.3  Module Line
 
@@ -5008,6 +5281,8 @@ The  header  line  specifies  the number of areas(aa) and the number of global s
 
 The  module  line  specifies  the module name from which this header segment was assembled.  The module line will  not  appear if the .module directive was not used in the source program.
 
+module 行は、このヘッダーセグメントが組み立てられたモジュール名を指定します。 .moduleディレクティブがソースプログラムで使用されていない場合、module行は表示されません。
+
 ### 3.6.4  Area Line
 
 ```
@@ -5015,6 +5290,8 @@ A label size ss flags ff
 ```
 
 The  area  line  defines the area label, the size (ss) of the area in bytes, and the area flags (ff).  The area flags  specify the ABS, REL, CON, OVR, and PAG parameters:
+
+エリア行は、エリアラベル、バイト単位のエリアサイズ(ss)、エリアフラグ(ff)を定義する。 エリアフラグは、ABS、REL、CON、OVR、PAGパラメータを指定する：
 
 ```
         OVR/CON  (0x04/0x00 i.e.  bit position 2)
@@ -5036,6 +5313,8 @@ The  area  line  defines the area label, the size (ss) of the area in bytes, and
 
 The symbol line defines (Def) or references (Ref) the identifier name with the value nnnn.  The defined value is relative to the  current area base address.  References to constants and external global symbols will always appear before the  first  area definition.  References to external symbols will have a value of zero.
 
+シンボル行は、nnnn という値の識別子名を定義(Def)または参照(Ref)する。 定義された値は、現在の領域のベースアドレスからの相対値である。 定数と外部グローバルシンボルへの参照は、常に最初の領域定義の前に現れる。 外部シンボルへの参照は、値がゼロになる。
+
 ### 3.6.6  T Line
 
 ```
@@ -5044,6 +5323,8 @@ The symbol line defines (Def) or references (Ref) the identifier name with the v
 
 The  T  line contains the assembled code output by the assembler with xx xx being the offset address from the  current  area base address and nn being the assembled instructions and data in byte format.
 
+T行には、アセンブラによって出力されたアセンブルコードが格納される。xx xxは現在のエリアベースアドレスからのオフセットアドレス、nnはアセンブルされた命令とバイト形式のデータである。
+
 ### 3.6.7  R Line
 
 ```
@@ -5051,6 +5332,8 @@ The  T  line contains the assembled code output by the assembler with xx xx bein
 ```
 
 The R line provides the relocation information to the linker. The nn nn value is the current area index, i.e.  which area  the current  values  were  assembled.  Relocation information is encoded in groups of 4 bytes:
+
+R行はリンカに再配置情報を提供する。nn nnの値は、現在の領域インデックス、つまり現在の値がどの領域でアセンブルされたかを示す。 再配置情報は4バイトのグループでエンコードされる：
 
 ```
     1.  n1  is  the  relocation mode and object format, for the adhoc
@@ -5075,6 +5358,8 @@ The R line provides the relocation information to the linker. The nn nn value is
 
 The groups of 4 bytes are repeated for each item requiring relocation in the preceding T line.
 
+4バイトのグループは、直前のT行で再配置を必要とする各項目について繰り返される。
+
 ### 3.6.8  P Line
 
 ```
@@ -5085,11 +5370,19 @@ The  P  line provides the paging information to the linker as specified by a .se
 
 Where  aa aa is the area reference number which specifies the selected page area and bb bb is the base address  of  the  page. bb bb will require relocation processing if the 'n1 n2 xx xx' is specified in the P line.  The linker will verify that  the  base address is on a 256 byte boundary and that the page length of an area defined with the PAG type is not larger than 256 bytes.
 
+P行は、.setdp命令で指定されたページング情報をリンカに提供する。 再配置情報の書式はR行と同じである。 対応するT行は以下の情報を持つ： T xx xx aa aa bb bb
+
+ここで、aa aaは選択されたページ領域を指定する領域参照番号であり、bb bbはページのベースアドレスである。 bb bbは、P行で'n1 n2 xx xx'が指定されている場合に再配置処理を必要とする。 リンカは、ベースアドレスが256バイト境界上にあり、PAG型で定義された領域のページ長が256バイトより大きくないことを確認する。
+
 The  linker  defaults any direct page references to the first area defined in the input REL file.  All ASxxxx assemblers  will specify the _CODE area first, making this the default page area.
+
+リンカは、直接ページ参照を入力 REL ファイルで定義された最初の領域にデフォルト設定します。 すべてのASxxxxアセンブラは_CODEエリアを最初に指定し、これをデフォルトのページエリアとします。
 
 ### 3.6.9  24-Bit and 32-Bit Addressing
 
 When  24-bit  or  32-bit  addressing is specified in the file format line [XDQ][HL][234] then the S and T Lines have  modified formats: 
+
+ファイルフォーマット行[XDQ][HL][234]で24ビットまたは32ビットアドレッシングが指定されている場合、S行とT行のフォーマットは変更される：
 ```
         S name Defnnnnnn                        (24-bit) 
         S name Refnnnnnn                        (24-bit) 
@@ -5102,9 +5395,13 @@ When  24-bit  or  32-bit  addressing is specified in the file format line [XDQ][
 
 The  multibyte  formats for byte data replace the 2-byte form for 16-bit data with 3-byte or 4-byte data for 24-bit or  32-bit data  respectively.  The 2nd byte format (also named MSB) always uses the second byte of the 2, 3, or 4-byte data.
 
+バイトデータのマルチバイトフォーマットは、16ビットデータの2バイトフォーマットを、それぞれ24ビットデータまたは32ビットデータの3バイトデータまたは4バイトデータに置き換えたものである。 2ndバイトフォーマット(MSBとも呼ばれる)は、常に2、3、4バイトデータの2バイト目を使用する。
+
 ### 3.6.10  ASlink V3.xx Error Messages
 
 The linker provides detailed error messages allowing the programmer to quickly find the errant code.   As  the  linker  completes  pass 1  over  the  input  file(s)  it  reports  any page boundary or page length errors as follows:
+
+リンカは詳細なエラーメッセージを表示するので、プログラマはエラーコードをすぐに見つけることができる。  リンカは入力ファイルに対してパス1を完了すると、ページ境界やページ長のエラーを次のように報告する：
 
 ```
 ?ASlink-Warning-Paged Area PAGE0 Boundary Error
@@ -5120,6 +5417,10 @@ where PAGE0 is the paged area.
 
 During  Pass  two the linker reads the T, R, and P lines performing the necessary relocations and  outputting  the  absolute code.  Various errors may be reported during this process The P line processing can produce only one possible error:
 
+ここで、PAGE0 はページングされた領域である。
+
+パス 2 の間、リンカは T、R、P 行を読み取り、必要な再配置を実行して絶対コードを出力する。 P 行の処理で発生する可能性のあるエラーは 1 つだけです：
+
 ```
 ?ASlink-Warning-Page Definition Boundary Error 
         file        module      pgarea      pgoffset 
@@ -5129,6 +5430,10 @@ During  Pass  two the linker reads the T, R, and P lines performing the necessar
 The error message specifies the file and module where the .setdp direct was issued and indicates  the  page  area  and  the  page offset value determined after relocation.
 
 The R line processing produces various errors:
+
+エラーメッセージには、.setdp direct が発行されたファイルとモジュールが指定され、再配置後に決定されたページ領域とページオフセット値が示される。
+
+R行処理では様々なエラーが発生する：
 
 ```
 ?ASlink-Warning-Byte PCR relocation error for symbol  bra2 
@@ -5142,6 +5447,8 @@ The R line processing produces various errors:
 
 These  error  messages  also specify the file, module, area, and offset within the area of the code referencing (Refby)  and  defining (Defin) the symbol:
 
+これらのエラーメッセージは、シンボルを参照(Refby)および定義(Definition)しているコードのファイル、モジュール、領域、領域内のオフセットも指定している：
+
 ```
 ?ASlink-Warning-Unsigned Byte error for symbol  two56 
         file        module      area        offset 
@@ -5152,6 +5459,10 @@ These  error  messages  also specify the file, module, area, and offset within t
 If the symbol is defined in the same module as the reference the linker is unable to report the symbol name.  The assembler listing  file(s) should be examined at the offset from the specified area to locate the offending code.
 
 The errors are:
+
+シンボルが参照と同じモジュールで定義されている場合、リンカはシンボル名を報告できない。 アセンブラのリストファイル(複数可)を、指定された領域からのオフセットで調べ、問題のあるコードを特定する必要がある。
+
+エラーは以下のとおり：
 
 1.  The  byte PCR error is caused by exceeding the pc relative byte branch range.
 
@@ -5165,12 +5476,27 @@ The errors are:
 
 6.  The  512K  Page  relocation  error  is generated if the destination  is  not  within  the  current  512K   page (DS80C390).
 
+1.  バイトPCRエラーは、pc相対バイト分岐範囲を超えていることが原因です。
+
+2.  Unsigned byteエラーは、インデックス値が負または255より大きかったことを示す。
+
+3.  Page0 エラーは、直接ページ変数が page0 の範囲 0～255 にない場合に発生する。
+
+4.  ページモードエラーは、直接変数が現在の直接ページ(6809)内にない場合に発生する。
+
+5.  転送先が現在の 2K ページ内にない場合、2K ページ再配置エラーが発生する (8051、DS8xCxxx)。
+
+6.  移動先が現在の512Kページ内にない場合、512Kページ再配置エラーが発生する(DS80C390)。
+
 <div style="page-break-before:always"></div>
 
 
 ## 3.7  HINT FILE FORMAT FOR RELOCATED LISTINGS
 
 The hint file is an ascii file containing information to help the linker convert the listing file  into  a  relocated  listing file.   Each  line in the .hlr file corresponds to a single line in the listing file.  The text line  usually  contains  3  or  4 parameters  in  the radix selected for the assembler as shown in the following table:
+
+ヒントファイルは、リンカがリスティングファイルを再配置リスティング ファイルに変換する際に役立つ情報を含むアスキーファイルです。  .hlrファイルの各行は、リスティングファイルの1行に対応します。 テキスト行には通常、次の表に示すように、アセンブラで選択された基数のパラメータが 3 つまたは 4 つ含まれています：
+
 ```
 Line Position:  123456789012 
                 ------------
@@ -5180,6 +5506,9 @@ Hex:             11 22 33
 ```
 
 Parameter 1 specifies the parameters listed in the line. A bit is set for each listing option enabled during the assembly of the line.
+
+パラメータ1は、その行にリストされているパラメータを指定する。ビットは、行の組み立て中に有効化されたリストオプションごとに設定される。
+
 ```
         BIT 0   - LIST_ERR      Error Code(s) 
         BIT 1   - LIST_LOC      Location 
@@ -5192,6 +5521,8 @@ Parameter 1 specifies the parameters listed in the line. A bit is set for each l
 ```
 
 Parameter 2 is the internal assembler listing mode value specified for this line during the assembly process:
+
+パラメータ 2 は、アセンブル処理中にこの行に指定された内部アセンブラリスティングモードの値である：
 
 ```
         0 - NLIST       No listing 
@@ -5207,6 +5538,10 @@ Parameter 3 is the number of output bytes listed for this line.
 
 The  4th  parameter  is only output if an equate references a value in a different area.  The area name is output in the  following format following the 3 parameters described above:
 
+パラメータ3は、この行の出力バイト数である。
+
+第4パラメータは、等号が異なるエリアの値を参照する場合にのみ出力される。 エリア名は、上記の3つのパラメータに続いて、以下のフォーマットで出力される：
+
 ```
 Line Position:  123456789012 
                 ------------
@@ -5214,6 +5549,8 @@ Area Name:       equatearea
 ```
 
 When the line number is present it is prepended to the 3 or 4 parameters described  above.   The  line  number  is  always  in decimal in the following format:
+
+行番号がある場合は、上記の3つまたは4つのパラメータの前に付加される。  行番号は常に10進数で、以下の形式である：
 ```
 Line Position:  1234567 
                 -------
@@ -5221,6 +5558,8 @@ Decimal:          LLLLL
 ```
 
 Thus the four formats (for each radix) that may be present in a .hlr file are:
+
+したがって、.hlrファイルに含まれる可能性のある4つのフォーマット(各基数)は以下の通りである：
 ```
 Line Position:  123456789012345678901234567890 
                 ------------------------------
@@ -5233,6 +5572,10 @@ Line Position:  123456789012345678901234567890
 The  linker understands these formats without any user interaction.
 
 If  a  hint  file  does not exist then the linker attempts to convert the list file to a relocated list file using some  basic assumptions  about the parameters listed in each line.  The conversion without a hint file  requires  at  least  these  listing parameters:   LOC,  BIN,  MEB, and ME.  The 'equate' values will not be updated.
+
+リンカは、ユーザーが操作しなくても、これらの形式を理解する。
+
+ヒントファイルが存在しない場合、リンカは、各行にリストされているパラメー タに関するいくつかの基本的な仮定を用いて、リストファイルを再配置されたリスト ファイルに変換しようとする。 ヒントファイルがない場合の変換には、少なくとも以下のリストパラメータが必要である：   LOC、BIN、MEB、ME。 equate」値は更新されない。
 
 <div style="page-break-before:always"></div>
 
@@ -5344,15 +5687,21 @@ The  distribution  will  be  unpacked into the base directory 'asxv5pxx' which w
 
 The  Linux  build  directory is /asxv5pxx/asxmak/linux/build. The makefile in this directory is compatible with the Linux  GNU make and GCC.  The command
 
+Linuxのビルドディレクトリーは/asxv5pxx/asxmak/linux/buildです。このディレクトリのmakefileはLinuxのGNU makeとGCCと互換性があります。 コマンド
+
     make clean
 
 will  remove  all  the  current  executable  files  in directory /asxv5pxx/asxmak/linux/exe and all the compiled  object  modules from the /asxv5pxx/asxmak/linux/build directory.
+
+は、/asxv5pxx/asxmak/linux/exeディレクトリにある現在の実行ファイルと、/asxv5pxx/asxmak/linux/buildディレクトリにあるすべてのコンパイル済みオブジェクトモジュールを削除します。コマンド
 
 The command
 
     make all
 
 will compile and link all the ASxxxx assemblers, the ASlink program, and the utility programs asxscn, asxcnv, and s19os9.   The make  file  can  make a single program by invoking make with the specific assembler, linker, or utility you wish to build:
+
+は、すべてのASxxxxアセンブラ、ASlinkプログラム、およびユーティリティプログラムasxscn、asxcnv、s19os9をコンパイルおよびリンクします。  make ファイルは、ビルドしたい特定のアセンブラ、リンカ、またはユーティリティを指定して make を起動することで、単一のプログラムを作成することができます：
 
     make aslink
 
@@ -5706,6 +6055,8 @@ and recompile the assemblers and linker.
 # <p style="text-align: center">APPENDIX A<br><br>ASXSCN LISTING FILE SCANNER</p>
 
 The  program  ASXSCN  is  a debugging utility program used to verify ASxxxx assembler code generation.  The program may be invoked with any of the following options:
+
+ASXSCN プログラムは、ASxxxx アセンブラコード生成を検証するために使用されるデバッギングユーティリティプログラムです。 このプログラムは、以下のいずれかのオプションを指定して起動することができます：
 ```
         Usage: [-dqx234i] file 
           d    decimal listing 
@@ -5721,6 +6072,10 @@ The  program  ASXSCN  is  a debugging utility program used to verify ASxxxx asse
 Select  one of the -d, -q, or -x options to match the listing file format and select only one of the -2, -3, or -4 options  to match  the  addressing range of the listing file.  The -i option inhibits the verification  of  the  assembler  relocation  flags generated by the ASxxxx assemblers -f or -ff options.
 
 Each  source assembly line selected for verification must include the expected output code in the comment field of the line. The  default  expects  verification code to follow the first ';' encountered in the line.  Use the -c option to specify that  the verification code follows the last ';' on the line.  The following has been extracted from the ASF2MC8 test file tf2mc8.asm:
+
+d、-q、または -x オプションの 1 つを選択してリスティングファイルの形式と一致させ、 -2、-3、または -4 オプションの 1 つだけを選択してリスティングファイルのアドレス範囲と一致させます。 iオプションを指定すると、ASxxxxアセンブラの-fまたは-ffオプションによって生成されるアセンブラの再配置フラグの検証は行われません。
+
+検証用に選択された各ソースアセンブリ行には、その行のコメントフィールドに期待される出力コードを含める必要があります。デフォルトでは、行の最初の ';' の後に検証コードを記述します。 c オプションを使用すると、検証コードが行の最後の ';' に続くように指定できます。 以下は、ASF2MC8のテストファイルtf2mc8.asmから抜粋したものである：
 ```
         reti            ; 30 
         call  ext       ; 31s12r34 
@@ -5733,6 +6088,8 @@ Each  source assembly line selected for verification must include the expected o
 ```
 
 The  r,  s,  and * are specific address relocation flags created when the -ff option is specified with any ASxxxx assembler.
+
+r、s、*は、ASxxxxアセンブラで-ffオプションが指定されたときに作成される特定のアドレス再配置フラグである。
 
 Invoking the assembler:
 
@@ -5752,14 +6109,22 @@ produces a listing file:
 
 The  expected code can be compared with the generated code by invoking the scanning program:
 
+期待されるコードは、スキャンプログラムを起動することによって、生成されたコードと比較することができる：
+
+
     asxscn tf2mc8.lst 
     0 code difference(s) found in file tf2mc8.lst
 
 The assembled code can also be linked:
 
+アセンブルされたコードはリンクすることもできる：
+
+
     aslink -u ...options... t2fc8
 
 to create an updated listing file:
+
+を使用して更新されたリストファイルを作成します：
 ```
 033B 30          677    reti            ; 30 
 033C 31 12 34    678    call  ext       ; 31s12r34 
@@ -5772,10 +6137,14 @@ to create an updated listing file:
 
 which resolves all relocations and removes the relocation flags. This file can also be verified:
 
+このファイルはすべての再配置を解決し、再配置フラグを削除する。このファイルを検証することもできる：
+
     asxscn -i tf2mc8.rst 
     0 code difference(s) found in file tf2mc8.rst
 
 The  verification  of  both  the .lst and .rst files from the same assembler test file requires careful definition of external variables  so  that  the  assembler  listing file and the linker listing file have the same code values.
+
+同じアセンブラテストファイルから.lstファイルと.rstファイルの両方を検証するには、アセンブラリスティングファイルとリンカリスティングファイルが同じコード値を持つように、外部変数を慎重に定義する必要がある。
 
 <div style="page-break-before:always"></div>
 
@@ -5783,6 +6152,8 @@ The  verification  of  both  the .lst and .rst files from the same assembler tes
 # <p style="text-align: center">APPENDIX B<br><br>ASXCNV LISTING CONVERTER</p>
 
 The  program  ASXCNV  is  a debugging utility program used to create an assembler file with verification  data.   The  program may be invoked with any of the following options:
+
+プログラム ASXCNV は、検証データを含むアセンブラファイルを作成するためのデバッギングユーティリティプログラムです。  このプログラムは、以下のいずれかのオプションで起動することができます：
 ```
         Usage: [-dqx234n#] file 
           d    decimal listing 
@@ -5799,6 +6170,13 @@ Select  one of the -d, -q, or -x options to match the listing file format, selec
 Each source assembly line which creates output data will have the data appended to the source line as a comment.  The appended comment will contain the relocation codes if they are present in the listing file.  Any existing comment  on  the  line  will  be overwritten.
 
 Given an existing listing file, a.lst, containing:
+
+d、-q、または -x オプションの 1 つを選択してリスティングファイルのフォーマットに一致させ、-2、-3、または -4 オプションの 1 つだけを選択してリスティングファイルのアドレス指定範囲に一致させ、-n#(# は 2、3、または 4)を使用してサイクル桁数を指定します。デフォルトは、16 進リスト、16 ビットアドレッシング、2 サイクル桁です。
+
+出力データを作成する各ソースアセンブリ行には、データがコメントとしてソース行に追加されます。 追加されたコメントには、リロケーションコードがリスティング ファイルに存在する場合は、それが含まれます。 その行の既存のコメントは上書きされます。
+
+既存のリストファイル a.lst が以下の内容を含んでいるとします：
+
 ```
 033B 30          677    reti 
 033C 31s12r34    678    call  ext 
@@ -5812,9 +6190,14 @@ Given an existing listing file, a.lst, containing:
 
 A  converted  listing  file  can  be created using the following command:
 
+変換されたリストファイルは以下のコマンドで作成できる：
+
     asxcnv -d2 a.lst
 
 The  created output file, a.out, is a new assembly file now contain the verification data in the comments:
+
+作成された出力ファイルa.outは、コメントに検証データを含む新しいアセンブリファイルである：
+
 ```
         reti            ; 30 
         call  ext       ; 31s12r34 
@@ -5835,12 +6218,18 @@ The  created output file, a.out, is a new assembly file now contain the verifica
 
 OS9  is  an  Operating System for the TRS-80/Tandy Color Computers based on the 6809/6309 processors.  The open source  version  of  the  OS9 operating system is NitrOS-9 and is available at:
 
+OS9は、6809/6309プロセッサを搭載したTRS-80/Tandyカラーコンピュータ用のオペレーティングシステムです。 OS9オペレーティングシステムのオープンソース版はNitrOS-9で、以下で入手できます：
+
     The NitrOS-9 Project 
     http://www.nitros9.org
 
 The s19os9 utility package contains the following:
 
+s19os9ユーティリティパッケージには以下が含まれます：
+
 1)  OS9  definition files and an  OS9 assembler module which creates the OS9 header, code and data areas, and the module CRC block:
+
+1) OS9定義ファイルと、OS9ヘッダー、コードエリア、データエリア、モジュールCRCブロックを作成するOS9アセンブラモジュール：
 
         os9_mod.def       OS9 Module Definitions 
         os9_sys.def       OS9 Sytem  Definitions 
@@ -5848,15 +6237,25 @@ The s19os9 utility package contains the following:
 
 2)  a program, s19os9, to post-process  assembled  OS9 modules from S19 format into  binary  OS9  modules with the appropriate  header  checksum  and module CRC values calculated.
 
+2) S19 フォーマットでアセンブルされた OS9 モジュールを、適切な ヘッダチェックサムとモジュール CRC 値を計算したバイナリ OS9 モジュールに後処理するプログラム s19os9 です。
+
 The  file `os9_mod.def` contains module definitions used in the header of OS9 binary files and was  derived  from  the  NitrOS-9 file `os9_mod.def`.
 
+ファイル `os9_mod.def` は OS9 バイナリファイルのヘッダで使用されるモジュール定義を含み、NitrOS-9 のファイル `os9_mod.def` から派生した。
+
 The  file  os9_sys.def contains system definitions pertaining to system service request codes, system reserved calls, I/O service  request  calls,  file  access modes, signal codes, get/put status codes, module offsets, and error codes.   This  file  was derived from the NitrOS-9 file os9defs.a.
+
+os9_sys.defファイルには、システムサービス要求コード、システム予約コール、I/Oサービス要求コール、ファイルアクセスモード、シグナルコード、get/putステータスコード、モジュールオフセット、エラーコードに関するシステム定義が含まれている。  このファイルは NitrOS-9 のファイル os9defs.a から派生したものです。
 
 ## C.2  CREATING AN OS9 MODULE
 
 This  section describes how to create an OS9 module using the files os9_mod.def, os9_sys.def, and os9_mod.asm.
 
 When  creating  an OS9 module certain parameters are required by the os9_mod.asm file to create the appropriate headers.   The list of supported parameters is listed here:
+
+このセクションでは、os9_mod.def、os9_sys.def、os9_mod.asmを使用してOS9モジュールを作成する方法を説明します。
+
+OS9モジュールを作成するとき、os9_mod.asmファイルが適切なヘッダを作成するために特定のパラメータが必要です。  サポートされているパラメータのリストはここにある：
 
 Basic Header:
 ```
@@ -5896,6 +6295,8 @@ The  OS9 Module file os9_mod.asm supports the creation of the following simple m
     DEVIC         -       Device Descriptor Module
 
 The  following code shows the steps required when creating an OS9 program using the os9_mod.asm file.  os9_mod.asm  loads  the os9_mod.def  and  os9_sys.def files, defines the software interrupt macro os9, and creates  the  os9  program  header  and  crc blocks.
+
+os9_mod.asmはos9_mod.defファイルとos9_sys.defファイルをロードし、ソフトウェア割り込みマクロos9を定義し、os9プログラムヘッダとcrcブロックを作成する。
 
 ### C.2.1  Step 1:  Define Header Values
 ```
