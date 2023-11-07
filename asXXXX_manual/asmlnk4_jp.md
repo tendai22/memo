@@ -677,8 +677,6 @@ num3:   .word   0               ;The label num3 has　the value
         .blkw   0H20
 ```
 
-The  .blkb  and .blkw directives are the preferred methods of allocating space.
-
 `.blkb`指令と`.blkw`指令は、スペースを割り当てるのに好ましい方法である。
 
 ### 1.3.5  Numbers
@@ -1326,11 +1324,9 @@ where:
             MAP     NOICE mapping
 ```
 
-The  .bank  directive allows an arbitrary grouping of program and/or data areas to be communicated to the  linker.   The  bank parameters are all optional and are described as follows:
+`.bank`指令は、任意のプログラム領域のグループ化とデータ領域をリンカに伝えることができる。  バンクパラメータはすべてオプションで、以下のように記述される：
 
-`.bank`指令は、プログラム領域とデータ領域の任意のグループ化をリンカに伝えることができる。  バンクパラメータはすべてオプションで、以下のように記述される：
-
-1.  BASE、バンクの開始アドレス(デフォルトは0)を定義することができる。 このアドレスは、リンカの -b オプションを使って上書きすることができる。 バンクアドレスは常に「バイト」アドレッシングで指定される。 「バイト」アドレスでない最初の領域(例えば、2バイト以上の「ワード」単位でアドレス指定するプロセッサ)は、領域アドレスが「バイト」アドレスから始まるようにスケーリングされる。
+1.  BASE、バンクの開始アドレス(デフォルトは0)を定義することができる。 このアドレスは、リンカの `-b` オプションを使って上書きすることができる。 バンクアドレスは常に「バイト」アドレッシングで指定される。 「バイト」アドレスでない最初の領域(例えば、2バイト以上の「ワード」単位でアドレス指定するプロセッサ)は、領域アドレスが「バイト」アドレスから始まるようにスケーリングされる。
 2.  SIZE(サイズ)：バンクの最大長、バイト単位で指定する。 サイズは常にバイト単位で指定される。
 3.  FSFX：このバンクのリンカが使用するファイル拡張子。 拡張子に空白を含めることはできない。
 4.  MAP、このバンクのコード/データの NOICE マッピングパラメータ。
@@ -1372,8 +1368,6 @@ where:
     symn            
 ```
 
-A  .globl directive may also have a label field and/or a comment field.
-
 `.globl`指令は、ラベルフィールドやコメントフィールドを持ってもよい。
 
 `.globl`指令は、モジュール内でグローバルシンボルとして定義されていないシンボルをエクスポートする(つまり、そのシンボルへのリンケージを提供する)ために用意されています。  グローバルシンボルをエクスポートする場合、`.globl J` 指令は次のようになります：
@@ -1381,8 +1375,6 @@ A  .globl directive may also have a label field and/or a comment field.
 ```
     J == expression or J::
 ```
-
-The  .globl directive and == construct can be overridden by a following .local directive.
 
 オブジェクトモジュールはグローバルシンボルによってリンクされているため、グローバルシンボルはプログラムにとって不可欠である。 与えられたプログラム内に現れる内部シンボルは、パス1の終了時にすべて定義されていなければならず、そうでなければ未定義とみなされる。 アセンブリ指令(-g)を使用すると、パス 1 の終了時にすべての未定義シンボルをグローバルにすることができます。
 
@@ -1504,8 +1496,6 @@ Format:
      .      ;} unconditional range          ;}
     .endif
 ```
-
-The  subconditional  assembly directives may be placed within conditional assembly blocks to indicate:
 
 サブ条件付きアセンブリ指令は、条件付きアセンブリブロックの中に置くことができる:  
 
@@ -1743,8 +1733,6 @@ Format:
     .endif
 ```
 
-The  conditional .ifidn is most useful when used in macro definitions to determine if  the  arguments  are  identical.   The range  of true condition will be processed if the symbol 'sym$1' is identical to 'sym$2' (i.e.  the character strings  for  sym$1 and  sym$2  are  the  same  consistent with the case sensitivity flag).  When this if statement occurs inside a  macro  where  an argument  substitution  may  be blank then an argument should be delimited with the form /symbol/ for each symbol.  The range  of true  condition  is  optional  as is the .else directive and the range  of  false  condition.   The  following  are   all   valid .ifidn/.else/.endif constructions:
-
 条件付きアセンブリ指令は、テスト条件の評価に基づいて、アセンブリ処理中にソースコードのブロックを含めたり除外したりすることができる。
 
 条件付き `.ifidn` は、引数が同一かどうかを判定するマクロ定義で使用すると最も便利です。  シンボル'sym$1'が'sym$2'と同一である場合(すなわち、大文字小文字を区別するフラグに合わせた比較によりsym$1とsym$2の文字列が同一である場合)、真条件の範囲が処理されます。 このif文が、引数の置換が空白になる可能性のあるマクロの内部で発生する場合、引数は、各シンボルに対して/symbol/の形式で区切られなければならない。 真の条件の範囲は、`.else`指令と偽の条件の範囲と同様に任意である。  以下はすべて有効な`.ifidn`/`.else`/`.endif`構文です。
@@ -1785,8 +1773,6 @@ Format:
     .endif
 ```
 
-The  conditional .ifdif is most useful when used in macro definitions to determine if  the  arguments  are  different.   The range  of true condition will be processed if the symbol 'sym$1' is different from 'sym$2' (i.e.  the character strings for sym$1 and  sym$2  are the not the same consistent with the case sensitivity flag).  When this if  statement  occurs  inside  a  macro where  an  argument  substitution  may be blank then an argument should be delimited with the form /symbol/ for each symbol.  The range  of  true  condition is optional as is the .else directive and the range of false condition.  The following are  all  valid .ifdif/.else/.endif constructions:
-
 条件付きアセンブリ指令は、テスト条件の評価に基づいて、アセンブリ処理中に ソースコードのブロックを含めたり除外したりすることができる。
 
 条件付き `.ifdif` は、引数が異なるかどうかを判定するマクロ定義で使用すると最も便利です。  シンボル'sym$1'が'sym$2'と異なる場合(すなわち、大文字小文字を区別するフラグに合わせた比較の結果sym$1とsym$2の文字列が同じでない場合)、真条件の範囲が処理されます。 このif文が引数の置換が空白になる可能性のあるマクロの内部で発生する場合、引数は各シンボルに対して/symbol/の形式で区切られなければならない。 真の条件の範囲は、`.else`指令と偽の条件の範囲と同様に任意である。 以下はすべて有効な`.ifdif`/`.else`/`.endif`構文です：
@@ -1823,21 +1809,19 @@ Format:
 where  the  cnd (followed by an optional comma) may be any of
 the following:
 
+ここで、cnd(コンマで区切られたオプションが続く場合も)は以下のいずれかになります。
+
 ||||
 |--|--|--|
 condition<br>(complement)|<br>Args|Assemble <br>Block if:
-eq   ( ne )|    expr|   equal to zero<br>(not equal to zero)
-gt   ( le )|    expr|   greater than zero<br>(less than or equal to zero)
-lt   ( ge )|    expr|   less than zero<br>(greater than or equal to zero)
-def  ( ndef )|  symbol| .define'd or user set<br>(not .define'd or user set)
-b    ( nb )|    macro|  argument present <br>symbol  (argument not present)
-idn  ( dif )|   macro|  arguments identical<br>symbol  (arguments not identical)
-f    ( t )|     ----- |  only within a .if/.else/.endif<br>conditional block
-tf        |     ----- | only within a .if/.else/.endif<br>conditional block
-
-All .if/.else/.endif directives are limited to a maximum nesting of 10 levels.
-
-The  use of a .else directive outside a .if/.endif block will generate an `<i>` error.  Assemblies having unequal .if and .endif counts will cause an `<i>` error.
+eq   ( ne )|    expr|   ゼロと等しい<br>(ゼロと等しくない)
+gt   ( le )|    expr|   ゼロより大きい<br>(ゼロと等しいか小さい)
+lt   ( ge )|    expr|   ゼロより小さい<br>(ゼロと等しいか大きい)
+def  ( ndef )|  symbol| .defineされているか、ユーザセットである<br>(.defineされていないか、ユーザセットでもない)
+b    ( nb )|    macro|  引数が存在する<br>シンボルか (引数が存在しないか)
+idn  ( dif )|   macro|  引数が同一のシンボルか<br>(引数が同一でないか)
+f    ( t )|     ----- |  .if/.else/.endifの内側でのみ<br>条件ブロック
+tf        |     ----- |  .if/.else/.endifの内側でのみ<br>条件ブロック
 
 .if/.else/.endif指令の最大ネストレベルは10に制限されている。
 
@@ -1846,10 +1830,7 @@ The  use of a .else directive outside a .if/.endif block will generate an `<i>` 
 
 ### 1.4.40  Immediate Conditional Assembly Directives
 
-
-The  immediate conditional assembly directives allow a single line of code to be assembled without  using  a  .if/.else/.endif construct.   All  of  the previously described conditionals have immediate equivalents.
-
-即時条件組み立て指令は、.if/.else/.endif 構造体を使用せずに、1 行のコードを組み立てることを可能にします。  先に説明したすべての条件分岐は、即値条件分岐に相当します。
+即時条件アセンブリ指令(immediate conditional assembly directives)は、.if/.else/.endif 構造を使用せずに、1 行のコードを組み立てることを可能にします。  先に説明したすべての条件分岐には、対応する即値条件分岐が存在します。
 
 Format:
 ```
@@ -1869,7 +1850,7 @@ Format:
     .iifdif      (,)arg1,arg2(,)    line_to_assemble
 ```
 
-Valid only within a conditional block:
+条件ブロックの中でのみ有効なもの。
 ```
 
     .iiff                           line_to_assemble
@@ -1878,7 +1859,7 @@ Valid only within a conditional block:
 ```
 
 
-Alternate Format:
+別の形式。
 ```
     .iif            arg(,)          line_to_assemble
     .iif    eq      arg(,)          line_to_assemble
@@ -1896,20 +1877,12 @@ Alternate Format:
     .iif    dif  (,)arg1,arg2(,)    line_to_assemble
 ```
 
-Valid only within a conditional block:
+条件ブロックの中でのみ有効なもの。
 ```
     .iif    f                       line_to_assemble
     .iif    t                       line_to_assemble
     .iif    tf                      line_to_assemble
 ```
-
-
-The (,) indicates an optional comma.
-
-The  .iif  types b, n, idn, and dif require the commas if the argument(s) may be blank.  These commas may be  removed  if  the arguments are delimited with the form ^/symbol/ for each symbol.
-
-The  immediate  conditional  directives  do  not  change  the .if/.else/.endif nesting level.
-
 (,)はオプションのカンマを示す。
 
 .iif型のb、n、idn、およびdifでは、引数が空白の場合はカンマが必要である。 引数が各シンボルに対して ^/symbol/ の形式で区切られている場合、これらのカンマは削除することができる。
@@ -1928,22 +1901,15 @@ Format:
 
 where:
 ```
-    string  represents  a string that is the file specifica-
-            tion of any file type.
+    string  任意のファイル型のファイルを指定する文字列を表す
 
-    /  /    represent   the  delimiting  characters.   These
-            delimiters   may   be   any   paired    printing
-            characters,  as  long  as the characters are not
-            contained within  the  string  itself.   If  the
-            delimiting  characters do not match, the .incbin
-            directive will give the `<q>` error.
+    /  /    デリミタ文字を表す。デリミタとして、その文字が引数
+            文字列の中で使用されていない限り、任意の印字可能
+            文字の組を使用できる。デリミタが一致しない場合、
+            .incbin 指令は `<q>` エラーを返す。
 ```
 
-The  .incbin  directive  is  used to insert the contents of a file verbatim into the assembler as a byte stream.  This can  be handy  (for example) when including some arbitrary data directly into the executable output.  However, it is recommended  to  use this only for small pieces of data.
-
-The .incbin can be invoked with one or two optional arguments which specify the number of bytes to skip in the  file  and  the maximum number of bytes to insert into the output file.
-
-.incbin指令は、ファイルの内容をそのままバイトストリームとしてアセンブラに挿入するために使用します。 これは(例えば)任意のデータを実行ファイルの出力に直接含める場合に便利です。 ただし、これは小さなデータに対してのみ使用することを推奨する。
+.incbin指令は、ファイルの内容をそのままバイトストリームとしてアセンブラに挿入するために使用します。 これは(例えば)任意のデータを実行ファイルの出力に直接含める場合に便利です。 これは小さなデータに対してのみ使用することを推奨します。
 
 .incbinは、1つまたは2つのオプション引数で呼び出すことができ、ファイル内でスキップするバイト数と、出力ファイルに挿入する最大バイト数を指定する。
 
@@ -1953,14 +1919,9 @@ The .incbin can be invoked with one or two optional arguments which specify the 
     .incbin "file.dat",1024,512     ; skip first 1024, and
                                     ; include at most 512 bytes
 ```
+デリミタ','は標準的なデリミタであり、空白文字、タブ文字、','(カンマ)のいずれでも使用可能である。引数offsetとcountはローカルでなければならず、評価の結果が定数でなければならない。0でも構わない。offsetが空の場合、デフォルト値である0となり、countが空の場合、ファイルの残りとなる。
 
-The ',' delimiters can be any regular delimiter - space, tab, or ','.  The offset and count arguments must be local, evaluate  to a  constant, and may be 0.  A blank offset is by default 0 and a blank count is the remainder of the file.
-
-デリミタ','は標準的なデリミタである、空白文字、タブ文字、','(カンマ)のいずれでも使用可能である。空白のオフセットはデフォルトで0であり、空白のカウントはファイルの残りとなる。
-
-An offset equal to or greater than the file length results in an `<i>` error.  A count that is larger than the  remaining  bytes in a file does not result in an error.
-
-オフセットがファイル長以上である場合は、`<i>`エラーとなる。 ファイルの残りバイト数より大きいカウントはエラーにならない。
+offsetがファイル長以上である場合は、`<i>`エラーとなる。 countがファイルの残りバイト数より大きい場合はエラーにならない。
 
 ### 1.4.42  .include Directive
 
@@ -1974,35 +1935,23 @@ Format:
 
 where:
 ```
-    string  represents  a string that is the file specifica-
-            tion of an ASxxxx source file.
+    string  ASxxxxソースファイルを指すファイル指定の文字列を表す。
 
-    /  /    represent   the  delimiting  characters.   These
-            delimiters   may   be   any   paired    printing
-            characters,  as  long  as the characters are not
-            contained within  the  string  itself.   If  the
-            delimiting characters do not match, the .include
-            directive will give the `<q>` error.
+    /  /    デリミタ文字を表す。デリミタとして、その文字が引数
+            文字列の中で使用されていない限り、任意の印字可能
+            文字の組を使用できる。デリミタが一致しない場合、
+            .include 指令は `<q>` エラーを返す。
 ```
 
-The .include directive is used to insert a source file within the source file currently being assembled.  When this  directive is encountered, an implicit .page directive is issued.  When the end of the specified source file is reached, an  implicit  .page directive is issued and input continues from the previous source file.  The maximum nesting level of source files specified by  a .include directive is five.
-
-The  total  number  of separately specified .include files is unlimited as each .include file is opened and then closed during each pass made by the assembler.
-
-The  default  directory  path,  if none is specified, for any .include file is the directory path of the  current  file.   For example:   if  the  current  source file, D:\proj\file1.asm, includes  a  file  specified   as   "include1"   then   the   file D:\proj\include1.asm is opened.
-
-.include指令は、現在アセンブル中のソースファイル内にソースファイルを挿入するために使用されます。 この指令に遭遇すると、暗黙の .page 指令が発行される。 指定されたソースファイルの終端に達すると、暗黙の .page 指令が発行され、前のソースファイルから入力が続行されます。 .include 指令で指定されるソースファイルの最大入れ子レベルは 5 です。
+.include指令は、現在アセンブル中のソースファイル内にソースファイルを挿入するために使用されます。 この指令に遭遇すると、暗黙の .page 指令が発行される。 指定されたソースファイルの終端に達すると、暗黙の .page 指令が発行され、以前のソースファイルからの入力が続行されます。 .include 指令で指定されるソースファイルの最大入れ子レベルは 5 です。
 
 各 .include ファイルはアセンブラの各パスの間に開かれ、閉じられるので、別々に指定された .include ファイルの総数は無制限である。
 
-.includeファイルのデフォルトのディレクトリパスは、何も指定されていない場合、現在のファイルのディレクトリパスになります。  例えば、現在のソースファイル D:￢projfile1.asm に "include1" と指定されたファイルが含まれている場合、D:￢proj feininclude1.asm がオープンされます。
+.includeファイルのデフォルトのディレクトリパスは、何も指定されていない場合、現在のファイルのディレクトリパスになります。  例えば、現在のソースファイル `D:\\proj\\file1.asm` に "include1" と指定されたファイルが含まれている場合、`D:\\proj\\include1.asm` がオープンされます。
 
 ### 1.4.42.1  Including Files In Windows/DOS  -
 
-Graphical Illustration of Include File Locations for the following command line entry:
-
 次のコマンドラインエントリ
-
 ```
 __> bin\ascheck -l -o -s  obj\prjct.rel   src\prjct\prjct.asm
 ```
@@ -2013,8 +1962,6 @@ __> bin\ascheck -l -o -s  obj\prjct.rel   src\prjct\prjct.asm
 </figure>
 
 ### 1.4.42.2  Including Files in Linux  -
-
-Graphical Illustration of Include File Locations for the following command line entry:
 
 次のコマンドラインエントリ
 
@@ -2027,11 +1974,8 @@ __$ bin/ascheck -l -o -s  obj/prjct.rel   src/prjct/prjct.asm
 <img width=700, src="img/002-1-4-42-2-including-files-in-linux.png">
 </figure>
 
-
-
 ### 1.4.43  .define and .undefine Directives
 
-Format:
 ```
 .define        keyword  /string/        or
 
@@ -2043,40 +1987,22 @@ Format:
 
 where:  
 ```
-    keyword is  the  substitutable  string  which must start
-            with a letter and may contain any combination of
-            digits and letters.
+    keyword は置き換えられる文字列で、文字から開始し、2文字目
+            以後は文字または数字を含むものでなければならない。
+
+    /  /    デリミタ文字を表す。デリミタとして、その文字が引数
+            文字列の中で使用されていない限り、任意の印字可能
+            文字の組を使用できる。デリミタが一致しない場合、
+            .define 指令は `<q>` エラーを返す。
 ```
 
-where:
-```
-    string  represents  a string that is substituted for the
-            keyword.  The string may contain any sequence of
-            characters including white space.
+.define指令は、キーワードを置換するユーザ定義文字列を指定する。 置換文字列は、それ自体が置換可能な他のキーワードを含んでいてもよい。 アセンブラは、キーワードが見つかった場所で行の解析を再開します。 .define指令内の循環参照を避けるように注意しなければなりません。そうしないと、アセンブラは「再帰の暴走」を起こし、`<s>`エラーになります。
 
-    /  /    represent   the  delimiting  characters.   These
-            delimiters   may   be   any   paired    printing
-            characters,  as  long  as the characters are not
-            contained within  the  string  itself.   If  the
-            delimiting  characters do not match, the .define
-            directive will give the `<q>` error.
-```
+.undefine指令はキーワードを置換可能な文字列として削除します。 キーワードが定義されていない場合でもエラーは返されません。
 
-The  .define  directive specifies a user defined string which is substituted for the keyword.  The substitution string may itself  contain other keywords that are substitutable.  The assembler resumes the parse of the line at the point the keyword  was found.  Care must be excersized to avoid any circular references within .define directives, otherwise the assembler may  enter  a 'recursion runaway' resulting in an `<s>` error.
+.define指令に置換文字列の有無にかかわらずあるキーワードを指定すると、そのキーワードは定義されますが、シンボルでなくなります。  キーワードはシンボルではないので、次のアセンブラパスの開始時にキーワードは未定義になります。
 
-The  .undefine  directive removes the keyword as a substitutable string.  No error is returned if the keyword  was  not  defined.
-
-.define指令は、キーワードを置換するユーザ定義文字列を指定する。 置換文字列は、それ自体が置換可能な他のキーワードを含んでいてもよい。 アセンブラは、キーワードが見つかった時点で行の解析を再開します。 .define指令内の循環参照を避けるように注意しなければなりません。そうしないと、アセンブラは「再帰の暴走」を起こし、`<s>`エラーになるかもしれません。
-
-.undefine指令はキーワードを置換可能な文字列として削除します。 キーワードが定義されていない場合、エラーは返されません。
-
-When a .define directive specifies a keyword, with or without a substitution string, the keyword is defined but is not a  symbol.   Because  the  keyword is not a symbol the keyword becomes undefined at the beginning of the next assembler pass.
-
-The   keyword   substitution   is   never  applied  to  these directives:   .define,  .undefine,   .ifdef   .ifndef,   iifdef, iifndef, or any variation of def or ndef conditionals.
-
-.define指令が置換文字列の有無にかかわらずキーワードを指定すると、そのキーワードは定義されますが、シンボルではありません。  キーワードはシンボルではないので、次のアセンブラパスの開始時にキーワードは未定義になります。
-
-.define、.undefine、.ifdef .ifndef、iifdef、iifndef、def または ndef 条件指定のバリエーション。
+キーワードの置換は、.define、.undefine、.ifdef、 .ifndef、iifdef、iifndef、def または ndef 条件指定のバリエーションには適用されません。
 
 ### 1.4.44  .enabl and .dsabl Directives
 
@@ -2087,11 +2013,7 @@ Format:
 .dsabl  (optn1, optn2, ...)     ;disable options
 ```
 
-The  'csn'  option  , C Style Numbers', is currently the only option available to all ASxxxx assemblers.  Enabling  the  'csn' option disables all the temporary radix options beginning with a 0 (zero) except the hex radix options  0x  and  0X.   All  other numbers  beginning  with 0 are evaluated as octal values and all numbers beginning with  digits  1-9  are  evaluated  as  decimal values.
-
-Individual assemblers may have additional options specific to that assembler and will be described in its documentation. 
-
-csn' オプション(C スタイル番号)は、現在すべての ASxxxx アセンブラで使用できる唯一のオプションです。 'csn' オプションを有効にすると、16進数オプションの0xと0Xを除く、0(ゼロ)で始まるすべての一時基数オプションが無効になります。  0から始まるその他の数値はすべて8進数として評価され、1～9桁で始まる数値はすべて10進数として評価される。
+`csn`(C Style Numbers: C言語風の数値) オプションは、現在すべての ASxxxx アセンブラで使用できる唯一のオプションです。 'csn' オプションを有効にすると、16進数オプションの0xと0Xを除く、0(ゼロ)で始まるすべての一時基数オプションが無効になります。  0から始まるその他の数値はすべて8進数として評価され、1～9桁で始まる数値はすべて10進数として評価される。
 
 個々のアセンブラには、そのアセンブラ固有のオプションが追加されている場合があり、そのオプションについてはそのアセンブラのドキュメントに記載されている。
 
@@ -2101,10 +2023,7 @@ Format:
 ```
 .setdp [base [,area]]
 ```
-
-The set direct page directive has a common format in all the assemblers supporting a paged mode.  The .setdp directive is  used to  inform  the  assembler of the current direct page region and the offset address within the selected area.  The normal invocation methods are:
-
-set direct page 指令は、ページモードをサポートするすべてのアセンブラで共通 の書式を持っている。 .setdp指令は、現在のダイレクトページ領域と選択された領域内のオフセットアドレスをアセンブラに通知するために使用される。 通常の呼び出し方法は以下の通りである：
+set direct page 指令は、ページモードをサポートするすべてのアセンブラで共通の書式を持っている。 .setdp指令は、現在のダイレクトページ領域と選択された領域内のオフセットアドレスをアセンブラに通知するために使用される。 通常の呼び出し方法は以下の通りである：
 
 ```
     .area   DIRECT  (PAG)
